@@ -2,6 +2,51 @@ import copy
 
 import torch
 
+# functions for building configs for Life-like CA
+def get_smooth_interval(rules_list):
+    """
+    Convert a single list of Life-like CA rules to a set of intervals.
+    Converts one list of rules at a time; 
+    birth and survival rules must be each converted in turn.
+    """
+
+    b = [[(2*bb-1)/16., (2*bb+1)/16.] for bb in rules_list]
+
+    return b
+
+def get_life_like_config(radius=1, birth=[3], survival=[2,3]):
+    """
+    Return a glaberish config based on a Life-like CA's B/S rules.
+    The default radius of 1 corresponds to a 3x3 Moore neighborhood. 
+    """
+
+    birth_intervals = get_smooth_interval(birth)
+    survival_intervals = get_smooth_interval(survival)
+
+    config = {}
+
+    kernel_config = {}
+    kernel_config["name"] = "MooreLike"
+    kernel_config["radius"] = radius
+
+    gen_config = {}
+    gen_config["name"] = "SmoothIntervals"
+    gen_config["parameters"] = torch.tensor(birth_intervals)
+    gen_config["mode"] = 1
+
+    per_config = {}
+    per_config["name"] = "SmoothIntervals"
+    per_config["parameters"] = torch.tensor(survival_intervals)
+    per_config["mode"] = 1
+
+    config["neighborhood_kernel_config"] = kernel_config 
+    config["genesis_config"] = gen_config
+    config["persistence_config"] = per_config
+
+    config["dt"] = 1.0
+
+    return config
+
 def get_orbium_config(radius=13):
 
     config = {}
@@ -46,4 +91,5 @@ def get_geminium_config(radius=18):
     config["persistence_config"] = copy.deepcopy(gen_config)
 
     return config
+
 

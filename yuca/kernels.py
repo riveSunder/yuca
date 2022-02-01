@@ -19,6 +19,14 @@ def get_kernel(kernel_config):
     elif kernel_config["name"] == "InnerMoore":
         kernel = np.zeros((3,3))
         kernel[1,1] = 1.0
+        return kernel
+    elif kernel_config["name"] == "MooreLike":
+        kernel_radius = kernel_config["radius"]
+        mid_kernel = kernel_radius 
+
+        kernel = np.ones((kernel_radius * 2 + 1, kernel_radius * 2 + 1))
+        kernel[mid_kernel, mid_kernel] = 0.0
+        kernel /= kernel.sum()
 
         return kernel
     else:

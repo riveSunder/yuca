@@ -6,6 +6,50 @@ import torch.nn as nn
 from yuca.utils import query_kwargs
 
 
+def sigmoid_1(x, mu, alpha, gamma=1):
+    return 1 / (1 + np.exp(-4 * (x - mu) / alpha))
+
+def get_smooth_steps_fn(intervals, alpha=0.0125):
+    """
+    construct an update function from intervals.
+    input intervals is a list of lists of interval bounds,
+    each element contains the start and end of an interval. 
+    """
+    
+
+    def smooth_steps_fn(x):
+        
+        result = np.zeros_like(x)
+        for bounds in intervals:
+            result += sigmoid_1(x, bounds[0], alpha) * (1 - sigmoid_1(x, bounds[1], alpha))
+        
+        return result
+    
+    return smooth_steps_fn
+
+class SmoothIntervals(nn.Module):
+
+    def __init__(self, **kwargs):
+        super(SmoothIntervals, self).__init__()
+
+        temp = torch.tensor([[0.185, 0.375]]) 
+        self.intervals = query_kwargs("parameters", temp, **kwargs)
+        self.alpha = query_kwargs("alpha", 0.0125, **kwargs)
+
+    def sigmoid_1(self, x, mu, alpha):
+
+        return 1.0 / (1.0 + torch.exp(- 4.0 * (x - mu) / alpha))
+
+    def forward(self, x):
+
+        result = torch.zeros_like(x)
+        for bounds in self.intervals:
+            result += self.sigmoid_1(x, bounds[0], self.alpha) \
+                    * (1 - self.sigmoid_1(x, bounds[1], self.alpha))
+
+        result = result * 2 - 1
+        return result
+        
 class Identity(nn.Module):
 
     def __init__(self, **kwargs):

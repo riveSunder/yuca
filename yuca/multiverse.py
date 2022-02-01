@@ -12,6 +12,7 @@ from yuca.activations import Gaussian, \
         GaussianMixture, \
         DoGaussian, \
         Polynomial, \
+        SmoothIntervals, \
         Identity
 
 import yuca.utils as utils
@@ -555,6 +556,8 @@ class CA(nn.Module):
             self.genesis_fns.append(nn.Tanh())
         elif config["name"] == "Identity":
             self.genesis_fns.append(Identity(**config))
+        elif config["name"] == "SmoothIntervals":
+            self.genesis_fns.append(SmoothIntervals(**config))
         else:
             print(f"warning, fn {config['fn']} not implemented yet")
         
@@ -576,6 +579,8 @@ class CA(nn.Module):
             self.persistence_fns.append(nn.Tanh())
         elif config["name"] == "Identity":
             self.persistence_fns.append(Identity(**config))
+        elif config["name"] == "SmoothIntervals":
+            self.persistence_fns.append(SmoothIntervals(**config))
         else:
             print(f"warning, fn {config['fn']} not implemented yet")
     
