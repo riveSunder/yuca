@@ -38,7 +38,7 @@ class GliderWrapper():
     def step(self, action):
         
         info = {} 
-        reward = 0
+        reward = torch.tensor(0.0)
         done = False
         obs = 0
         eps = 1e-6
@@ -48,7 +48,10 @@ class GliderWrapper():
         mean_grid = action.mean()
         max_grid = 0.31 #action.max()
 
-        y_displacement_0 = (self.y_grid * action).sum() / (eps + action.sum())
+        # avoid the "tree falling over" hack 
+#        global y_displacement_0
+        y_displacement_0 = torch.tensor(0.0) #None 
+        #(self.y_grid * action).sum() / (eps + action.sum())
 
         old_grid = 1.0  * action
         for step in range(self.ca_steps):
@@ -58,16 +61,26 @@ class GliderWrapper():
             mean_grid = action.mean()
             max_grid = action.max()
 
-            if step % self.ca_steps // 8 == 0 or step == (self.ca_steps - 1):
+            if step % (self.ca_steps // 8) == 0:# or step == (self.ca_steps - 1):
+                
+
+#                global y_displacement_0
                 y_displacement_1 = (self.y_grid * action).sum() / (eps + action.sum())
-                y_displacement = torch.abs(y_displacement_1 - y_displacement_0)
 
                 # penalize growth/decay, i.e. incentivize morphological homeostasis
                 #
                 growth = 1.0 - (mean_grid / (mean_grid_0 + eps))
                 mean_grid_0 = mean_grid
                 mean_grid = action.mean()
-                reward += torch.abs(y_displacement) #- torch.abs(growth) * 100
+
+                if y_displacement_0 != 0.0: #None:
+                    y_displacement = torch.abs(y_displacement_1 - y_displacement_0)
+                    reward += torch.abs(y_displacement) #- torch.abs(growth) * 100
+                else: 
+                    y_displacement = torch.tensor(0.0)
+                    reward += torch.abs(y_displacement) #- torch.abs(growth) * 100
+
+                y_displacement_0 = y_displacement_1.clone()
 
             dgrid = action - old_grid
             old_grid = 1.0  * action
