@@ -155,7 +155,20 @@ class Phanes():
                 results = self.analyze_universe()
                 t1 = time.time()
 
-                import pdb; pdb.set_trace()
+                elapsed_time = t1-t0
+
+                progress_msg = f"ca config {filename} analyzed in {elapsed_time} s\n"
+                progress_msg += f"   avg./final mortality ratio: "
+                progress_msg += f"{np.mean(results['mortality_ratio'])}/"
+                progress_msg += f"{results['mortality_ratio'][-1]}\n"
+                progress_msg += f"   avg./final fertility ratio: "
+                progress_msg += f"{np.mean(results['fertility_ratio'])}/"
+                progress_msg += f"{results['fertility_ratio'][-1]}\n"
+                progress_msg += f"   avg./final autocorrelation: "
+                progress_msg += f"{np.mean(results['autocorrelation'])}/"
+                progress_msg += f"{results['autocorrelation'][-1][0]}\n"
+
+                print(progress_msg)
 
                 save_directory = os.path.split(os.path.split(my_directory)[0])[0]
                 save_directory = os.path.join(save_directory, "ca_analysis")
@@ -163,6 +176,9 @@ class Phanes():
                 save_name = os.path.splitext(filename)[0] + "_analysis.npy"
                 save_path = os.path.join(save_directory, save_name)
 
+                results["name"] = filename
+                results["use_cppn"] = self.use_cppn
+                results["max_ca_steps"] = self.ca_steps
                 np.save(save_path, results)
 
 
