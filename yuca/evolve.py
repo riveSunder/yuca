@@ -112,8 +112,15 @@ if __name__ == "__main__":
     entry_point = []
     entry_point.append(os.path.split(sys.argv[0])[1])
     args_list = sys.argv[1:]
-    sorted_args = [[args_list[aa], args_list[aa+1]] \
-            for aa in range(0,len(args_list), 2)]
+
+    sorted_args = []
+    for aa in range(0, len(args_list)):
+
+        if "-" in args_list[aa]:
+            sorted_args.append([args_list[aa]])
+        else: 
+            sorted_args[-1].append(args_list[aa])
+
     sorted_args.sort()
     entry_point.extend(sorted_args)
     kwargs["entry_point"] = entry_point
