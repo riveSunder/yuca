@@ -2,7 +2,8 @@ import numpy as np
 
 import torch
 
-from yuca.activations import Gaussian, DoGaussian, CosOverX2, GaussianMixture
+from yuca.activations import Gaussian, DoGaussian, \
+        CosOverX2, GaussianMixture, SmoothLifeKernel
 
 import matplotlib.pyplot as plt
 
@@ -16,6 +17,8 @@ def get_kernel(kernel_config):
         get_kernel_fn = CosOverX2
     elif kernel_config["name"] == "DoGaussian":
         get_kernel_fn = DoGaussian
+    elif kernel_config["name"] == "SmoothLifeKernel":
+        get_kernel_fn = SmoothLifeKernel
     elif kernel_config["name"] == "InnerMoore":
         kernel = np.zeros((3,3))
         kernel[1,1] = 1.0

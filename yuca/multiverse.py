@@ -89,11 +89,11 @@ class CA(nn.Module):
 
         self.config = config
 
-        if "identity_kernel" not in config.keys():
+        if "identity_kernel_config" not in config.keys():
             self.add_identity_kernel()
         else: 
-            id_kernel = get_kernel(config["identity_kernel"])
-            self.add_identity_kernel(id_kernel)
+            id_kernel = get_kernel(config["identity_kernel_config"])
+            self.add_identity_kernel(kernel = id_kernel)
 
         self.initialize_id_layer()
 

@@ -27,6 +27,24 @@ def get_smooth_steps_fn(intervals, alpha=0.0125):
     
     return smooth_steps_fn
 
+class SmoothLifeKernel(nn.Module):
+
+    def __init__(self, **kwargs):
+        super(SmoothLifeKernel, self).__init__()
+
+
+        self.r_a = query_kwargs("r_a", 1.0, **kwargs)
+        self.r_i = query_kwargs("r_i", 1.0 / 3.0, **kwargs)
+
+    def forward(self, x):
+
+        kernel = np.zeros_like(x)
+
+        kernel[x >= self.r_i] = 1.0
+        kernel[x > self.r_a] = 0.0
+
+        return torch.tensor(kernel)
+
 class SmoothIntervals(nn.Module):
 
     def __init__(self, **kwargs):
@@ -35,6 +53,7 @@ class SmoothIntervals(nn.Module):
         temp = torch.tensor([[0.185, 0.375]]) 
         self.intervals = query_kwargs("parameters", temp, **kwargs)
         self.alpha = query_kwargs("alpha", 0.0125, **kwargs)
+        self.mode = query_kwargs("mode", 0, **kwargs)
 
     def sigmoid_1(self, x, mu, alpha):
 
@@ -43,11 +62,13 @@ class SmoothIntervals(nn.Module):
     def forward(self, x):
 
         result = torch.zeros_like(x)
+
         for bounds in self.intervals:
             result += self.sigmoid_1(x, bounds[0], self.alpha) \
                     * (1 - self.sigmoid_1(x, bounds[1], self.alpha))
 
-        result = result * 2 - 1
+        if self.mode:
+            result = result * 2 - 1
         return result
         
 class Identity(nn.Module):
