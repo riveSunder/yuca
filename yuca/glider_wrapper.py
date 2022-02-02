@@ -76,10 +76,10 @@ class GliderWrapper():
 
                 if y_displacement_0 != 0.0: #None:
                     y_displacement = torch.abs(y_displacement_1 - y_displacement_0)
-                    reward += torch.abs(y_displacement) - torch.abs(growth) * 100
+                    reward += torch.abs(y_displacement) - torch.abs(growth) * 150
                 else: 
                     y_displacement = torch.tensor(0.0)
-                    reward += torch.abs(y_displacement) - torch.abs(growth) * 100
+                    reward += torch.abs(y_displacement) - torch.abs(growth) * 150
 
                 y_displacement_0 = y_displacement_1.clone()
 
