@@ -1,4 +1,5 @@
 import os
+import copy
 
 import numpy as np
 from functools import reduce
@@ -178,7 +179,7 @@ class CA(nn.Module):
         config["genesis_config"] = genesis_config
         config["persistence_config"] = persistence_config
 
-        return config
+        return copy.deepcopy(config)
 
     def save_config(self, filepath, config=None):
 

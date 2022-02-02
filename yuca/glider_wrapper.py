@@ -54,6 +54,7 @@ class GliderWrapper():
         #(self.y_grid * action).sum() / (eps + action.sum())
 
         old_grid = 1.0  * action
+        score_every = max([self.ca_steps // 8 , 1])
         for step in range(self.ca_steps):
        
             action = self.ca(action)
@@ -61,7 +62,7 @@ class GliderWrapper():
             mean_grid = action.mean()
             max_grid = action.max()
 
-            if step % (self.ca_steps // 8) == 0:# or step == (self.ca_steps - 1):
+            if step % (score_every) == 0:# or step == (self.ca_steps - 1):
                 
 
 #                global y_displacement_0

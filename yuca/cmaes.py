@@ -285,17 +285,44 @@ class CMAES():
         # send ca model back to device
         self.env.ca.to_device(restore_device)
 
+    def get_elite_configs(self):
+
+        elite_configs = []
+        
+        restore_steps = 1 * self.env.ca_steps
+        self.env.ca_steps = 2
+        for hh in range(self.elite_params.shape[0]):
+
+            
+            temp_agent = self.agent_fn(\
+                    params = self.elite_params[hh].squeeze(),\
+                    dim = self.dim)
+
+            temp_agent.to_device(self.my_device)
+
+
+            action = temp_agent.get_action()
+            _ = self.env.step(action)
+
+            elite_configs.append(self.env.ca.make_config())
+
+
+        self.env.ca_steps = restore_steps
+        return elite_configs
+
     def mantle(self):
 
         t0 = time.time()
 
         progress = {}
         progress["elite_params"] = []
+        progress["elite_configs"] = []
         progress["mean_fitness"] = []
         progress["max_fitness"] = []
         progress["min_fitness"] = []
         progress["std_dev_fitness"] = []
         progress["kwargs"] = self.kwargs
+
 
         print("begin search for interesting universes, " \
                 f"selection mode {self.selection_mode} " \
@@ -343,7 +370,11 @@ class CMAES():
                 fit_std_dev = np.std(fitness) 
                 avg_alive = np.mean(proportion_alive)
 
+                elite_configs = self.get_elite_configs()
+
                 progress["elite_params"].append(self.elite_params)
+                progress["elite_configs"].append(elite_configs)
+
                 progress["mean_fitness"].append(fit_mean)
                 progress["min_fitness"].append(fit_min)
                 progress["max_fitness"].append(fit_max)
