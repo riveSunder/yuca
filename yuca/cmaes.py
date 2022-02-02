@@ -175,6 +175,45 @@ class CMAES():
         # reduce the impact of lucky/unlucky predictor initializations
         return np.mean(fitness_replicates), proportion_alive
 
+    def rank_population(self, fitness):
+        """
+        for the final generation, fitness scores are ranked deterministically
+        """
+
+        print("final population sorting, truncation mode")
+
+        sorted_indices = list(np.argsort(fitness))
+        sorted_indices.reverse()
+        sorted_fitness = np.array(fitness)[sorted_indices]
+
+        elite_pop = []
+        elite_fitness = []
+
+        for jj in range(self.elite_keep):
+
+            elite_pop.append(self.population[sorted_indices[jj]])
+            elite_fitness.append(fitness[sorted_indices[jj]])
+
+        elite_params = None
+        for jj in range(self.elite_keep):
+
+            if elite_params is None:
+                elite_params = elite_pop[jj].get_params()[np.newaxis,:]
+            else:
+                elite_params = np.append(elite_params,\
+                        elite_pop[jj].get_params()[np.newaxis,:],\
+                        axis=0)
+
+        self.elite_params = elite_params
+        elite_mean = np.mean(elite_params, axis=0)
+
+        covar = (1 / self.elite_keep) \
+                * np.matmul((elite_params - self.means).T,\
+                (elite_params - self.means))
+
+        self.means = elite_mean
+        self.covar = covar
+
     def update_population(self, fitness):
 
         if self.selection_mode == 0:
@@ -323,7 +362,6 @@ class CMAES():
         progress["std_dev_fitness"] = []
         progress["kwargs"] = self.kwargs
 
-
         print("begin search for interesting universes, " \
                 f"selection mode {self.selection_mode} " \
                 f"prediction motivator mode {self.prediction_mode}")
@@ -362,7 +400,10 @@ class CMAES():
                     proportion_alive.append(result[1])
 
                 
-                self.update_population(fitness)
+                if generation == self.generations - 1:
+                    self.rank_population(fitness)
+                else:
+                    self.update_population(fitness)
 
                 fit_mean = np.mean(fitness) 
                 fit_max = np.max(fitness) 
