@@ -361,6 +361,7 @@ class CMAES():
         progress["min_fitness"] = []
         progress["std_dev_fitness"] = []
         progress["kwargs"] = self.kwargs
+        progress["distribution"] = []
 
         print("begin search for interesting universes, " \
                 f"selection mode {self.selection_mode} " \
@@ -420,6 +421,8 @@ class CMAES():
                 progress["min_fitness"].append(fit_min)
                 progress["max_fitness"].append(fit_max)
                 progress["std_dev_fitness"].append(fit_std_dev)
+
+                progress["distribution"].append([1.0 * self.means, 1.0 * self.covar])
 
                 t2 = time.time()
                 timing_msg = f"elapsed time: {t2-t0:.4f}, generation {t2-t1:.4f}"
