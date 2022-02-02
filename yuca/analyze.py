@@ -71,11 +71,16 @@ class Phanes():
         last_step = - torch.ones(self.batch_size)
         
         grid = torch.zeros(self.batch_size, 1, self.dim, self.dim)
-        # b_dim stands for bounded dim
-        b_dim = self.dim // 2
+        if self.use_cppn:
+            for cppn_num in range(self.batch_size):
+                cppn = CPPN(dim = self.dim)
+                grid[cppn_num] = cppn.get_action()
+        else:
+            # b_dim stands for bounded dim
+            b_dim = self.dim // 2
 
-        grid[:,:,b_dim//2:-b_dim//2, b_dim//2:-b_dim//2] = torch.rand(\
-                self.batch_size, 1, b_dim, b_dim)
+            grid[:,:,b_dim//2:-b_dim//2, b_dim//2:-b_dim//2] = torch.rand(\
+                    self.batch_size, 1, b_dim, b_dim)
 
         # escape mask checks for patterns that escape the bounding box
         escape_mask = torch.zeros_like(grid)
@@ -109,7 +114,8 @@ class Phanes():
             autocorr = self.autocorrelate(grid, old_grid)
             old_grid = 1.0 * grid
 
-            autocorrelation.append([np.mean(autocorr), np.std(autocorr)])
+            autocorrelation.append([np.mean(autocorr), np.std(autocorr), \
+                    np.min(autocorr), np.max(autocorr)])
             # keep track of last steps
             last_step[(last_step * (active_grids == 0)) == -1] = step
             # mortality is the potential for patterns to vanish
@@ -138,25 +144,26 @@ class Phanes():
         list_dir = os.listdir(my_directory)
 
         for filename in list_dir:
-            load_path = os.path.join(my_directory, filename)
+            if "npy" in filename:
+                load_path = os.path.join(my_directory, filename)
 
-            ca_config = np.load(load_path, allow_pickle=True).reshape(1)[0]
-            self.ca.load_config(ca_config)
-            self.ca.no_grad()
+                ca_config = np.load(load_path, allow_pickle=True).reshape(1)[0]
+                self.ca.load_config(ca_config)
+                self.ca.no_grad()
 
-            t0 = time.time()
-            results = self.analyze_universe()
-            t1 = time.time()
+                t0 = time.time()
+                results = self.analyze_universe()
+                t1 = time.time()
 
-            import pdb; pdb.set_trace()
+                import pdb; pdb.set_trace()
 
-            save_directory = os.path.split(os.path.split(my_directory)[0])[0]
-            save_directory = os.path.join(save_directory, "ca_analysis")
+                save_directory = os.path.split(os.path.split(my_directory)[0])[0]
+                save_directory = os.path.join(save_directory, "ca_analysis")
 
-            save_name = os.path.splitext(filename)[0] + "_analysis.npy"
-            save_path = os.path.join(save_directory, save_name)
+                save_name = os.path.splitext(filename)[0] + "_analysis.npy"
+                save_path = os.path.join(save_directory, save_name)
 
-            np.save(save_path, results)
+                np.save(save_path, results)
 
 
 
@@ -174,7 +181,7 @@ if __name__ == "__main__":
             default=1024, help="number of ca steps to search for")
 
     parser.add_argument("-u", "--use_cppn", type=int, \
-            default=1, help="use CPPNs instead of random initializations")
+            default=0, help="use CPPNs instead of random initializations")
 
     args = parser.parse_args()
 
