@@ -177,7 +177,9 @@ class Phanes():
                 save_directory = os.path.split(os.path.split(my_directory)[0])[0]
                 save_directory = os.path.join(save_directory, "ca_analysis")
 
-                save_name = os.path.splitext(filename)[0] + "_analysis.npy"
+                
+                save_name = os.path.splitext(filename)[0] \
+                        + "{self.use_cppn}_analysis.npy"
                 save_path = os.path.join(save_directory, save_name)
 
                 results["name"] = filename

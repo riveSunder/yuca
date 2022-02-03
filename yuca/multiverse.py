@@ -82,6 +82,15 @@ class CA(nn.Module):
         else:
             self.default_init2()
 
+        self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
+
+        if self.input_filepath is not None:
+            my_data = np.load(self.input_filepath, allow_pickle=True).reshape(1)[0]
+
+            my_params = my_data["elite_params"][-1][0]
+
+            self.set_params(my_params)
+
 
     def load_config(self, config):
 
@@ -159,9 +168,9 @@ class CA(nn.Module):
         else:
             genesis_config = self.genesis_fn_config
 
-        if "parameters" in genesis_config.keys():
+        #if "parameters" in genesis_config.keys():
 
-            genesis_config["parameters"] = self.get_genesis_params()
+        #    genesis_config["parameters"] = self.get_genesis_params()
             
         # persistence
         if self.persistence_fn_config is None:
@@ -170,9 +179,9 @@ class CA(nn.Module):
         else:
             persistence_config = self.persistence_fn_config
 
-        if "parameters" in persistence_config.keys():
+        #if "parameters" in persistence_config.keys():
 
-            persistence_config["parameters"] = self.get_persistence_params()
+        #    persistence_config["parameters"] = self.get_persistence_params()
             
         config["id_kernel_config"] = id_kernel_config
         config["neighborhood_kernel_config"] = neighborhood_kernel_config
