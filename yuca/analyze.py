@@ -3,6 +3,7 @@ import os
 import sys
 import subprocess
 
+from functools import reduce
 import time
 
 import numpy as np
@@ -38,12 +39,17 @@ class Phanes():
     def load_ca_config(self, filepath):
         pass
 
-    def autocorrelate(self, grid1, grid2):
+    def autocorrelate_old(self, grid1, grid2):
         
         eps = 1e-7
 
+        import pdb; pdb.set_trace()
         grid1 = grid1.detach().cpu().numpy()
         grid2 = grid2.detach().cpu().numpy()
+
+        #grid1 = (eps + grid1 - np.mean(grid1)) / (eps + np.std(grid1))
+        #grid2 = (eps + grid2 - np.mean(grid2)) / (eps + np.std(grid2))
+
         pad_dim = np.max(np.array(grid1.shape[-2:]) * 2)
 
         f_g_1 = np.fft.fft2(grid1, (pad_dim, pad_dim))
@@ -59,6 +65,18 @@ class Phanes():
         corr = corr_12
 
         return corr
+
+    def autocorrelate(self, grid1, grid2):
+        eps = 1e-7
+
+        grid1_norm = (eps + grid1 - grid1.mean()) / (eps + grid1.std())
+        grid2_norm = (eps + grid2 - grid2.mean()) / (eps + grid2.std())
+
+        autocorrelation = F.conv2d(grid1_norm.transpose(0,1), grid2_norm.transpose(0,1))
+
+        autocorrelation = autocorrelation / reduce(lambda x,y: x*y, grid1.shape)
+
+        return autocorrelation.detach().cpu().numpy()
 
     def analyze_universe(self):
         
@@ -106,8 +124,6 @@ class Phanes():
             
             grid = self.ca(grid)
 
-            if grid.mean() == 0.0:
-                break
 
             active_grids = 1.0 * \
                     (grid.mean(dim=(2,3)).mean(dim=-1) > 0.00)
@@ -127,6 +143,8 @@ class Phanes():
             # rules are fertile when a pattern escapes a bounding box
             fertility_ratio.append(fertile_grids.mean().cpu().item()) #.numpy())
             steps.append(step)
+            if grid.mean() == 0.0:
+                break
 
 
         results = {}
@@ -179,7 +197,7 @@ class Phanes():
 
                 
                 save_name = os.path.splitext(filename)[0] \
-                        + "{self.use_cppn}_analysis.npy"
+                        + f"cppn{self.use_cppn}_analysis.npy"
                 save_path = os.path.join(save_directory, save_name)
 
                 results["name"] = filename
@@ -193,14 +211,16 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser("args for plotting evo logs")
 
+
+    parser.add_argument("-b", "--batch_size", type=int, \
+            default=64, help="number of grid instances (vectorization)")
+    parser.add_argument("-c", "--ca_steps", type=int, \
+            default=1024, help="number of ca steps to search for")
+    parser.add_argument("-d", "--device", type=str, \
+            default="cpu", help="device to use (cpu or cuda)")
     parser.add_argument("-i", "--input_directory", type=str,\
             default="ca_configs/", help="directory containing ca rule config files")
 
-    parser.add_argument("-d", "--device", type=str, \
-            default="cpu", help="device to use (cpu or cuda)")
-
-    parser.add_argument("-c", "--ca_steps", type=int, \
-            default=1024, help="number of ca steps to search for")
 
     parser.add_argument("-u", "--use_cppn", type=int, \
             default=0, help="use CPPNs instead of random initializations")
