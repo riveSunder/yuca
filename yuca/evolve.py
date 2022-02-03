@@ -9,6 +9,7 @@ from yuca.cmaes import CMAES
 from yuca.cppn import CPPN
 
 from yuca.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper
+from yuca.random_wrapper import RandomWrapper
 from yuca.glider_wrapper import GliderWrapper
 
 def pattern_search(**kwargs):
@@ -29,6 +30,8 @@ def universe_search(**kwargs):
         env_fn = SimpleHaltingWrapper
     elif "HaltingWrapper" in kwargs["env_fn"]:
         env_fn = HaltingWrapper
+    elif "RandomWrapper" in kwargs["env_fn"]:
+        env_fn = RandomWrapper
     else:
         exception_msg = f"should be unreachable, env_fn {kwargs['env_fn']} "\
                 f" not recognized"
