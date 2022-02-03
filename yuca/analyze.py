@@ -71,13 +71,17 @@ class Phanes():
         last_step = - torch.ones(self.batch_size)
         
         grid = torch.zeros(self.batch_size, 1, self.dim, self.dim)
+        # b_dim stands for bounded dim
+        b_dim = self.dim // 2
         if self.use_cppn:
             for cppn_num in range(self.batch_size):
                 cppn = CPPN(dim = self.dim)
                 grid[cppn_num] = cppn.get_action()
+                grid[:,:,:b_dim//2,:] *= 0
+                grid[:,:,:,:b_dim//2] *= 0
+                grid[:,:,-b_dim//2:,:] *= 0
+                grid[:,:,:,-b_dim//2:] *= 0
         else:
-            # b_dim stands for bounded dim
-            b_dim = self.dim // 2
 
             grid[:,:,b_dim//2:-b_dim//2, b_dim//2:-b_dim//2] = torch.rand(\
                     self.batch_size, 1, b_dim, b_dim)
