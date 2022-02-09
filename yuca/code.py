@@ -1,4 +1,3 @@
-
 import os
 import copy
 
@@ -130,7 +129,6 @@ class CODE(CA):
 
         grid, self.prev_dt = self.adaptive_euler(universe)
         
-
         return grid
 
 if __name__ == "__main__":
