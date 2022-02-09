@@ -113,22 +113,23 @@ class TestCA(unittest.TestCase):
 
         for my_device in ["cpu", torch.device("cpu"), "cuda", torch.device("cuda")]:
             
-            ca.to_device(my_device)
-             
-            for ii, genesis_fn in enumerate(ca.genesis_fns):
-                for jj, param in enumerate(genesis_fn.named_parameters()):
+            if "cuda" in torch.device(my_device).type and torch.cuda.is_available():
+                ca.to_device(my_device)
+                 
+                for ii, genesis_fn in enumerate(ca.genesis_fns):
+                    for jj, param in enumerate(genesis_fn.named_parameters()):
+                        self.assertEqual(param[1].device.type, \
+                                torch.device(my_device).type)
+
+                for kk, persistence_fn in enumerate(ca.persistence_fns):
+                    for ll, param in enumerate(persistence_fn.named_parameters()):
+                        self.assertEqual(param[1].device.type, \
+                                torch.device(my_device).type)
+
+                for mm, param in enumerate(ca.named_parameters()):
+
                     self.assertEqual(param[1].device.type, \
                             torch.device(my_device).type)
-
-            for kk, persistence_fn in enumerate(ca.persistence_fns):
-                for ll, param in enumerate(persistence_fn.named_parameters()):
-                    self.assertEqual(param[1].device.type, \
-                            torch.device(my_device).type)
-
-            for mm, param in enumerate(ca.named_parameters()):
-
-                self.assertEqual(param[1].device.type, \
-                        torch.device(my_device).type)
                 
 
         ca = CA()
@@ -136,21 +137,22 @@ class TestCA(unittest.TestCase):
 
         for my_device in ["cpu", torch.device("cpu"), "cuda", torch.device("cuda")]:
             
-            ca.to_device(my_device)
-             
-            for ii, genesis_fn in enumerate(ca.genesis_fns):
-                for jj, param in enumerate(genesis_fn.named_parameters()):
+            if "cuda" in torch.device(my_device).type and torch.cuda.is_available():
+                ca.to_device(my_device)
+                 
+                for ii, genesis_fn in enumerate(ca.genesis_fns):
+                    for jj, param in enumerate(genesis_fn.named_parameters()):
+                        self.assertEqual(param[1].device.type, \
+                                torch.device(my_device).type)
+
+                for kk, persistence_fn in enumerate(ca.persistence_fns):
+                    for ll, param in enumerate(persistence_fn.named_parameters()):
+                        self.assertEqual(param[1].device.type, \
+                                torch.device(my_device).type)
+
+                for mm, param in enumerate(ca.named_parameters()):
                     self.assertEqual(param[1].device.type, \
                             torch.device(my_device).type)
-
-            for kk, persistence_fn in enumerate(ca.persistence_fns):
-                for ll, param in enumerate(persistence_fn.named_parameters()):
-                    self.assertEqual(param[1].device.type, \
-                            torch.device(my_device).type)
-
-            for mm, param in enumerate(ca.named_parameters()):
-                self.assertEqual(param[1].device.type, \
-                        torch.device(my_device).type)
 
 
 if __name__ == "__main__":
