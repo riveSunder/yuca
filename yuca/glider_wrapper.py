@@ -13,7 +13,9 @@ class GliderWrapper():
 
     def __init__(self, **kwargs):
 
-        self.ca = CA(**kwargs)
+        ca_fn = query_kwargs("ca_fn", CA, **kwargs)
+
+        self.ca = ca_fn(**kwargs)
         self.ca_steps = query_kwargs("ca_steps", 1024, **kwargs)
         self.batch_size = query_kwargs("batch_size", 8, **kwargs)
         self.dim = query_kwargs("dim", 128, **kwargs)

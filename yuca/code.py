@@ -74,7 +74,7 @@ class CODE(CA):
             
             if step_mse < self.error_threshold:
                 keep = True
-                ca.dt = current_step
+                self.dt = current_step
             else:
                 current_step = current_step * 0.75
                 

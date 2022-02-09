@@ -12,11 +12,25 @@ from yuca.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper
 from yuca.random_wrapper import RandomWrapper
 from yuca.glider_wrapper import GliderWrapper
 
+from yuca.multiverse import CA
+from yuca.metaca import MetaCA
+from yuca.code import CODE
+
 def pattern_search(**kwargs):
     
     kwargs["agent_fn"] = CPPN
     kwargs["env_fn"] = GliderWrapper 
 
+    if "CA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = CA
+    elif "CODE" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = CODE
+    elif "MetaCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = MetaCA
+    else:
+        exception_msg = f"should be unreachable, env_fn {kwargs['ca_fn']} "\
+                f" not recognized"
+        assert False, exception_msg
     print(f"Evolve mobile patterns with CPPNs and {kwargs['env_fn']}")
 
     population = CMAES(**kwargs)
@@ -34,6 +48,17 @@ def universe_search(**kwargs):
         env_fn = RandomWrapper
     else:
         exception_msg = f"should be unreachable, env_fn {kwargs['env_fn']} "\
+                f" not recognized"
+        assert False, exception_msg
+
+    if "CA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = CA
+    elif "CODE" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = CODE
+    elif "MetaCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = MetaCA
+    else:
+        exception_msg = f"should be unreachable, env_fn {kwargs['ca_fn']} "\
                 f" not recognized"
         assert False, exception_msg
 
@@ -100,6 +125,7 @@ if __name__ == "__main__":
             help="npy log file training curves etc.")
 
     parser.add_argument("-f", "--env_fn", type=str, default="HaltingWrapper")
+    parser.add_argument("-ca", "--ca_fn", type=str, default="CA")
 
     args = parser.parse_args()
 
