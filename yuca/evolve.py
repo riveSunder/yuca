@@ -21,12 +21,12 @@ def pattern_search(**kwargs):
     kwargs["agent_fn"] = CPPN
     kwargs["env_fn"] = GliderWrapper 
 
-    if "CA" in kwargs["ca_fn"]:
+    if "MetaCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = MetaCA
+    elif "CA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CA
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
-    elif "MetaCA" in kwargs["ca_fn"]:
-        kwargs["ca_fn"] = MetaCA
     else:
         exception_msg = f"should be unreachable, env_fn {kwargs['ca_fn']} "\
                 f" not recognized"
@@ -51,12 +51,12 @@ def universe_search(**kwargs):
                 f" not recognized"
         assert False, exception_msg
 
-    if "CA" in kwargs["ca_fn"]:
+    if "MetaCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = MetaCA
+    elif "CA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CA
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
-    elif "MetaCA" in kwargs["ca_fn"]:
-        kwargs["ca_fn"] = MetaCA
     else:
         exception_msg = f"should be unreachable, env_fn {kwargs['ca_fn']} "\
                 f" not recognized"
