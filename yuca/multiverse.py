@@ -944,6 +944,8 @@ class CA(nn.Module):
             for ll, param in enumerate(persistence_fn.parameters()):
                 param.requires_grad = False
         
+    def reset(self):
+        pass
 
 if __name__ == "__main__":
 

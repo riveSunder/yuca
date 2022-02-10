@@ -49,10 +49,13 @@ class MetaCA(CA):
         super(MetaCA, self).__init__(**kwargs)
 
 
-    def forward(self, grid, dgrid=None, mode=0):
+        self.reset()
 
-        if dgrid == None:
-            dgrid = torch.zeros_like(grid)
+    def forward(self, grid, mode=0):
+        
+
+        if grid.shape != self.dgrid.shape:
+            self.dgrid = torch.zeros_like(grid)
 
         if grid.shape[1] >= 4:
             grid = self.alive_mask(grid)
@@ -62,13 +65,15 @@ class MetaCA(CA):
 
         update_update = self.update_universe(identity, neighborhoods)
 
-        dgrid = dgrid + 1.0 * update_update
+        self.dgrid = self.dgrid + 1.0 * update_update
         
-        new_grid = torch.clamp(grid + self.dt * dgrid, 0, 1.0)
+        new_grid = torch.clamp(grid + self.dt * self.dgrid, 0, 1.0)
         
-        #new_universe = self.weights_layer(new_universe)
+        return new_grid
 
-        return new_grid, dgrid 
+    def reset(self):
+
+        self.dgrid = torch.tensor([0])
 
 if __name__ == "__main__":
 
