@@ -14,6 +14,7 @@ class SimpleHaltingWrapper(nn.Module):
 
         ca_fn = query_kwargs("ca_fn", CA, **kwargs)
 
+
         self.ca = ca(**kwargs)
         self.num_blocks = query_kwargs("num_blocks", 4, **kwargs)
 
@@ -93,7 +94,9 @@ class HaltingWrapper(nn.Module):
     def __init__(self, **kwargs):
         super(HaltingWrapper, self).__init__()
 
-        self.ca = CA(**kwargs)
+        ca_fn = query_kwargs("ca_fn", CA, **kwargs)
+        self.ca = ca_fn(**kwargs)
+
         self.num_blocks = query_kwargs("num_blocks", 4, **kwargs)
 
         self.dropout = query_kwargs("dropout", 0.0, **kwargs)
@@ -186,17 +189,17 @@ class HaltingWrapper(nn.Module):
 
     def step(self, action):
     
-        #import pdb; pdb.set_trace()
         self.ca.set_params(action)
 
         for train_step in range(self.train_steps):
             self.train()
 
             self.zero_grad()
+            self.ca.reset()
 
             grid = torch.rand(self.batch_size, self.ca.external_channels, \
                     self.dim, self.dim).to(self.ca.my_device)
-            #grid[:,:,:32,:32] = 1.0
+
 
             for mm in range(self.bigbang_steps):
                 

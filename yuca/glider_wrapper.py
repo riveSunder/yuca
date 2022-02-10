@@ -57,6 +57,7 @@ class GliderWrapper():
 
         old_grid = 1.0  * action
         score_every = max([self.ca_steps // 8 , 1])
+        self.ca.reset()
         for step in range(self.ca_steps):
        
             action = self.ca(action)
