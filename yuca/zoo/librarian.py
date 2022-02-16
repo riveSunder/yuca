@@ -11,6 +11,12 @@ class Librarian():
 
         self.cur_path = os.path.split(os.path.realpath(__file__))[0]
         self.directory = query_kwargs("directory", self.cur_path, **kwargs) 
+
+        default_config_dir = os.path.split(os.path.split(self.cur_path)[0])[0]
+        default_config_dir = os.path.join(default_config_dir, "ca_configs")
+        self.config_directory = query_kwargs(\
+                "config_directory", default_config_dir, **kwargs)
+
         self.verbose = query_kwargs("verbose", True, **kwargs)
 
         self.update_index()
@@ -23,38 +29,70 @@ class Librarian():
         pattern_names = os.listdir(self.directory)
 
         for elem in pattern_names:
-            if ".py" in elem:
+            if ".py" in elem or ".ipynb" in elem:
                 pattern_names.remove(elem)
 
         pattern_names = [os.path.splitext(elem)[0] for elem in pattern_names]
 
         self.index = pattern_names
 
-    def store(self, pattern: np.array, pattern_name: str = "my_pattern"):
+    def store(self, pattern: np.array, pattern_name: str = "my_pattern",\
+            config_name: str = "unspecified"):
 
         counter = 0
         file_path = os.path.join(self.directory, f"{pattern_name}{counter:03}.npy")
 
         while os.path.exists(file_path):
             counter += 1
-            file_path = os.path.join(self.directory, f"{pattern_name}.npy")
+            file_path = os.path.join(self.directory, f"{pattern_name}{counter:03}.npy")
 
-            if counter > 1000:
+            if counter >= 1000:
                 # shouldn't be here, assuming less than 1000 patterns of same name
                 print(f"more than {counter} variants of pattern {pattern_name}, "\
                         f"consider choosing a new name.")
+
+        meta_path = os.path.join(self.directory, 
+                f"{pattern_name}{counter:03}.csv")
+
+
+        if config_name == "unspecified" and self.verbose:
+            print(f"warning, no config supplied for {pattern_name}")
+
+        with open(meta_path, "w") as f:
+            f.write(f"ca_config,{config_name}")
 
         np.save(file_path, pattern) 
 
         if self.verbose:
             print(f"pattern {pattern_name} saved to {file_path}")
+            print(f"pattern {pattern_name} metadata saved to {meta_path}")
+
+        self.index.append(f"{pattern_name}  {counter:03}")
 
 
-    def load(self, pattern_name: str):
+    def load(self, pattern_name: str) -> tuple([np.array, str]):
         """
         load pattern from disk
         """
-        pass
+
+        file_path = os.path.join(self.directory, f"{pattern_name}.npy")
+        meta_path = os.path.join(self.directory, f"{pattern_name}.csv")
+
+
+        pattern = np.load(file_path)
+
+        with open(meta_path) as f:
+            metadata = f.readlines()
+
+            ca_config = metadata[0].split(",")[1]
+
+        if self.verbose:
+            print(f"pattern {pattern_name} loaded from {file_path}")
+            print(f"pattern {pattern_name} metadata loaded from {meta_path}")
+
+
+        return pattern, ca_config
+
 
     def crop(self, pattern: np.array, row: tuple, column: tuple) -> np.array:
         """
