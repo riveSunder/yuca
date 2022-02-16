@@ -113,6 +113,11 @@ class HaltingWrapper(nn.Module):
         self.prediction_mode = query_kwargs("prediction_mode", 0, **kwargs)
         self.bigbang_steps = 8
 
+        self.ca_config = query_kwargs("ca_config", None, **kwargs)
+
+        if self.ca_config is not None:
+            self.ca.restore_config(self.ca_config)
+
 
     def forward(self, x):
         

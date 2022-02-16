@@ -87,45 +87,53 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser("args for plotting evo logs")
 
-    parser.add_argument("-g", "--generations", type=int, default=32, \
-            help="number of generations to train for")
-    parser.add_argument("-p", "--population_size", type=int, default=32, \
-            help="number of parameters in population")
-    parser.add_argument("-e", "--selection_mode", type=int, default=0, \
-            help="selection mode: 0: truncatio, 1: rand. tourney, 2: proportional")
-    parser.add_argument("-m", "--dim", type=int, \
-            default=128, help="grid x,y dimension (square edge length)")
-    parser.add_argument("-r", "--prediction_mode", type=int, default=0, \
-            help="prediction mode: 0-vanishing, 1-static end, 2-both")
-
-    parser.add_argument("-s", "--seed", type=int, nargs="+", default=13)
-    parser.add_argument("-c", "--ca_steps", type=int, \
-            default=1024, help="number of ca steps to search for")
     parser.add_argument("-b", "--batch_size", type=int, \
             default=64, help="number of grid instances (vectorization)")
+    parser.add_argument("-c", "--ca_steps", type=int, \
+            default=1024, help="number of ca steps to search for")
+    parser.add_argument("-ca", "--ca_fn", type=str, default="CA")
+
+    parser.add_argument("-cc", "--ca_config", type=str, default=None,\
+            help="filename (or filepath) designating a ca_config to load")
+
     parser.add_argument("-d", "--device", type=str, \
             default="cpu", help="device to use (cpu or cuda)")
-    parser.add_argument("-v", "--conv_mode", type=str, \
-            default="circular", \
-            help="padding mode to use, 'circular', 'reflect', or 'zeros'")
-    parser.add_argument("-l", "--replicates", type=int, default=1,\
-            help="number of replicates to use in get_fitness")
-    parser.add_argument("-k", "--kernel_radius", type=int, \
-            default=13, help="kernel radius. kernel shape will be 2r+1 by 2r+1)")
 
     parser.add_argument("-dt", "--dtype", type=str, \
             default="float32", \
             help="set default dtype in torch")
 
-    parser.add_argument("-t", "--tag", type=str, \
-            default="pattern_search", \
-            help="string tag for identifying experiments")
+    parser.add_argument("-e", "--selection_mode", type=int, default=0, \
+            help="selection mode: 0: truncatio, 1: rand. tourney, 2: proportional")
+
+    parser.add_argument("-f", "--env_fn", type=str, default="HaltingWrapper")
+    parser.add_argument("-g", "--generations", type=int, default=32, \
+            help="number of generations to train for")
+
     parser.add_argument("-i", "--input_filepath", type=str, \
             default=None, \
             help="npy log file training curves etc.")
 
-    parser.add_argument("-f", "--env_fn", type=str, default="HaltingWrapper")
-    parser.add_argument("-ca", "--ca_fn", type=str, default="CA")
+    parser.add_argument("-k", "--kernel_radius", type=int, \
+            default=13, help="kernel radius. kernel shape will be 2r+1 by 2r+1)")
+    parser.add_argument("-l", "--replicates", type=int, default=1,\
+            help="number of replicates to use in get_fitness")
+    parser.add_argument("-m", "--dim", type=int, \
+            default=128, help="grid x,y dimension (square edge length)")
+
+    parser.add_argument("-p", "--population_size", type=int, default=32, \
+            help="number of parameters in population")
+    parser.add_argument("-r", "--prediction_mode", type=int, default=0, \
+            help="prediction mode: 0-vanishing, 1-static end, 2-both")
+
+    parser.add_argument("-s", "--seed", type=int, nargs="+", default=13)
+    parser.add_argument("-t", "--tag", type=str, \
+            default="pattern_search", \
+            help="string tag for identifying experiments")
+    parser.add_argument("-v", "--conv_mode", type=str, \
+            default="circular", \
+            help="padding mode to use, 'circular', 'reflect', or 'zeros'")
+
 
     args = parser.parse_args()
 

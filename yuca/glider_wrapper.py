@@ -24,13 +24,18 @@ class GliderWrapper():
         self.external_channels = query_kwargs("external_channels", 1, **kwargs)
 
         self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
+        self.ca_config = query_kwargs("ca_config", None, **kwargs)
 
-        if self.input_filepath is not None:
+        if self.ca_config is not None:
+
+            self.ca.restore_config(self.ca_config)
+
+        elif self.input_filepath is not None:
+
             my_data = np.load(self.input_filepath, allow_pickle=True).reshape(1)[0]
-
             my_params = my_data["elite_params"][-1][0]
-
             self.ca.set_params(my_params)
+
         else:
             self.ca.no_grad()
 

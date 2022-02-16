@@ -196,6 +196,11 @@ class GaussianMixture(nn.Module):
         self.mode = query_kwargs("mode", 0, **kwargs)
         parameters = query_kwargs("parameters", [0.5, 0.15], **kwargs)
 
+        # this is a kludge. 
+        # TODO: store ca_configs with numpy arrays only, no tensors. 
+        parameters = torch.tensor(parameters).to(torch.get_default_dtype())
+
+
         self.amplitudes = torch.tensor([])
 
         self.gaussians = []

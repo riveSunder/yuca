@@ -66,6 +66,9 @@ class CMAES():
 
         # aim for large deviation in means, yet narrow intervals
 
+        # the type of evolution (pattern or universe rule selection)
+        # is determined by the presence or absence of the string
+        # 'pattern' in the tag.
         if "pattern" in self.tag:
             temp_agent = self.agent_fn(**kwargs)
             self.starting_means = temp_agent.get_params()
