@@ -118,7 +118,7 @@ def get_orbium_config(radius=13):
 
     return config
 
-def get_geminium_config(radius=18):
+def get_geminium_config(radius=31):
 
     config = {}
 
