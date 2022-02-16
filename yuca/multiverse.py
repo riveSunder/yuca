@@ -122,6 +122,7 @@ class CA(nn.Module):
         if "dt" in config.keys():
             self.dt = config["dt"]
         else: 
+
             self.dt = 0.1
 
         self.initialize_weight_layer()
@@ -129,13 +130,25 @@ class CA(nn.Module):
 
     def restore_config(self, filepath):
 
+        default_directory = os.path.split(\
+                os.path.split(os.path.realpath(__file__))[0])[0]
+        default_directory = os.path.join(default_directory, "ca_configs")
+
         if os.path.exists(filepath):
 
             config = np.load(filepath, allow_pickle=True).reshape(1)[0]
             self.load_config(config)
             print(f"config restored from {filepath}")
+
+        elif os.path.exists(os.path.join(default_directory, filepath)):
             
+            filepath = os.path.join(default_directory, filepath)
+            config = np.load(filepath, allow_pickle=True).reshape(1)[0]
+            self.load_config(config)
+            print(f"config restored from {filepath}")
+        
         else:
+
             print(f"attempted to read {filepath}, not found")
             assert False, f"{filepath} not found"
         
