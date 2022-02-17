@@ -55,38 +55,40 @@ class CODE(CA):
         keep = False
         
         current_step = self.prev_dt*2
-        
-        while (not keep) and current_step >= self.min_dt:
-            self.dt = current_step
-            
-            big_step_grid = self.get_new_grid(grid)
-            
-            self.dt = current_step * 0.5
-            
-            small_step_grid = self.get_new_grid(grid)
-            small_step_grid = self.get_new_grid(small_step_grid)
-            
-            mean_error = (big_step_grid - small_step_grid)**2
-            mean_error *= 1.0 * (small_step_grid > 0.0)
-            
-            step_mse = mean_error.max()
-            #torch.max((big_step_grid - small_step_grid)**2)
-            
-            if step_mse < self.error_threshold:
-                keep = True
+        # Don't track gradients while estimating step size
+        with torch.no_grad():
+
+            while (not keep) and current_step >= self.min_dt:
+                self.dt = current_step
+                
+                big_step_grid = self.get_new_grid(grid)
+
+                self.dt = current_step * 0.5
+
+                small_step_grid = self.get_new_grid(grid)
+                small_step_grid = self.get_new_grid(small_step_grid)
+
+                mean_error = (big_step_grid - small_step_grid)**2
+                mean_error *= 1.0 * (small_step_grid > 0.0)
+
+                step_mse = mean_error.max()
+                #torch.max((big_step_grid - small_step_grid)**2)
+
+                if step_mse < self.error_threshold:
+                    keep = True
+                    self.dt = current_step
+                else:
+                    current_step = current_step * 0.75
+
+
+            if not keep:
+                #print(f"{step_mse} does not meet error threshold, using min_dt of  {min_dt}")
+                current_step = self.min_dt
                 self.dt = current_step
             else:
-                current_step = current_step * 0.75
-                
+                pass
+                #print(f"{step_mse} does meet error threshold, using {ca.dt}")
             
-        if not keep:
-            #print(f"{step_mse} does not meet error threshold, using min_dt of  {min_dt}")
-            current_step = self.min_dt
-            self.dt = current_step
-        else:
-            pass
-            #print(f"{step_mse} does meet error threshold, using {ca.dt}")
-        
         total_step = 0.0
         
         while total_step < 1.0:
