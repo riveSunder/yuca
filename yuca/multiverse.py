@@ -80,7 +80,7 @@ class CA(nn.Module):
         elif "init3" in self.tag.lower():
             self.default_init3()
         else:
-            self.default_init2()
+            self.random_init()
 
         self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
 
@@ -306,7 +306,6 @@ class CA(nn.Module):
 
     def random_init(self):
 
-
         self.genesis_fns = []
         self.persistence_fns = []
         self.add_identity_kernel()
@@ -413,8 +412,7 @@ class CA(nn.Module):
 
         self.dt = 0.1
 
-        #self.include_parameters()
-            
+        self.include_parameters()
         
     def add_identity_kernel(self, **kwargs):
         
@@ -786,18 +784,21 @@ class CA(nn.Module):
 
                 print(f"loss at step {training_step} = {loss}")
 
-                grid = utils.prep_input(target, \
-                        external_channels=self.external_channels, \
-                        batch_size=1, \
-                        aperture_radius=aperture_radius, \
-                        bite_radius=bite_radius, \
-                        noise_level=my_noise)
+                if 1:
+                    grid = utils.prep_input(target, \
+                            external_channels=self.external_channels, \
+                            batch_size=1, \
+                            aperture_radius=aperture_radius, \
+                            bite_radius=bite_radius, \
+                            noise_level=my_noise)
 
-                save_fig_sequence(grid, self, \
-                        num_steps=num_ca_steps + num_loss_steps, mode=0, \
-                        tag=f"tr_step_{training_step}_")
+                    save_fig_sequence(grid, self, \
+                            num_steps=num_ca_steps + num_loss_steps, mode=0, \
+                            tag=f"tr_step_{training_step}_",\
+                            invert_colors=False)
 
             loss = 0.0
+
             optimizer.zero_grad()
             for ca_step in range(num_ca_steps):
                 batch = self.forward(batch)
@@ -805,7 +806,9 @@ class CA(nn.Module):
             for ca_step in range(num_loss_steps):
 
                 batch = self.forward(batch)
-                loss += torch.mean((target - batch[:,:target.shape[1],:,:])**2) \
+                loss += torch.mean(\
+                        (target.to(self.my_device) \
+                        - batch[:,:target.shape[1],:,:])**2) \
                         / num_loss_steps
 
             loss.backward()

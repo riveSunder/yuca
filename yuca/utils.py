@@ -193,8 +193,8 @@ def save_fig_sequence(grid, ca, num_steps=10, \
     """
 
     old_device = ca.my_device 
-    ca.to_device("cpu")
-    grid = grid.to("cpu")
+    #ca.to_device("cpu")
+    grid = grid.to(ca.my_device)
 
     # number of leading zeros
     leading = num_steps // 10 + 1
@@ -213,13 +213,13 @@ def save_fig_sequence(grid, ca, num_steps=10, \
             save_path = os.path.join(frames_path, f"frame_{step:010}.png")
 
         if grid.shape[1] >= 4:
-            img = np.uint8(255 * grid[0,0:4,:,:].detach().numpy())
+            img = np.uint8(255 * grid[0,0:4,:,:].detach().cpu().numpy())
             img = img.transpose(1,2,0)
         elif grid.shape[1] == 3:
-            img = np.uint8(255 * grid[0,0:3,:,:].detach().numpy())
+            img = np.uint8(255 * grid[0,0:3,:,:].detach().cpu().numpy())
             img = img.transpose(1,2,0)
         else:
-            img = np.uint8(255 * cmap(grid[0,0,:,:].detach().numpy()))
+            img = np.uint8(255 * cmap(grid[0,0,:,:].detach().cpu().numpy()))
 
         if invert_colors:
             img[:,:,:3] = 255 - img[:,:,:3]
@@ -239,4 +239,4 @@ def save_fig_sequence(grid, ca, num_steps=10, \
         print("vanishing grid, no gif made")
 
     os.system(f"rm -r {frames_path}")
-    ca.to_device(old_device)
+    #ca.to_device(old_device)
