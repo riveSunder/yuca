@@ -834,7 +834,7 @@ class CA(nn.Module):
 
                 save_fig_sequence(grid, self, \
                         num_steps=num_ca_steps+num_loss_steps, mode=0, \
-                        tag=f"tr_step_{training_step}_")
+                        tag=f"tr_step_{training_step}_", invert_colors=False)
 
     def to_device(self, my_device):
         """
