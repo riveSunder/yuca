@@ -15,6 +15,7 @@ from yuca.glider_wrapper import GliderWrapper
 from yuca.multiverse import CA
 from yuca.metaca import MetaCA
 from yuca.code import CODE
+from yuca.lenia import Lenia
 
 def pattern_search(**kwargs):
     
@@ -27,11 +28,16 @@ def pattern_search(**kwargs):
         kwargs["ca_fn"] = CA
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
+    elif "Lenia" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = Lenia
     else:
         exception_msg = f"should be unreachable, env_fn {kwargs['ca_fn']} "\
                 f" not recognized"
         assert False, exception_msg
-    print(f"Evolve mobile patterns with CPPNs and {kwargs['env_fn']}")
+
+    print(f"Evolve mobile patterns with CPPNs and {kwargs['env_fn']}"\
+            f" and CA type {kwargs['ca_fn']}")
+    
 
     population = CMAES(**kwargs)
 
@@ -57,12 +63,15 @@ def universe_search(**kwargs):
         kwargs["ca_fn"] = CA
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
+    elif "Lenia" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = Lenia
     else:
         exception_msg = f"should be unreachable, env_fn {kwargs['ca_fn']} "\
                 f" not recognized"
         assert False, exception_msg
 
-    print(f"Evolve CA rules with {kwargs['env_fn']} ")
+    print(f"Evolve CA rules with {kwargs['env_fn']} "\
+            f" and CA type {kwargs['ca_fn']}")
 
     kwargs["env_fn"] = env_fn
 
