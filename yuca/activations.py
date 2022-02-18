@@ -247,6 +247,27 @@ class GaussianMixture(nn.Module):
 
         return result
 
+class GaussianMetaMixture(nn.Module):
+
+    def __init__(self, **kwargs):
+        super(GaussianMetaMixture, self).__init__()
+
+        self.mode = query_kwargs("mode", 0, **kwargs)
+
+    def forward(self, x):
+
+        eps = 1e-7
+
+        if self.mode:
+            gaussian0 = torch.exp(- ((x[:, 0, :, :] \
+                    - x[:, 1, :, :] ) / (eps + x[:, 2, :, :]))**2 / 2 ) * 2 -1
+
+        else:
+            gaussian0 = torch.exp(- ((x[:, 0, :, :] \
+                    - x[:, 1, :, :] ) / (eps + x[:, 2, :, :]))**2 / 2 )
+
+        return gaussian0.unsqueeze(1)
+
 class DoubleGaussian(nn.Module):
 
     def __init__(self, **kwargs):

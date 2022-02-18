@@ -48,7 +48,7 @@ class MetaCA(CA):
     def __init__(self, **kwargs):
         super(MetaCA, self).__init__(**kwargs)
 
-
+        self.ddt = 0.25
         self.reset()
 
     def forward(self, grid, mode=0):
@@ -65,7 +65,7 @@ class MetaCA(CA):
 
         update_update = self.update_universe(identity, neighborhoods)
 
-        self.dgrid = self.dgrid + 0.1 * update_update
+        self.dgrid = self.dgrid + self.ddt * update_update
         
         new_grid = torch.clamp(grid + self.dt * self.dgrid, 0, 1.0)
         
