@@ -44,6 +44,10 @@ class GliderWrapper():
 
     def step(self, action):
         
+        return self.meta_step(self, action):
+
+    def meta_step(self, action):
+        
         info = {} 
         reward = torch.tensor(0.0)
         done = False
