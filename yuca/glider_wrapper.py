@@ -44,7 +44,7 @@ class GliderWrapper():
 
     def step(self, action):
         
-        return self.meta_step(self, action):
+        return self.meta_step(self, action)
 
     def meta_step(self, action):
         
