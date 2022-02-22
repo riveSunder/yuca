@@ -81,7 +81,7 @@ class StepPredictor(nn.Module):
     def fit(self, train_dataloader, val_dataloader=None, **kwargs):
 
         max_epochs = query_kwargs("max_epochs", 100, **kwargs)
-        disp_every = query_kwargs("disp_every", max_epochs // 10, **kwargs)
+        disp_every = query_kwargs("disp_every", max([1, max_epochs // 10]), **kwargs)
         lr = query_kwargs("lr", 3e-4, **kwargs)
 
         self.train()
