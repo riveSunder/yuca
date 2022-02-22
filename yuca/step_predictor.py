@@ -194,7 +194,9 @@ class StepPredictor(nn.Module):
 
         print(msg)
 
-        save_path = os.path.split(os.path.realpath(__file__))[0]
+        save_path = os.path.split(os.path.split(\
+                os.path.realpath(__file__))[0])[0]
+
         save_path = os.path.join(save_path, "logs", f"{self.exp_tag}_final.txt")
 
 
