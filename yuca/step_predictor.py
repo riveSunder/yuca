@@ -200,7 +200,7 @@ class StepPredictor(nn.Module):
         save_path = os.path.join(save_path, "logs", f"{self.exp_tag}_final.txt")
 
 
-        with open(save_path) as f:
+        with open(save_path, "w") as f:
             f.write(msg)
 
 
