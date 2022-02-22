@@ -285,4 +285,4 @@ if __name__ == "__main__":
                     pin_memory=pin_memory, \
                     num_workers=24)
 
-            model.end_evaluation(train_dataloader, val_dataloader, test_dataloader)
+            model.end_evaluate(train_dataloader, val_dataloader, test_dataloader)
