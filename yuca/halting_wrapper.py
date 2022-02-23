@@ -15,7 +15,7 @@ class SimpleHaltingWrapper(nn.Module):
         ca_fn = query_kwargs("ca_fn", CA, **kwargs)
 
 
-        self.ca = ca(**kwargs)
+        self.ca = ca_fn(**kwargs)
         self.num_blocks = query_kwargs("num_blocks", 4, **kwargs)
 
         self.ca_steps = query_kwargs("ca_steps", 1024, **kwargs)
