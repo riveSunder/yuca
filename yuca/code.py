@@ -50,6 +50,12 @@ class CODE(CA):
         self.min_dt = 0.01
         self.error_threshold = 1e-3
 
+        self.reset()
+
+    def reset(self):
+
+        self.t_count = 0.0
+
     def adaptive_euler(self, grid):
         
         keep = False
@@ -91,13 +97,9 @@ class CODE(CA):
             
         total_step = 0.0
         
-        while total_step < 1.0:
-            if total_step + self.dt > 1.0:
-                self.dt = 1.0 - total_step 
-                self.dt += 0.01
-              
-            grid = self.get_new_grid(grid)
-            total_step += self.dt
+        grid = self.get_new_grid(grid)
+
+        self.t_count += self.dt
             
         return grid, current_step
     
@@ -142,8 +144,12 @@ if __name__ == "__main__":
     grid = torch.rand(1, 1, dim, dim)
 
     plt.figure(); plt.imshow(grid.cpu().numpy().squeeze())
-    for ii in range(100):
+    print(f"starting t_count = {ca.t_count}")
+    while ca.t_count <= 10.0:
         grid = ca(grid)
+
+
+    print(f"ending t_count = {ca.t_count}")
 
     plt.figure(); plt.imshow(grid.cpu().numpy().squeeze())
 
