@@ -60,7 +60,7 @@ class CODE(CA):
         
         keep = False
         
-        current_step = self.prev_dt*2
+        current_step = min([self.prev_dt * 2, self.max_dt])
         # Don't track gradients while estimating step size
         with torch.no_grad():
 

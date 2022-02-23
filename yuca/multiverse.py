@@ -91,6 +91,11 @@ class CA(nn.Module):
 
             self.set_params(my_params)
 
+        self.reset()
+
+    def reset(self):
+        
+        self.t_count = 0.0
 
     def load_config(self, config):
 
@@ -699,6 +704,7 @@ class CA(nn.Module):
         new_universe = torch.clamp(universe + self.dt * update, 0, 1.0)
         
         #new_universe = self.weights_layer(new_universe)
+        self.t_count += self.dt
 
         return new_universe
 
@@ -960,8 +966,6 @@ class CA(nn.Module):
             for ll, param in enumerate(persistence_fn.parameters()):
                 param.requires_grad = False
         
-    def reset(self):
-        pass
 
 if __name__ == "__main__":
 
