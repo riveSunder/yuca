@@ -188,8 +188,8 @@ class StepPredictor(nn.Module):
         val_loss = self.evaluate(val_dataloader)
         test_loss = self.evaluate(test_dataloader)
 
-        msg =   f"{self.exp_tag} train loss: {test_loss} \n" \
-                f"{self.exp_tag} val loss: {test_loss} \n" \
+        msg =   f"{self.exp_tag} train loss: {train_loss} \n" \
+                f"{self.exp_tag} val loss: {val_loss} \n" \
                 f"{self.exp_tag} test loss: {test_loss} \n"
 
         print(msg)
