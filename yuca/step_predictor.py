@@ -96,7 +96,29 @@ class StepPredictor(nn.Module):
         t0 = time.time()
         for epoch in range(max_epochs):
 
-            if epoch % disp_every == 0:
+            self.train()
+
+            for batch_x, batch_y in train_dataloader:
+
+                optimizer.zero_grad()
+
+                pred = model(batch_x.to(self.my_device))
+
+                loss = torch.mean((batch_y.to(self.my_device) - pred)**2)
+
+                loss.backward()
+                optimizer.step()
+                
+                if len(smooth_loss):
+                    smooth_loss.append(smooth_loss[-1] * 0.99 \
+                            + loss.detach().item() * 0.01)
+
+                else:
+                    smooth_loss.append(loss.detach().item())
+
+                wall_time_t.append(time.time() - t0)
+
+            if epoch % disp_every == 0 or epoch == (max_epochs-1):
                 self.eval()
                 val_loss = 0.0
                 val_samples = 0
@@ -136,29 +158,11 @@ class StepPredictor(nn.Module):
                         os.path.realpath(__file__))[0])[0]
 
                 save_path = os.path.join(save_path, "logs", f"{self.exp_tag}.npy")
+                model_save_path = os.path.join(save_path, "models", f"{self.exp_tag}_model.pt")
 
                 np.save(save_path, progress)
+                torch.save(model_save_path, self.state_dict())
 
-            self.train()
-            for batch_x, batch_y in train_dataloader:
-
-                optimizer.zero_grad()
-
-                pred = model(batch_x.to(self.my_device))
-
-                loss = torch.mean((batch_y.to(self.my_device) - pred)**2)
-
-                loss.backward()
-                optimizer.step()
-                
-                if len(smooth_loss):
-                    smooth_loss.append(smooth_loss[-1] * 0.99 \
-                            + loss.detach().item() * 0.01)
-
-                else:
-                    smooth_loss.append(loss.detach().item())
-
-                wall_time_t.append(time.time() - t0)
 
     def evaluate(self, test_dataloader):
 
