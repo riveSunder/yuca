@@ -16,6 +16,7 @@ from yuca.multiverse import CA
 from yuca.metaca import MetaCA
 from yuca.code import CODE
 from yuca.lenia import Lenia
+from yuca.random_step_ca import RandomStepCA
 
 def pattern_search(**kwargs):
     
@@ -30,6 +31,8 @@ def pattern_search(**kwargs):
         kwargs["ca_fn"] = CODE
     elif "Lenia" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = Lenia
+    elif "RandomStepCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = RandomStepCA
     else:
         exception_msg = f"should be unreachable, env_fn {kwargs['ca_fn']} "\
                 f" not recognized"
@@ -65,6 +68,8 @@ def universe_search(**kwargs):
         kwargs["ca_fn"] = CODE
     elif "Lenia" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = Lenia
+    elif "RandomStepCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = RandomStepCA
     else:
         exception_msg = f"should be unreachable, env_fn {kwargs['ca_fn']} "\
                 f" not recognized"
