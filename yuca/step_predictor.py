@@ -161,7 +161,7 @@ class StepPredictor(nn.Module):
                 model_save_path = os.path.join(save_path, "models", f"{self.exp_tag}_model.pt")
 
                 np.save(save_path, progress)
-                torch.save(model_save_path, self.state_dict())
+                torch.save(self.state_dict(), model_save_path)
 
 
     def evaluate(self, test_dataloader):
