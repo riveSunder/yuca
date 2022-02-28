@@ -47,7 +47,11 @@ class Lenia(CA):
     def __init__(self, **kwargs):
         super(Lenia, self).__init__(**kwargs)
 
+        self.reset()
 
+    def reset(self):
+        
+        self.t_count = 0.0
     def update_universe(self, identity, neighborhoods):
 
         growth = self.genesis(neighborhoods)
@@ -55,8 +59,6 @@ class Lenia(CA):
 
         return update 
 
-    def reset(self):
-        pass
 
 if __name__ == "__main__":
 
