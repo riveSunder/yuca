@@ -34,6 +34,8 @@ class Librarian():
 
         pattern_names = [os.path.splitext(elem)[0] for elem in pattern_names]
 
+        pattern_names.sort()
+
         self.index = pattern_names
 
     def store(self, pattern: np.array, pattern_name: str = "my_pattern",\
