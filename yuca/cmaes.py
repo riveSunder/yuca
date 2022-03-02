@@ -217,6 +217,16 @@ class CMAES():
         self.means = elite_mean
         self.covar = covar
 
+        # save best config
+
+
+        this_filepath = os.path.realpath(__file__)
+        temp = os.path.split(os.path.split(this_filepath)[0])[0]
+        ca_config_filepath = os.path.join(temp, f"ca_configs/{self.exp_id}.npy")
+        
+        self.env.ca.set_params(self.elite_params[0])
+        self.env.ca.save_config(ca_config_filepath)
+
     def update_population(self, fitness):
 
         if self.selection_mode == 0:
