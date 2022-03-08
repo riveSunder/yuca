@@ -224,8 +224,11 @@ class CMAES():
         temp = os.path.split(os.path.split(this_filepath)[0])[0]
         ca_config_filepath = os.path.join(temp, f"ca_configs/{self.exp_id}.npy")
         
-        self.env.ca.set_params(self.elite_params[0])
+        if "pattern" not in self.tag:
+            self.env.ca.set_params(self.elite_params[0])
+
         self.env.ca.save_config(ca_config_filepath)
+
 
     def update_population(self, fitness):
 
@@ -452,19 +455,6 @@ class CMAES():
 
                 logs_path = os.path.join("./logs", f"{self.exp_id}_seed{my_seed}.npy")
                 np.save(logs_path, progress)
-
-                if (0):
-                    # saving animations each time is a waste of time
-                    if "pattern" not in self.exp_id:
-                        self.save_gif(tag = f"{self.exp_id}_seed{my_seed}_"
-                                f"immode{self.prediction_mode}_gen_{generation}")
-                    else:
-                        self.population[0].set_params(progress["elite_params"][-1][0])
-                        grid = self.population[0].get_action()
-                        effective_steps = min([self.ca_steps, 512])
-                        save_fig_sequence(grid, self.env.ca, num_steps=effective_steps,\
-                                frames_path=f"./assets/{self.exp_id}",\
-                                tag=f"{self.exp_id}_gen{generation}_{my_seed}")
 
                 if fit_std_dev < 0.0001 and generation > 6:
                     early_msg = f"fitness std. dev. fallen to {fit_std_dev} "\

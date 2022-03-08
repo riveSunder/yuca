@@ -85,6 +85,7 @@ class CA(nn.Module):
         self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
 
         if self.input_filepath is not None:
+
             my_data = np.load(self.input_filepath, allow_pickle=True).reshape(1)[0]
 
             my_params = my_data["elite_params"][-1][0]
@@ -185,6 +186,8 @@ class CA(nn.Module):
             assert False,  "not implemented exception"
         else:
             genesis_config = self.genesis_fn_config
+            half_params = len(self.get_params()) // 2 
+            genesis_config["parameters"] = self.get_params()[:half_params]
 
         #if "parameters" in genesis_config.keys():
 
@@ -196,6 +199,8 @@ class CA(nn.Module):
             assert False,  "not implemented exception"
         else:
             persistence_config = self.persistence_fn_config
+            half_params = len(self.get_params()) // 2 
+            persistence_config["parameters"] = self.get_params()[half_params:]
 
         #if "parameters" in persistence_config.keys():
 
