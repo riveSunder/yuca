@@ -28,9 +28,13 @@ class Librarian():
 
         pattern_names = os.listdir(self.directory)
 
+        remove_list = []
         for elem in pattern_names:
-            if ".py" in elem or ".ipynb" in elem:
-                pattern_names.remove(elem)
+            if ".py" in elem or ".ipynb" in elem or "csv" in elem:
+                remove_list.append(elem)
+                
+        for elem in remove_list:
+            pattern_names.remove(elem)
 
         pattern_names = [os.path.splitext(elem)[0] for elem in pattern_names]
 
