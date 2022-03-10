@@ -71,6 +71,7 @@ class CA(nn.Module):
         self.genesis_fn_config = None
         self.persistence_fn_config = None
 
+            
         if "orbi" in self.tag.lower():
             self.load_config(get_orbium_config(radius=self.kernel_radius))
         elif "len" in self.tag.lower():
@@ -81,6 +82,10 @@ class CA(nn.Module):
             self.default_init3()
         else:
             self.random_init()
+
+        if "ca_config" in kwargs.keys():
+            if kwargs["ca_config"] is not None:
+                self.restore_config(kwargs["ca_config"])
 
         self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
 

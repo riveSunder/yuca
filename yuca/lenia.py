@@ -60,6 +60,34 @@ class Lenia(CA):
         return update 
 
 
+    def get_params(self):
+    
+        params = np.array([])
+
+        params = np.append(params, self.get_genesis_params())
+
+        return params
+
+    def set_params(self, params):
+
+        self.no_grad()
+        param_start = 0
+
+        for ii, genesis_fn in enumerate(self.genesis_fns):
+            for jj, param in genesis_fn.named_parameters():
+
+                if not len(param.shape):
+                    param = param.reshape(1)
+
+                param_stop = param_start + reduce(lambda x,y: x*y, param.shape)
+                param[:] = nn.Parameter( \
+                        torch.tensor( \
+                        params[param_start:param_stop].reshape(param.shape),\
+                        requires_grad = self.use_grad), \
+                        requires_grad = self.use_grad)
+
+                param_start = param_stop
+
 if __name__ == "__main__":
 
 
