@@ -24,9 +24,14 @@ class ParamsAgent():
                 **kwargs)
         self.num_params = self.params.shape[0]
 
-        self.filter_params = query_kwargs("filter_params", True, **kwargs)
+        self.filter_params = True #query_kwargs("filter_params", True, **kwargs)
 
     def get_action(self, obs=None):
+
+        
+        if self.filter_params:
+            # filters for evolving universes with gaussian update functions
+            self.params = np.abs(self.params)
 
         return self.params
 
@@ -41,8 +46,9 @@ class ParamsAgent():
             params = np.abs(params)
 
             # prevents rulesets with 0-neighbor cells becoming activate
-            params[0] = np.clip(params[0], 0.05, 1.0)
-            params[2] = np.clip(params[2], 0.05, 1.0)
+            
+            params = np.clip(params, 0.0001, 1.0)
+            #params[2] = np.clip(params[2], 0.005, 1.0)
 
         self.params = params
 
