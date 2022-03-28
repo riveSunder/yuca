@@ -369,7 +369,7 @@ class CMAES():
 
         t0 = time.time()
 
-        progress = {}
+        orogress = {}
         progress["elite_params"] = []
         progress["elite_configs"] = []
         progress["mean_fitness"] = []
@@ -413,6 +413,7 @@ class CMAES():
                             replicates = self.replicates, \
                             seed = generation * my_seed)
 
+
                     fitness.append(result[0])
                     proportion_alive.append(result[1])
 
@@ -430,7 +431,13 @@ class CMAES():
 
                 elite_configs = self.get_elite_configs()
 
-                progress["elite_params"].append(self.elite_params)
+                if "pattern" not in self.exp_id:
+                    progress["elite_params"].append(self.elite_params)
+                    progress["distribution"].append([1.0 * self.means, 1.0 * self.covar])
+                else:
+                    progress["elite_params"] = [self.elite_params]
+                    progress["distribution"] = [[1.0 * self.means, 1.0 * self.covar]]
+
                 progress["elite_configs"].append(elite_configs)
 
                 progress["mean_fitness"].append(fit_mean)
@@ -438,7 +445,8 @@ class CMAES():
                 progress["max_fitness"].append(fit_max)
                 progress["std_dev_fitness"].append(fit_std_dev)
 
-                progress["distribution"].append([1.0 * self.means, 1.0 * self.covar])
+                logs_path = os.path.join("./logs", f"{self.exp_id}_seed{my_seed}.npy")
+                np.save(logs_path, progress)
 
                 t2 = time.time()
                 timing_msg = f"elapsed time: {t2-t0:.4f}, generation {t2-t1:.4f}"
@@ -453,8 +461,6 @@ class CMAES():
                 print(progress_msg)
                 print(proportion_msg)
 
-                logs_path = os.path.join("./logs", f"{self.exp_id}_seed{my_seed}.npy")
-                np.save(logs_path, progress)
 
                 if fit_std_dev < 0.0001 and generation > 6:
                     early_msg = f"fitness std. dev. fallen to {fit_std_dev} "\
