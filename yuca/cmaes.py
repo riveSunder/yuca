@@ -369,7 +369,7 @@ class CMAES():
 
         t0 = time.time()
 
-        orogress = {}
+        progress = {}
         progress["elite_params"] = []
         progress["elite_configs"] = []
         progress["mean_fitness"] = []
