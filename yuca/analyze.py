@@ -78,6 +78,53 @@ class Phanes():
 
         return autocorrelation.detach().cpu().numpy()
 
+    def get_grid_entropy(self, grid):
+        """
+        $
+        H = -\sum{ p log_2(p)}
+        $
+        """
+        
+        eps = 1e-9
+        # convert grid to uint8
+        
+        stretched_grid = (grid - np.min(grid)) / np.max(grid - np.min(grid))
+        
+        uint8_grid = np.uint8(255*stretched_grid)
+        
+        p = np.zeros(256)
+        
+        for ii in range(p.shape[0]):
+            p[ii] = np.sum(uint8_grid == ii)
+            
+        # normalize p
+        p = p / p.sum()
+        
+        h = - np.sum( p * np.log2( eps+p))
+        
+        return h
+
+    def get_spatial_entropy(self, grid, window_size=63):
+        
+        # grid 
+        
+        half_window = (window_size - 1) // 2
+        dim_grid = grid.shape
+        
+        padded_grid = np.pad(grid, pad_width=(half_window), mode="wrap")
+        
+        spatial_h = np.zeros_like(grid)
+        
+        print(dim_grid, grid.shape)
+        for xx in range(dim_grid[0]): #half_window, half_window + dim_grid[0]):
+            for yy in range(dim_grid[1]): #half_window, half_window + dim_grid[1]):
+                
+                spatial_h[xx, yy] = self.get_grid_entropy(\
+                        padded_grid[xx:xx + 2*half_window +1, \
+                        yy:yy + 2*half_window + 1])
+                
+        return spatial_h
+                
     def analyze_universe(self):
         
         steps = []
