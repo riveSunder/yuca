@@ -25,7 +25,7 @@ class Phanes():
         self.ca_steps = query_kwargs("ca_steps", 2048, **kwargs)
         self.batch_size = query_kwargs("batch_size", 128, **kwargs)
 
-        self.dim = query_kwargs("dim", 128, **kwargs)
+        self.dim = query_kwargs("dim", 64, **kwargs)
         self.my_device = query_kwargs("device", "cpu", **kwargs)
         self.use_cppn = query_kwargs("use_cppn", False, **kwargs)
 
@@ -107,21 +107,47 @@ class Phanes():
     def get_spatial_entropy(self, grid, window_size=63):
         
         # grid 
+
+        if type(grid) == torch.Tensor:
+            grid = grid.detach().cpu().numpy()
         
         half_window = (window_size - 1) // 2
-        dim_grid = grid.shape
+
+        if len(grid.shape) == 2:
+            dim_grid = grid.shape
+            
+            padded_grid = np.pad(grid, pad_width=(half_window), mode="wrap")
+            
+            spatial_h = np.zeros_like(grid)
+            
+            for xx in range(dim_grid[0]): #half_window, half_window + dim_grid[0]):
+                for yy in range(dim_grid[1]): #half_window, half_window + dim_grid[1]):
+                    
+                    spatial_h[xx, yy] = self.get_grid_entropy(\
+                            padded_grid[xx:xx + 2*half_window +1, \
+                            yy:yy + 2*half_window + 1])
+
+        elif len(grid.shape) == 4:
         
-        padded_grid = np.pad(grid, pad_width=(half_window), mode="wrap")
-        
-        spatial_h = np.zeros_like(grid)
-        
-        print(dim_grid, grid.shape)
-        for xx in range(dim_grid[0]): #half_window, half_window + dim_grid[0]):
-            for yy in range(dim_grid[1]): #half_window, half_window + dim_grid[1]):
-                
-                spatial_h[xx, yy] = self.get_grid_entropy(\
-                        padded_grid[xx:xx + 2*half_window +1, \
-                        yy:yy + 2*half_window + 1])
+            number_samples = grid.shape[0]
+            number_channels = grid.shape[1]
+
+            dim_grid = grid.shape[2], grid.shape[3]
+
+            spatial_h = np.zeros((number_samples, number_channels, \
+                    dim_grid[0], dim_grid[1]))
+
+            for sample_index in range(number_samples):
+                for channel in range(number_channels):
+
+                    for xx in range(dim_grid[0]): 
+                        for yy in range(dim_grid[1]): 
+
+                            padded_grid = np.pad(grid[sample_index, channel,:,:],\
+                                    pad_width=(half_window), mode="wrap")
+                            spatial_h[sample_index, channel, xx, yy] = self.get_grid_entropy(\
+                                    padded_grid[xx:xx + 2*half_window +1, \
+                                    yy:yy + 2*half_window + 1])
                 
         return spatial_h
                 
@@ -131,6 +157,14 @@ class Phanes():
         autocorrelation = []
         mortality_ratio = []
         fertility_ratio = []
+        entropy_mean = []
+        entropy_std_dev = []
+
+        # size of the moving window for calculating entropy
+        window_size = self.ca.kernel_radius * 2 + 1 
+
+        # keeping track of grads can slow things down substantially
+        self.ca.no_grad()
 
         # keep track of how long before patterns vanish
         last_step = - torch.ones(self.batch_size)
@@ -167,10 +201,10 @@ class Phanes():
         log_every = max([self.ca_steps // 8, 1])
         old_grid = 1.0 * grid
 
+        print(grid.shape)
         for step in range(self.ca_steps):
             
             grid = self.ca(grid)
-
 
             active_grids = 1.0 * \
                     (grid.mean(dim=(2,3)).mean(dim=-1) > 0.00)
@@ -189,7 +223,16 @@ class Phanes():
             mortality_ratio.append(1.0 - active_grids.mean().cpu().item()) #.numpy())
             # rules are fertile when a pattern escapes a bounding box
             fertility_ratio.append(fertile_grids.mean().cpu().item()) #.numpy())
+
+            # spatial entropy calculates entropy ($\sum( p log_2 (p) $) with 
+            # a moving window the same size as ca neighborhood kernel
+            entropy = self.get_spatial_entropy(grid, window_size = window_size)
+            entropy_mean.append(np.mean(entropy))
+            entropy_std_dev.append(np.std(entropy))
+
             steps.append(step)
+
+
             if grid.mean() == 0.0:
                 break
 
@@ -201,6 +244,8 @@ class Phanes():
         results["mortality_ratio"] = mortality_ratio
         results["last_step"] = last_step.cpu().numpy()
         results["autocorrelation"] = autocorrelation
+        results["entropy_mean"] = entropy_mean 
+        results["entropy_std_dev"] = entropy_std_dev
 
         return results
 
@@ -218,7 +263,9 @@ class Phanes():
 
                 ca_config = np.load(load_path, allow_pickle=True).reshape(1)[0]
                 self.ca.load_config(ca_config)
-                self.ca.no_grad()
+                
+                # redundant (call no_grad in analyze_universe)
+                #self.ca.no_grad()
 
                 t0 = time.time()
                 results = self.analyze_universe()
