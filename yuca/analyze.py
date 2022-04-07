@@ -88,7 +88,7 @@ class Phanes():
         eps = 1e-9
         # convert grid to uint8
         
-        stretched_grid = (grid - np.min(grid)) / np.max(grid - np.min(grid))
+        stretched_grid = (grid - np.min(grid)) / (np.max(grid - np.min(grid))+eps)
         
         uint8_grid = np.uint8(255*stretched_grid)
         
