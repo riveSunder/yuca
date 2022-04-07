@@ -178,7 +178,7 @@ class CMAES():
         # reduce the impact of lucky/unlucky predictor initializations
         return np.mean(fitness_replicates), proportion_alive
 
-    def rank_population(self, fitness):
+    def rank_population(self, fitness, seed=0):
         """
         for the final generation, fitness scores are ranked deterministically
         """
@@ -222,7 +222,7 @@ class CMAES():
 
         this_filepath = os.path.realpath(__file__)
         temp = os.path.split(os.path.split(this_filepath)[0])[0]
-        ca_config_filepath = os.path.join(temp, f"ca_configs/{self.exp_id}.npy")
+        ca_config_filepath = os.path.join(temp, f"ca_configs/{self.exp_id}_seed{seed}.npy")
         
         if "pattern" not in self.tag:
             self.env.ca.set_params(self.elite_params[0])
@@ -419,7 +419,7 @@ class CMAES():
 
                 
                 if generation == self.generations - 1:
-                    self.rank_population(fitness)
+                    self.rank_population(fitness, seed=my_seed)
                 else:
                     self.update_population(fitness)
 
@@ -463,6 +463,7 @@ class CMAES():
 
 
                 if fit_std_dev < 0.0001 and generation > 6:
+                    self.rank_population(fitness, seed = my_seed)
                     early_msg = f"fitness std. dev. fallen to {fit_std_dev} "\
                             f"ending evolution early."
                     print(early_msg)
