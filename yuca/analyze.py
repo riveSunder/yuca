@@ -284,6 +284,14 @@ class Phanes():
                 progress_msg += f"{np.mean(results['autocorrelation'])}/"
                 progress_msg += f"{results['autocorrelation'][-1][0]}\n"
 
+                progress_msg += f"   avg./final spatial entropy mean: "
+                progress_msg += f"{np.mean(results['entropy_mean'])}/"
+                progress_msg += f"{results['entropy_mean'][-1][0]}\n"
+
+                progress_msg += f"   avg./final spatial entropy std. dev.: "
+                progress_msg += f"{np.mean(results['entropy_std_dev'])}/"
+                progress_msg += f"{results['entropy_std_dev'][-1][0]}\n"
+
                 print(progress_msg)
 
                 save_directory = os.path.split(os.path.split(my_directory)[0])[0]
