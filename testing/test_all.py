@@ -11,6 +11,4 @@ if __name__ == "__main__":
     if not (torch.cuda.is_available()):
         msg = "\n   cuda not detected, tests will run on cpu only \n" 
         print(msg)
-    unittest.main(verbosity=1)
-
-    
+    unittest.main(verbosity=2)

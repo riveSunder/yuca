@@ -362,7 +362,6 @@ class CA(nn.Module):
         self.initialize_weight_layer()
 
         if self.ca_mode == "functional" or self.ca_mode == "neurofunctional":
-            print(self.ca_mode)
             for pp in range(self.internal_channels):
                 
                 if (pp > 8):
