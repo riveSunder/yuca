@@ -339,6 +339,9 @@ class CA(nn.Module):
             else:
                 mu = np.random.rand() 
                 sigma = np.random.rand() 
+
+                mu = np.clip(mu, 0.05, 0.95)
+                sigma = np.clip(sigma, 0.0005, 0.1)
                 
                 #get_gaussian_kernel(radius=13, mu=0.5, sigma=0.15, r_scale=1.0):
                 if mm < (3 * self.internal_channels) // 4:
@@ -359,7 +362,6 @@ class CA(nn.Module):
         self.initialize_weight_layer()
 
         if self.ca_mode == "functional" or self.ca_mode == "neurofunctional":
-            print(self.ca_mode)
             for pp in range(self.internal_channels):
                 
                 if (pp > 8):

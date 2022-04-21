@@ -118,7 +118,7 @@ if __name__ == "__main__":
             help="set default dtype in torch")
 
     parser.add_argument("-e", "--selection_mode", type=int, default=0, \
-            help="selection mode: 0: truncatio, 1: rand. tourney, 2: proportional")
+            help="selection mode: 0: truncation, 1: rand. tourney, 2: proportional")
 
     parser.add_argument("-f", "--env_fn", type=str, default="HaltingWrapper")
     parser.add_argument("-g", "--generations", type=int, default=32, \
@@ -136,11 +136,12 @@ if __name__ == "__main__":
             default=128, help="grid x,y dimension (square edge length)")
 
     parser.add_argument("-p", "--population_size", type=int, default=32, \
-            help="number of parameters in population")
+            help="number of individuals in population")
     parser.add_argument("-r", "--prediction_mode", type=int, default=0, \
             help="prediction mode: 0-vanishing, 1-static end, 2-both")
 
-    parser.add_argument("-s", "--seed", type=int, nargs="+", default=13)
+    parser.add_argument("-s", "--seed", type=int, nargs="+", default=13,\
+            help="seeds to initialized PRNGs, can enter more than one")
     parser.add_argument("-t", "--tag", type=str, \
             default="pattern_search", \
             help="string tag for identifying experiments")
