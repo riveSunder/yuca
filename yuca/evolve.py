@@ -136,7 +136,7 @@ if __name__ == "__main__":
             default=128, help="grid x,y dimension (square edge length)")
 
     parser.add_argument("-p", "--population_size", type=int, default=32, \
-            help="number of inidividuals in population")
+            help="number of individuals in population")
     parser.add_argument("-r", "--prediction_mode", type=int, default=0, \
             help="prediction mode: 0-vanishing, 1-static end, 2-both")
 
