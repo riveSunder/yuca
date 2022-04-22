@@ -6,8 +6,8 @@
 
 ## A continuous cellular automata research library
 
-#### [Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis](https://rivesunder.github.io/yuca/docs/evo_abio) (Under construction)
+#### [Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis](https://rivesunder.github.io/yuca/evo_abio) (Under construction)
 
-#### [---Under Blind Review---](https://rivesunder.github.io/yuca/docs/step_size) (Under construction)
+#### [---Under Blind Review---](https://rivesunder.github.io/yuca/step_size) (Under construction)
 
-#### [---Under Blind Review---](https://rivesunder.github.io/yuca/docs/glaberish) (Under construction)
+#### [---Under Blind Review---](https://rivesunder.github.io/yuca/glaberish) (Under construction)
