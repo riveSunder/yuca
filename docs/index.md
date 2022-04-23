@@ -1,4 +1,3 @@
-# Your Universal Cellular Automata
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/s11_slow_glider_vagopteron_glider.gif">
