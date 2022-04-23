@@ -8,6 +8,10 @@
 
 #### [Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis](https://rivesunder.github.io/yuca/evo_abio) (Under construction)
 
+
+<br><br>
 #### [---Under Blind Review---](https://rivesunder.github.io/yuca/step_size) (Under construction)
 
+
+<br><br>
 #### [---Under Blind Review---](https://rivesunder.github.io/yuca/glaberish) (Under construction)
