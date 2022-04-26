@@ -8,7 +8,9 @@
 
 <blockquote>
 If you wish to make an apple pie from scratch, you must first invent the universe. ---Carl Sagan _Cosmos_ 1980 
-</blockquote> [^Sa1980]
+</blockquote> 
+
+[^Sa1980]
 
 In one of many famous quotes from Carl Sagan, when he spoke of inventing a universe in order to make an apple pie he was principally talking about the construction of heavier elements from hydrogen, a process that takes place in the fusion cores of stars. Without a universe that supports stellar lives like our own, their would be no stars, and without stars we shouldn't expect the ingredients of a typical pie recipe to exist. But another requisite for making apple pies is a universe that can support the bakers.
 
@@ -30,7 +32,7 @@ While some of the glider patterns evolved in Lenia CA were apparently not previo
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_pages/assets/zoo/lenia_zoo/discutium_valvatus_glider_00.gif">
 </p>
 
-_Orbium bicaudatus_ is a Lenia rule set with $\mu = 0.15$ and $\sigma = 0.014$. It uses the _Orbium_ neighborhood kernel with $\mu_k = 0.5$ and $\sigma_k = 0.15$. 
+_Orbium bicaudatus_ is a Lenia rule set with $$\mu = 0.15$$ and $$\sigma = 0.014$$. It uses the _Orbium_ neighborhood kernel with $$\mu_k = 0.5$$ and $$\sigma_k = 0.15$$. 
  
 ## Putatively new gliders in Lenia CA
 
@@ -39,21 +41,21 @@ _Orbium bicaudatus_ is a Lenia rule set with $\mu = 0.15$ and $\sigma = 0.014$. 
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_pages/assets/zoo/lenia_zoo/discutium_solidus_glider_00.gif">
 </p>
 
-_Discutium solidus_ is a Lenia rule set with $\mu = 0.356$ and $\sigma = 0.063$. 
+_Discutium solidus_ is a Lenia rule set with $$\mu = 0.356$$ and $$\sigma = 0.063$$. 
 
 ### _Discutium valvatus_ 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_pages/assets/zoo/lenia_zoo/discutium_valvatus_glider_00.gif">
 </p>
 
-_Discutium valvatus_ is a Lenia rule set with $\mu = 0.337$ and $\sigma = 0.0595$. 
+_Discutium valvatus_ is a Lenia rule set with $$\mu = 0.337$$ and $$\sigma = 0.0595$$. 
 
 ### _Hydrogemium natans 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_pages/assets/zoo/lenia_zoo/hydrogeminium_natans_glider_00.gif">
 </p>
 
-_Hydrogeminium natans_ is a Lenia rule set with an update rule defined by $\mu = 0.26$ and $\sigma = 0.036$ and a neighborhood with three rings centered at $\mu_{k_n} = (0.0938, 0.2814, 0.4690)$, with $\sigma_{k_n} = (0.033, 0.033, 0.033)$ and weighted by $(0.5, 1.0, 0.667)$. The glider shown here has the same behavior (but different cell values) than fast/wobbly gliders found in s613 and s643 evolved CA, which share the _Hydrogeminium_ neighborhood kernel. 
+_Hydrogeminium natans_ is a Lenia rule set with an update rule defined by $$\mu = 0.26$$ and $$\sigma = 0.036$$ and a neighborhood with three rings centered at $$\mu_{k_n} = (0.0938, 0.2814, 0.4690)$$, with $$\sigma_{k_n} = (0.033, 0.033, 0.033)$$ and weighted by $$(0.5, 1.0, 0.667)$$. The glider shown here has the same behavior (but different cell values) than fast/wobbly gliders found in s613 and s643 evolved CA, which share the _Hydrogeminium_ neighborhood kernel. 
 
 
 [^Ca1974]: Carter, Brandon. "Large number coincidences and the anthropic principle in cosmology." Confrontation of cosmological theories with observational data. Springer, Dordrecht, 1974. 291-298.
