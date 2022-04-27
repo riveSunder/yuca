@@ -43,7 +43,7 @@ While some of the glider patterns evolved in Lenia CA were apparently not previo
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_pages/assets/zoo/lenia_zoo/discutium_valvatus_glider_00.gif">
 </p>
 
-_Orbium bicaudatus_ is a Lenia rule set with $$\mu = 0.15$$ and $$\sigma = 0.014$$. It uses the _Orbium_ neighborhood kernel with $$\mu_k = 0.5$$ and $$\sigma_k = 0.15$$. 
+_Orbium bicaudatus_ is a Lenia rule set with <img src="https://render.githubusercontent.com/render/math?math=\mu = 0.15"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma = 0.014">. It uses the _Orbium_ neighborhood kernel with <img src="https://render.githubusercontent.com/render/math?math=\mu_k = 0.5"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma_k = 0.15">. 
  
 
 ### _Hydrogemium natans_ 
@@ -60,21 +60,22 @@ _Hydrogeminium natans_ is a Lenia rule set with an update rule defined by $$\mu 
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_pages/assets/zoo/lenia_zoo/discutium_solidus_glider_00.gif">
 </p>
 
-_Discutium solidus_ is a Lenia rule set based on the _Orbium_ neighborhood kernel witha Gaussian update rule defined by $$\mu = 0.356$$ and $$\sigma = 0.063$$. 
+_Discutium solidus_ is a Lenia rule set with <img src="https://render.githubusercontent.com/render/math?math=\mu = 0.356"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma = 0.063">. 
 
 ### _Discutium valvatus_ 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_pages/assets/zoo/lenia_zoo/discutium_valvatus_glider_00.gif">
 </p>
 
-_Discutium valvatus_ is a Lenia rule set based on the _Orbium_ neighborhood kernel witha Gaussian update rule defined by with $$\mu = 0.337$$ and $$\sigma = 0.0595$$. 
+_Discutium valvatus_ is a Lenia rule set with <img src="https://render.githubusercontent.com/render/math?math=\mu = 0.337"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma = 0.0595">. 
 
 ### _Hydrogemium natans 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_pages/assets/zoo/lenia_zoo/hydrogeminium_natans_glider_00.gif">
 </p>
 
-The glider shown here has the same behavior (but different cell values) than fast/wobbly gliders found in s613 and s643 evolved CA, which share the _Hydrogeminium_ neighborhood kernel. 
+_Hydrogeminium natans_ is a Lenia rule set with an update rule defined by <img src="https://render.githubusercontent.com/render/math?math=\mu = 0.26"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma = 0.036"> and a neighborhood with three rings centered at <img src="https://render.githubusercontent.com/render/math?math=\mu_{k_n} = (0.0938, 0.2814, 0.4690)">, with <img src="https://render.githubusercontent.com/render/math?math=\sigma_{k_n} = (0.033, 0.033, 0.033)"> and weighted by <img src="https://render.githubusercontent.com/render/math?math=(0.5, 1.0, 0.667)">. The glider shown here has the same behavior (but different cell values) than fast/wobbly gliders found in s613 and s643 evolved CA, which share the _Hydrogeminium_ neighborhood kernel. 
+
 
 [^note1]: Consider the gap in diversity of domestic versus wild life. 
 [^note2]: See for example [conwaylife.com forums](https://conwaylife.com/forums/viewtopic.php?f=11&t=2597) or the built-in demos in CA simulation software [Golly](https://conwaylife.com/wiki/Golly) [^Golly2016].
