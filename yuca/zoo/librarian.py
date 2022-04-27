@@ -30,7 +30,10 @@ class Librarian():
 
         remove_list = []
         for elem in pattern_names:
-            if ".py" in elem or ".ipynb" in elem or "csv" in elem:
+            if ".py" in elem \
+                    or ".ipynb" in elem \
+                    or "csv" in elem \
+                    or "pycache" in elem:
                 remove_list.append(elem)
                 
         for elem in remove_list:
