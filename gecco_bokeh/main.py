@@ -1,4 +1,7 @@
 import os
+import time
+
+import matplotlib.pyplot as plt
 
 import numpy as np
 import torch
@@ -21,19 +24,37 @@ from bokeh.models import ColumnDataSource
 from bokeh.events import DoubleTap, Tap
 
 
+
+global grid
+global my_period
+global my_step
+
+my_step = 0
+my_period = 512
+grid = torch.zeros(1,1,193,193)
+
+
 # instantiate librarian (zoo manager) and ca (simulator)
 lib = Librarian()
 ca = CA() 
+ca.no_grad()
 
 pattern_index = lib.index
-grid, rule_string = lib.load("frog001")
-reward_sum = 0.0
+pattern, rule_string = lib.load("frog001")
+
+place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3
+place_w = (grid.shape[-1] - pattern.shape[-1]) // 2 - 3
+
+grid[:,:, place_h:place_h+pattern.shape[-2], place_w:place_w+pattern.shape[-1]] = \
+        torch.tensor(pattern[:,:,:,:])
+
+ca.restore_config(rule_string)
 
 p = figure(plot_width=3*256, plot_height=3*256, title="CA Universe")
 
 #p_plot = figure(plot_width=int(1.25*256), plot_height=int(1.25*256), title="'Reward'")
     
-source = ColumnDataSource(data=dict(my_image=[obs.squeeze().cpu().numpy()]))
+source = ColumnDataSource(data=dict(my_image=[grid.squeeze().cpu().numpy()]))
 #source_plot = ColumnDataSource(data=dict(x=np.arange(1), y=np.arange(1)*0))
 
 img = p.image(image='my_image',x=0, y=0, dw=256, dh=256, palette="Magma256", source=source)
@@ -45,32 +66,33 @@ button_faster = Button(sizing_mode="stretch_width",label="Faster >>")
 
 button_reset_prev_pattern = Button(sizing_mode="stretch_width",label="Previous pattern")
 
-button_reset_prev_pattern = Button(sizing_mode="stretch_width",label="Reset current pattern")
+button_reset_this_pattern = Button(sizing_mode="stretch_width",label="Reset current pattern")
 
-button_reset_prev_pattern = Button(sizing_mode="stretch_width",label="Next pattern")
+button_reset_next_pattern = Button(sizing_mode="stretch_width",label="Next pattern")
 
 message = Paragraph()
 
 def update():
         global grid
         global my_step
+        global ca
         #global rewards
         global pattern_index
         
+        ca.no_grad()
         grid = ca(grid)
         
-        my_img = grid.cpu().numpy()
+        my_img = grid.squeeze().cpu().numpy()
         new_data = dict(my_image=[my_img])
         
-
         #new_line = dict(x=np.arange(my_step+2), y=rewards)
         #new_line = dict(x=[my_step], y=[r.cpu().numpy().item()])
 
-        source.stream(new_data, rollover=1)
+        source.stream(new_data, rollover=0)
         #source_plot.stream(new_line, rollover=2000)
 
         my_step += 1
-        message.text = f"Message!"
+        message.text = f"Message! step {my_step}, period: {my_period} ms"
     
 def go():
    
@@ -84,34 +106,43 @@ def go():
 
 def faster():
     global my_period
-    my_period = max([my_period / 2, 1])
+    my_period = max([my_period / 2, 128])
     go()
+    time.sleep(my_period*0.001)
     go()
     
 def slower():
     global my_period
     my_period = min([my_period * 2, 8192])
     go()
+    time.sleep(my_period*0.001)
     go()
 
 def reset_this_pattern():
 
     global grid
     global lib
+    global ca
 
     my_step = 0
     
-    grid = torch.zeros(1, 1, 257, 257) 
+    grid = torch.zeros(1, 1, 193, 193) 
 
-    temp_pattern_name = lib.index.pop(len(lib.index))
+    temp_pattern_name = lib.index.pop(-1)
 
     pattern, rule_string = lib.load(temp_pattern_name)
-
     lib.index.append(temp_pattern_name)
+
+    ca.restore_config(rule_string)
+    place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3
+    place_w = (grid.shape[-1] - pattern.shape[-1]) // 2 - 3
+
+    grid[:,:, place_h:place_h+pattern.shape[-2], \
+            place_w:place_w+pattern.shape[-1]] = torch.tensor(pattern[:,:,:,:])
 
     new_data = dict(my_image=[(grid.squeeze()).cpu().numpy()])
     
-    source.stream(new_data, rollover=1)
+    source.stream(new_data, rollover=0)
     #source_plot.stream(new_line, rollover=2000)
 
  
@@ -119,20 +150,28 @@ def reset_next_pattern():
     
     global grid
     global lib
+    global ca
 
     my_step = 0
     
-    grid = torch.zeros(1, 1, 257, 257) 
+    grid = torch.zeros(1, 1, 193, 193) 
 
     temp_pattern_name = lib.index.pop(0)
 
     pattern, rule_string = lib.load(temp_pattern_name)
 
+    ca.restore_config(rule_string)
+    place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3
+    place_w = (grid.shape[-1] - pattern.shape[-1]) // 2 - 3
+
+    grid[:,:, place_h:place_h+pattern.shape[-2], \
+            place_w:place_w+pattern.shape[-1]] = torch.tensor(pattern[:,:,:,:])
+
     lib.index.append(temp_pattern_name)
             
     new_data = dict(my_image=[(grid.squeeze()).cpu().numpy()])
     
-    source.stream(new_data, rollover=1)
+    source.stream(new_data, rollover=o)
     #source_plot.stream(new_line, rollover=2000)
     message.text = f"reset next"
         
@@ -140,22 +179,30 @@ def reset_prev_pattern():
    
     global grid
     global lib
+    global ca
 
     my_step = 0
     
-    grid = torch.zeros(1, 1, 257, 257) 
+    grid = torch.zeros(1, 1, 193, 193) 
 
-    temp_pattern_name = lib.index.pop(len(lib.index))
+    temp_pattern_name = lib.index.pop(-1)
     lib.index.insert(0, temp_pattern_name)
-    temp_pattern_name = lib.index.pop(len(lib.index))
+    temp_pattern_name = lib.index.pop(-1)
 
     pattern, rule_string = lib.load(temp_pattern_name)
+
+    ca.restore_config(rule_string)
+    place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3
+    place_w = (grid.shape[-1] - pattern.shape[-1]) // 2 - 3
+
+    grid[:,:, place_h:place_h+pattern.shape[-2], \
+            place_w:place_w+pattern.shape[-1]] = torch.tensor(pattern[:,:,:,:])
 
     lib.index.append(temp_pattern_name)
             
     new_data = dict(my_image=[(grid.squeeze()).cpu().numpy()])
     
-    source.stream(new_data, rollover=1)
+    source.stream(new_data, rollover=o)
     #source_plot.stream(new_line, rollover=2000)
     message.text = f"reset prev"
 
