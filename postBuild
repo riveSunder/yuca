@@ -1,0 +1,20 @@
+#!/bin/bash
+
+pip install -e .
+cd gecco_bokeh
+
+git clone -b gecco_pages https://github.com/riveSunder/yuca.git
+
+cd yuca
+pip install -e .
+cd ../
+
+python -c "from yuca.multiverse import CA; ca = CA(); print('Looks OK')"
+cd ../
+
+# enable jupyter_server_proxy
+jupyter serverextension enable --sys-prefix jupyter_server_proxy
+# install the bokeh server extension so that bokeh launches at startup
+mv bokehserverextension.py ${NB_PYTHON_PREFIX}/lib/python*/site-packages/
+# enable bokeh extension
+jupyter serverextension enable --sys-prefix bokehserverextension
