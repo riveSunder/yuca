@@ -4,7 +4,7 @@
 <img src="assets/frog_race.gif">
 </p>
 
-[https://mybinder.org/v2/gh/riveSunder/yuca/master?urlpath=/proxy/5006/gecco_bokeh](https://mybinder.org/v2/gh/riveSunder/yuca/master?urlpath=/proxy/5006/gecco_bokeh)
+[https://mybinder.org/v2/gh/riveSunder/yuca/gecco_pages?urlpath=/proxy/5006/gecco_bokeh](https://mybinder.org/v2/gh/riveSunder/yuca/gecco_pages?urlpath=/proxy/5006/gecco_bokeh)
 
 # Quick Start
 

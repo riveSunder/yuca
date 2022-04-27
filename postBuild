@@ -1,16 +1,8 @@
 #!/bin/bash
 
 pip install -e .
-cd gecco_bokeh
-
-git clone -b gecco_pages https://github.com/riveSunder/yuca.git
-
-cd yuca
-pip install -e .
-cd ../
 
 python -c "from yuca.multiverse import CA; ca = CA(); print('Looks OK')"
-cd ../
 
 # enable jupyter_server_proxy
 jupyter serverextension enable --sys-prefix jupyter_server_proxy
