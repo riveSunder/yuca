@@ -31,7 +31,7 @@ global my_step
 
 my_step = 0
 my_period = 512
-grid = torch.zeros(1,1,193,193)
+grid = torch.zeros(1,1,96, 96)
 
 
 # instantiate librarian (zoo manager) and ca (simulator)
@@ -50,7 +50,7 @@ grid[:,:, place_h:place_h+pattern.shape[-2], place_w:place_w+pattern.shape[-1]] 
 
 ca.restore_config(rule_string)
 
-p = figure(plot_width=3*256, plot_height=3*256, title="CA Universe")
+p = figure(plot_width=256, plot_height=256, title="CA Universe")
 
 #p_plot = figure(plot_width=int(1.25*256), plot_height=int(1.25*256), title="'Reward'")
     
@@ -126,7 +126,7 @@ def reset_this_pattern():
 
     my_step = 0
     
-    grid = torch.zeros(1, 1, 193, 193) 
+    grid = torch.zeros(1, 1, 96, 96) 
 
     temp_pattern_name = lib.index.pop(-1)
 
@@ -154,7 +154,7 @@ def reset_next_pattern():
 
     my_step = 0
     
-    grid = torch.zeros(1, 1, 193, 193) 
+    grid = torch.zeros(1, 1, 96, 96) 
 
     temp_pattern_name = lib.index.pop(0)
 
@@ -183,7 +183,7 @@ def reset_prev_pattern():
 
     my_step = 0
     
-    grid = torch.zeros(1, 1, 193, 193) 
+    grid = torch.zeros(1, 1, 96, 96) 
 
     temp_pattern_name = lib.index.pop(-1)
     lib.index.insert(0, temp_pattern_name)
