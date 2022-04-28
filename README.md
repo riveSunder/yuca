@@ -4,6 +4,8 @@
 <img src="assets/frog_race.gif">
 </p>
 
+[https://mybinder.org/v2/gh/riveSunder/yuca/gecco_2022_pages?urlpath=/proxy/5006/bokeh-app](https://mybinder.org/v2/gh/riveSunder/yuca/gecco_2022_pages?urlpath=/proxy/5006/bokeh-app)
+
 # Quick Start
 
 ## Installation
