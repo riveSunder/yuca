@@ -7,7 +7,7 @@ setup(\
         version = "0.0", \
         description = "Your Universal Cellular Automata", \
         install_requires=[\
-                        "bokeh==2.3.1",\
+                        "bokeh==2.4.1",\
                         "jupyter==1.0.0",\
                         "notebook==6.3.0",\
                         "numpy==1.18.4",\
