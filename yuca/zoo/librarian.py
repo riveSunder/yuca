@@ -33,7 +33,7 @@ class Librarian():
             if ".py" in elem \
                     or ".ipynb" in elem \
                     or "csv" in elem \
-                    or "pycache" in elem:
+                    or "__pycache__" in elem:
                 remove_list.append(elem)
                 
         for elem in remove_list:
@@ -46,7 +46,8 @@ class Librarian():
         self.index = pattern_names
 
     def store(self, pattern: np.array, pattern_name: str = "my_pattern",\
-            config_name: str = "unspecified"):
+            config_name: str = "unspecified", entry_point="not specified",\
+            commit_hash="not_specified"):
 
         counter = 0
         file_path = os.path.join(self.directory, f"{pattern_name}{counter:03}.npy")
@@ -69,6 +70,8 @@ class Librarian():
 
         with open(meta_path, "w") as f:
             f.write(f"ca_config,{config_name}")
+            f.write(f"\ncommit_hash,{commit_hash}")
+            f.write(f"\nentry_point,{entry_point}")
 
         np.save(file_path, pattern) 
 
@@ -95,12 +98,15 @@ class Librarian():
 
             ca_config = metadata[0].split(",")[1]
 
+            entry_point = metadata[1].split(",")[1]
+            commit_hash = metadata[2].split(",")[1]
+
         if self.verbose:
             print(f"pattern {pattern_name} loaded from {file_path}")
             print(f"pattern {pattern_name} metadata loaded from {meta_path}")
 
 
-        return pattern, ca_config
+        return pattern, ca_config, entry_point, commit_hash
 
 
     def crop(self, pattern: np.array, row: tuple, column: tuple) -> np.array:
