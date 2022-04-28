@@ -1,12 +1,16 @@
 #!/bin/bash
 
 pip install -e .
+cd bokeh-app
 
-python -c "from yuca.multiverse import CA; ca = CA(); print('Looks OK')"
+git clone https://github.com/riveSunder/carle.git
 
-ls
+cd carle
+pip install -e .
+cd ../
 
-python -c "import os; os.system('ls'); print('figure out where you are')"
+python -c "from carle.env import CARLE; env = CARLE(); print('Looks OK')"
+cd ../
 
 # enable jupyter_server_proxy
 jupyter serverextension enable --sys-prefix jupyter_server_proxy
