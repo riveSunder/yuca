@@ -1,16 +1,6 @@
 #!/bin/bash
 
 pip install -e .
-cd bokeh-app
-
-git clone https://github.com/riveSunder/carle.git
-
-cd carle
-pip install -e .
-cd ../
-
-python -c "from carle.env import CARLE; env = CARLE(); print('Looks OK')"
-cd ../
 
 # enable jupyter_server_proxy
 jupyter serverextension enable --sys-prefix jupyter_server_proxy
