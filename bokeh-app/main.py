@@ -50,7 +50,7 @@ grid[:,:, place_h:place_h+pattern.shape[-2], place_w:place_w+pattern.shape[-1]] 
 
 ca.restore_config(rule_string)
 
-p = figure(plot_width=256, plot_height=256, title="CA Universe")
+p = figure(plot_width=768, plot_height=768, title="CA Universe")
 
 #p_plot = figure(plot_width=int(1.25*256), plot_height=int(1.25*256), title="'Reward'")
     
