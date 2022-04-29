@@ -1,0 +1,4 @@
+ca_config,o_bicaudatus.npy
+commit_hash,1eb25be2331d77bc1d7f339eb4057ab5c5901416
+
+entry_point,python yuca/evolve.py -b 1 -c 512 -cc ca_configs/lenia/o_bicaudatus.npy -d cuda:1 -dt 32 -e 0 -g 10 -l 1 -m 257 -p 512 -s 1 3 5 -t gecco_demo_o_bicaudatus_pattern -v circular
