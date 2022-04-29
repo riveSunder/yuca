@@ -48,7 +48,7 @@ _Orbium bicaudatus_ is a Lenia rule set with <img src="https://render.githubuser
 
 ### _Hydrogemium natans_ 
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/zoo/lenia_zoo/hydrogeminium_natans_glider_01.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/zoo/lenia_zoo/hydrogeminium_natans_glider_00.gif">
 </p>
 
 _Hydrogeminium natans_ is a Lenia rule set with an update rule defined by $$\mu = 0.26$$ and $$\sigma = 0.036$$ and a neighborhood with three rings centered at $$\mu_{k_n} = (0.0938, 0.2814, 0.4690)$$, with $$\sigma_{k_n} = (0.033, 0.033, 0.033)$$ and weighted by $$(0.5, 1.0, 0.667)$$. 
