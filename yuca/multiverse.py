@@ -140,6 +140,8 @@ class CA(nn.Module):
         self.include_parameters()
 
     def restore_config(self, filepath):
+        if "\n" in filepath:
+            filepath = filepath.replace("\n","")
 
         default_directory = os.path.split(\
                 os.path.split(os.path.realpath(__file__))[0])[0]
@@ -160,8 +162,9 @@ class CA(nn.Module):
         
         else:
 
+            print(f"default directory: {default_directory}")
             print(f"attempted to read {filepath}, not found")
-            assert False, f"{filepath} not found"
+            #assert False, f"{filepath} not found"
         
     def make_config(self):
 

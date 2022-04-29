@@ -40,7 +40,7 @@ ca = CA()
 ca.no_grad()
 
 pattern_index = lib.index
-pattern, rule_string = lib.load("frog001")
+pattern, rule_string, entry_point, commit_hash = lib.load("orbium_orbium000")
 
 place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3
 place_w = (grid.shape[-1] - pattern.shape[-1]) // 2 - 3
@@ -50,7 +50,7 @@ grid[:,:, place_h:place_h+pattern.shape[-2], place_w:place_w+pattern.shape[-1]] 
 
 ca.restore_config(rule_string)
 
-p = figure(plot_width=768, plot_height=768, title="CA Universe")
+p = figure(plot_width=384, plot_height=384, title="CA Universe")
 
 #p_plot = figure(plot_width=int(1.25*256), plot_height=int(1.25*256), title="'Reward'")
     
@@ -70,7 +70,11 @@ button_reset_this_pattern = Button(sizing_mode="stretch_width",label="Reset curr
 
 button_reset_next_pattern = Button(sizing_mode="stretch_width",label="Next pattern")
 
-message = Paragraph()
+message = Paragraph(sizing_mode="scale_width")
+pattern_message = Paragraph(sizing_mode="scale_width")
+config_message = Paragraph(sizing_mode="scale_width")
+entry_message = Paragraph(sizing_mode="scale_width")
+git_message = Paragraph(sizing_mode="scale_width")
 
 def update():
         global grid
@@ -92,7 +96,7 @@ def update():
         #source_plot.stream(new_line, rollover=2000)
 
         my_step += 1
-        message.text = f"Message! step {my_step}, period: {my_period} ms"
+        message.text = f"Step {my_step}, period: {my_period} ms"
     
 def go():
    
@@ -130,7 +134,7 @@ def reset_this_pattern():
 
     temp_pattern_name = lib.index.pop(-1)
 
-    pattern, rule_string = lib.load(temp_pattern_name)
+    pattern, rule_string, entry_point, commit_hash = lib.load(temp_pattern_name)
     lib.index.append(temp_pattern_name)
 
     ca.restore_config(rule_string)
@@ -145,6 +149,12 @@ def reset_this_pattern():
     source.stream(new_data, rollover=0)
     #source_plot.stream(new_line, rollover=2000)
 
+    ca_name = os.path.splitext(rule_string)[0]
+
+    pattern_message.text = f"(unofficial) moniker: {temp_pattern_name}"
+    config_message.text = f"\nCA config: {ca_name} " 
+    entry_message.text =  f"\nevolved with: \n{entry_point}" 
+    git_message.text = f"\nat git commit hash: \n{commit_hash}"
  
 def reset_next_pattern():
     
@@ -158,7 +168,7 @@ def reset_next_pattern():
 
     temp_pattern_name = lib.index.pop(0)
 
-    pattern, rule_string = lib.load(temp_pattern_name)
+    pattern, rule_string, entry_point, commit_hash = lib.load(temp_pattern_name)
 
     ca.restore_config(rule_string)
     place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3
@@ -171,9 +181,14 @@ def reset_next_pattern():
             
     new_data = dict(my_image=[(grid.squeeze()).cpu().numpy()])
     
-    source.stream(new_data, rollover=o)
+    source.stream(new_data, rollover=0)
     #source_plot.stream(new_line, rollover=2000)
-    message.text = f"reset next"
+    ca_name = os.path.splitext(rule_string)[0]
+
+    pattern_message.text = f"pattern moniker: {temp_pattern_name}"
+    config_message.text = f"\nCA config: {ca_name} " 
+    entry_message.text =  f"\nevolved with: {entry_point}" 
+    git_message.text = f"\nat git commit hash: \n {commit_hash}"
         
 def reset_prev_pattern():
    
@@ -189,7 +204,7 @@ def reset_prev_pattern():
     lib.index.insert(0, temp_pattern_name)
     temp_pattern_name = lib.index.pop(-1)
 
-    pattern, rule_string = lib.load(temp_pattern_name)
+    pattern, rule_string, entry_point, commit_hash = lib.load(temp_pattern_name)
 
     ca.restore_config(rule_string)
     place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3
@@ -202,9 +217,14 @@ def reset_prev_pattern():
             
     new_data = dict(my_image=[(grid.squeeze()).cpu().numpy()])
     
-    source.stream(new_data, rollover=o)
+    source.stream(new_data, rollover=0)
     #source_plot.stream(new_line, rollover=2000)
-    message.text = f"reset prev"
+    ca_name = os.path.splitext(rule_string)[0]
+
+    pattern_message.text = f"pattern moniker: {temp_pattern_name}"
+    config_message.text = f"\nCA config: {ca_name} " 
+    entry_message.text =  f"\nevolved with: {entry_point}" 
+    git_message.text = f"\nat git commit hash: \n {commit_hash}"
 
 #def human_toggle(event):
 #    global action
@@ -251,9 +271,17 @@ reset_layout = row(button_reset_prev_pattern, \
         button_reset_next_pattern)
         
 message_layout = row(message)
+pattern_message_layout = row(config_message)
+config_message_layout = row(pattern_message)
+entry_message_layout = row(entry_message)
+git_message_layout = row(git_message)
 
 curdoc().add_root(display_layout)
 curdoc().add_root(control_layout)
 curdoc().add_root(reset_layout)
 
 curdoc().add_root(message_layout)
+curdoc().add_root(pattern_message_layout)
+curdoc().add_root(config_message_layout)
+curdoc().add_root(entry_message_layout)
+curdoc().add_root(git_message_layout)
