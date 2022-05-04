@@ -98,8 +98,14 @@ class Librarian():
 
             ca_config = metadata[0].split(",")[1]
 
-            entry_point = metadata[3].split(",")[1]
-            commit_hash = metadata[1].split(",")[1]
+            try:
+                entry_point = metadata[3].split(",")[1]
+            except:
+                entry_point = "none"
+            try:
+                commit_hash = metadata[1].split(",")[1]
+            except:
+                commit_hash = "none"
 
         if self.verbose:
             print(f"pattern {pattern_name} loaded from {file_path}")
