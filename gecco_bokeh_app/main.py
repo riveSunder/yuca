@@ -178,17 +178,22 @@ def reset_next_pattern():
             place_w:place_w+pattern.shape[-1]] = torch.tensor(pattern[:,:,:,:])
 
     lib.index.append(temp_pattern_name)
-            
+
     new_data = dict(my_image=[(grid.squeeze()).cpu().numpy()])
     
     source.stream(new_data, rollover=0)
     #source_plot.stream(new_line, rollover=2000)
     ca_name = os.path.splitext(rule_string)[0]
 
-    pattern_message.text = f"pattern moniker: {temp_pattern_name}"
+    pattern_message.text = f"(unofficial) moniker: {temp_pattern_name}"
     config_message.text = f"\nCA config: {ca_name} " 
     entry_message.text =  f"\nevolved with: {entry_point}" 
     git_message.text = f"\nat git commit hash: \n {commit_hash}"
+
+    if commit_hash == "none":
+        reset_next_pattern()
+            
+
         
 def reset_prev_pattern():
    
@@ -221,41 +226,17 @@ def reset_prev_pattern():
     #source_plot.stream(new_line, rollover=2000)
     ca_name = os.path.splitext(rule_string)[0]
 
-    pattern_message.text = f"pattern moniker: {temp_pattern_name}"
+    pattern_message.text = f"(unofficial) moniker: {temp_pattern_name}"
     config_message.text = f"\nCA config: {ca_name} " 
     entry_message.text =  f"\nevolved with: {entry_point}" 
     git_message.text = f"\nat git commit hash: \n {commit_hash}"
 
-#def human_toggle(event):
-#    global action
-#
-#    coords = [np.round(env.height*event.y/256-0.5), np.round(env.width*event.x/256-0.5)]
-#    offset_x = (env.height - env.action_height) / 2
-#    offset_y = (env.width - env.action_width) / 2
-#
-#    coords[0] = coords[0] - offset_x
-#    coords[1] = coords[1] - offset_y
-#
-#    coords[0] = np.uint8(np.clip(coords[0], 0, env.action_height-1))
-#    coords[1] = np.uint8(np.clip(coords[1], 0, env.action_height-1))
-#
-#    action[:, :, coords[0], coords[1]] = 1.0 * (not(action[:, :, coords[0], coords[1]]))
-#
-#    padded_action = stretch_pixel/2 + env.inner_env.action_padding(action).squeeze()
-#
-#    my_img = (padded_action*2 + obs.squeeze()).cpu().numpy()
-#    my_img[my_img > 3.0] = 3.0
-#    (padded_action*2 + obs.squeeze()).cpu().numpy()
-#    new_data = dict(my_image=[my_img])
-#
-#    source.stream(new_data, rollover=8)
-##
+    if commit_hash == "none":
+        reset_prev_pattern()
+
 
 reset_this_pattern()
      
-#p.on_event(Tap, human_toggle)
-#p.on_event(DoubleTap, clear_toggles)
-
 button_reset_prev_pattern.on_click(reset_prev_pattern)
 button_reset_this_pattern.on_click(reset_this_pattern)
 button_reset_next_pattern.on_click(reset_next_pattern)
