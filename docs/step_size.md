@@ -1,6 +1,8 @@
 
 # Step Size is a Consequential Parameter in Continuous Cellular Automata
 
+*Experiment with varying step size in this [notebook](https://mybinder.org/v2/gh/rivesunder/yuca/step_size_pages?labpath=notebooks%2Fconsequential_step_size.ipynb) in mybinder:* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/step_size_pages?labpath=notebooks%2Fconsequential_step_size.ipynb)
+
 ## Introduction
 
 Cellular automata (CA) dynamics with continuously-valued states and time steps can be generically written as[^note1]:
@@ -25,42 +27,74 @@ Only the final condition with a step size of ~0.4166 seconds displays noticeably
 ## Pattern stability depends on step size
 
 A minimal glider in the style of the 
-Life glider [^rafler2012] and implemented in the _Scutium gravidus_ CA under the Lenia framework is only stable in a range of step sizes from about 0.25 to 0.97. A choice of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png"> outside this range results in a vanishing glider. 
+Life glider [^Ra2012] and implemented in the _Scutium gravidus_ CA under the Lenia framework is only stable in a range of step sizes from about 0.25 to 0.97. A choice of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png"> outside this range results in a vanishing glider. 
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/single_scutium.gif" width=50%><br>
+  <em>A minimal glider in Lenia's _Scutium gravidus_ rule set [^Ch2019], similar to the SmoothLife glider [^Ra2012], is unstable at step sizes below about 0.25 and above about 0.97.</em>
 </p>
 
-It is worth noting that this glider in Lenia's _Scutium_ CA rules closely resembles the SmoothLife glider mentioned by Rafler [^rafler2012], where, because SmoothLife initially used a replacement instead of a residual update function, it was essentially simulated with a step size of 1.0. Modified to use the notation of Lenia, the discrete SmoothLife update can be written as: 
 
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/smooth_life.png">
-
-Where <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/s_fn.png" height=16> is the SmoothLife update function. While this discrete version of SmoothLife (in which the first glider was found) does not have a time step but the update function does depend on both the neighborhood states <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/k_convolve_at.png" height=16> _and_ the previous cell states <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/at.png" height=16>, a distinction discarded in Lenia. 
-
-## Otherwise Identical CA May Support Different Patterns in Mutually Exclusive Step Size Ranges
-
-A wide glider is typically stable for over 2000 steps at a <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png"> of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/point_1.png">, but disappears at step sizes of 0.05 or below and exhibits unrestrained growth at a step size of 0.5.
+A wide glider is typically stable for over 2000 steps at a <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png" height=16> of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/point_1.png" height=16>, but disappears at step sizes of 0.05 or below and is also unstable at a step size of 0.5 or above, usually exhibiting unconstrained growth at large step sizes.
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/superwide_scutium.gif" width=50%><br>
+  <em>A wide glider in _Scutium gravidus_. Unlike the narrow glider, this glider is pseudo-stable at a moderate step size of 0.1 and unstable for large and small step sizes above and below about 0.5 and 0.05, respectively.</em>
 </p>
 
-## Behavior of Individual Patterns May Vary Qualitatively at Different Step Size While Maintaining Self-Organization
+## Behavior of individual patterns can vary qualitatively at different step sizes
 
-A more striking consequence of step size is qualitatively different behavior at different step sizes. The following example is a "frog" pattern implemented in an extension of Lenia called Glaberish [^davis2022]. Earlier, our attention was drawn to the fact that in Lenia, only the results of a 2D convolution of the neighborhood kernel and the cell state grid is considered when computing the growth function <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/growth_fn.png">. Glaberish splits this growth function into _persistence_ and _genesis_ functions, each contributes to the overal change in cell state according to the current grid states.  
+A more striking consequence of step size is qualitatively different behavior at different step sizes. The following example is a "frog" pattern implemented in an extension of Lenia called Glaberish [^Da2022]. In Lenia, the growth function <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/growth_fn.png" height=16>  depends only on the results of a 2D convolution of the neighborhood kernel and the cell state grid <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/k_convolve_at.png" height=16>. Glaberish splits this growth function into _persistence_ (<img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/persistence_fn.png" height=16>) and _genesis_ (<img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/genesis_fn.png" height=16>) functions, each contributes to the overal change in cell state according to the current grid states.  
 
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/glaberish.png">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/glaberish.png">
 
-Glaberish CA dynamics reinstate the dependence on cell state found in SmoothLife, Conway's Life [^gardner1970], and other Life-like CA, while maintaining the flexibility of the Lenia's growth function. The frog pattern can be found in a Glaberish CA with evolved persistence ang genesis parameters called s613 (see [^davis2022b] for details on how this CA was evolved). While the narrow and wide gliders in Lenia's _Scutium gravidus_ CA occupy particular (and mutually exclusive) ranges of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png">, the s613 frog pattern exhibits qualitatively different behavior across a range of step sizes from about 0.01 to about 0.13.  
+Glaberish CA dynamics reinstate the dependence on cell state found in SmoothLife, Conway's Life [^Ga1970], and other Life-like CA, while maintaining the flexibility of Lenia's growth function. The following frog pattern can be found in a Glaberish CA with evolved persistence ang genesis parameters called s613 (see [^Da2022b] for details on how this CA was evolved). While the narrow and wide gliders in Lenia's _Scutium gravidus_ CA occupy particular ranges of <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/dt.png" height=16>, the s613 frog pattern exhibits qualitatively different behavior across a range of step sizes from about 0.01 to about 0.13.  
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/supplemental_item_1_step_size_behavior.gif">
 </p>
 
+## Conclusions
 
-[^note1]: But note the different formulation for the original, discrete, SmoothLife, which had a discrete time-step (_i.e._ cell states were replaced at each time step): <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/smooth_life.png" height=18>
+This work demonstrates the consequences of varying step size in continuous CA. Patterns simulated in Lenia's _Scutium gravidus_ CA are unstable at either too large or too small step size, and different patterns occupy different step size ranges in otherwise identical CA rules. In the Glaberish CA s613, the frog pattern exhibits qualititatively different behavior at step sizes from 0.01 to 0.15, ranging from corkscrewing, meandering, hopping, surging, and finally bursting and disappearing. 
+
+The results we have observed for these patterns contrasts sharply with previous remarks concerning the similarity of continuous CA to Euler's method for solving ODEs with regard to step size [^Ch2019]. Observations of the mobile _Orbium_ pattern in Lenia were consistent with the premise that decreasing step size asymptotically approaches an ideal simulation of the _Orbium_ pattern [^Ch2019], but for gliders in _Scutium gravidus_ and s613 we have shown that the relationship between CA dynamics and step size is not that simple in general. This work demonstrates that for several patterns a lower step size does not entail a more accurate simulation, but different behavior or potential patterns entirely. Given the evidence presented in this work, it follows that step size should be given due consideration when searching for bioreminiscent patterns [^Ch2019] [^Ch2020], and for optimization and learning with CA, for example in training patterns to have the agency to negotiate obstacles [^Ha2022], or for training neural CA for a variety of tasks such as growing patterns [^Mo2020], classifying pixels [^Ra2020], learning to generate textures [^Ni2021], and control [^variengien2007}.
+
+*Experiment with varying step size in this [notebook](https://mybinder.org/v2/gh/rivesunder/yuca/step_size_pages?labpath=notebooks%2Fconsequential_step_size.ipynb) in mybinder:* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/step_size_pages?labpath=notebooks%2Fconsequential_step_size.ipynb)
+
+**This post has not been peer-reviewed itself, but provides supporting information for the following short article accepted to the 2022 Conference on Artificial Life:**
+
+* Davis, Q, Tyrell and Bongard, Josh. "Step Size is a Consequential Parameter in Continuous Cellular Automata". Accepted to The 2022 Conference on Artificial Life. (2022).
+
+## References and Footnotes
+
+[^note1]: **Note:** The different formulation for the original, discrete, SmoothLife, which had a discrete time-step (_i.e._ cell states were replaced at each time step): <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/smooth_life.png" height=18>
+
+
+[^Ch2019]: Chan, Bert Wang-Chak. "Lenia - Biology of Artificial Life." Complex Syst. 28 (2019): [https://arxiv.org/abs/1812.05433](https://arxiv.org/abs/1812.05433).
+
+[^Ch2020]: Chan, Bert Wang-Chak. "Lenia and Expanded Universe." ALIFE 2020: The 2020 Conference on Artificial Life. MIT Press, (2020). [https://arxiv.org/abs/2005.03742](https://arxiv.org/abs/2005.03742)
+
+[^Da2022]: Davis, Q, Tyrell and Bongard, Josh. "Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary
+Life-Like Cellular Automata". Accepted to The 2022 Conference on Artificial Life. (2022).
+
+[^Da2022b]: Davis, Q, Tyrell and Bongard, Josh. "Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis". Accepted to Proceedings of the Genetic and Evolutionary Computation Conference Companion (2022): [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
+
+[^Ga1970]: Gardener, Master. "Mathematical games: the fantastic combinations of john conway's new solitaire game 'life'." (1970).
+
+[^Ha2022]: Hamon, G. and Etcheverry, M. and Chan, B. W.-C. and Moulin-Frier, C. and Oudeyer, P.-Y. Learning sensorimotor agency in cellular automata. Blog post. (2022). [https://developmentalsystems.org/sensorimotor-lenia/](https://developmentalsystems.org/sensorimotor-lenia/).
+
+[^Mo2020]: Mordvintsev, A. and Randazzo, E. and Niklasson, E. and Levin, M. Growing neural cellular automata. Distill. (2020) [https://distill.pub/2020/growing-ca](https://distill.pub/2020/growing-ca).
+
+[^Mu2014]: Munafo, Robert. "Stable localized moving patterns in the 2-D Gray-Scott model." arXiv: Pattern Formation and Solitons (2014): [https://arxiv.org/abs/1501.01990](https://arxiv.org/abs/1501.01990).
+
+[^Ni2021]: Niklasson, E. and Mordvintsev, A. and Randazzo, E. and Levin, M. "Self-Organising Textures", Distill, (2021). [https://distill.pub/selforg/2021/textures/](https://distill.pub/selforg/2021/textures/)
+
 [^Ra2012]: Rafler, Stephan. “Generalization of Conway's "Game of Life" to a continuous domain - SmoothLife.” arXiv: Cellular Automata and Lattice Gases (2011): [https://arxiv.org/abs/1111.1567](https://arxiv.org/abs/1111.1567)
-[^Ch2019]: Chan, Bert Wang-Chak. “Lenia - Biology of Artificial Life.” Complex Syst. 28 (2019): [https://arxiv.org/abs/1812.05433](https://arxiv.org/abs/1812.05433)
-[^Mu2014]: Munafo, Robert. “Stable localized moving patterns in the 2-D Gray-Scott model.” arXiv: Pattern Formation and Solitons (2014): [https://arxiv.org/abs/1501.01990](https://arxiv.org/abs/1501.01990)
 
-[^Sc2016]: Schmickl, Thomas et al. “How a life-like system emerges from a simple particle motion law.” Scientific Reports 6 (2016): n. pag.
+[^Ra2020]: Randazzo, E. and Mordvintsev, A. and Niklasson, E. and Levin, M. and Greydanus, S. Self-classifying MNIST digits. Distill. (2020)
+[https://distill.pub/2020/selforg/mnist](https://distill.pub/2020/selforg/mnist).
+
+[^Sc2016]: Schmickl, Thomas et al. "How a life-like system emerges from a simple particle motion law." Scientific Reports 6 (2016): [https://www.nature.com/articles/srep37969](https://www.nature.com/articles/srep37969)
+
+[^Va2021]: Variengien, A. and Pontes-Filho and Sidny abd Glover, T. and Nichele, S. "Towards self-organized control: Using neural cellular automata to robustly control a cart-pole agent." Innovations in Machine Intelligence, 1:1–14. (2021). [https://arxiv.org/abs/2106.15240v1](https://arxiv.org/abs/2106.15240v1)
