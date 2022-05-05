@@ -30,13 +30,13 @@ Life glider [^Ra2012] and implemented in the _Scutium gravidus_ CA under the Len
 
 ![Image](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/single_scutium.gif)
 
-_A minimal glider in Lenia's _Scutium gravidus_ rule set [^Ch2019], similar to the SmoothLife glider [^Ra2012], is unstable at step sizes below about 0.25 and above about 0.97._
+**_A minimal glider in Lenia's _Scutium gravidus_ rule set [^Ch2019], similar to the SmoothLife glider [^Ra2012], is unstable at step sizes below about 0.25 and above about 0.97._**
 
 A wide glider is typically stable for over 2000 steps at a <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png" height=16> of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/point_1.png" height=16>, but disappears at step sizes of 0.05 or below and is also unstable at a step size of 0.5 or above, usually exhibiting unconstrained growth at large step sizes.
 
 ![Image](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/superwide_scutium.gif)
 
-_A wide glider in _Scutium gravidus_. Unlike the narrow glider, this glider is pseudo-stable at a moderate step size of 0.1 and unstable for large and small step sizes above and below about 0.5 and 0.05, respectively._
+**_A wide glider in _Scutium gravidus_. Unlike the narrow glider, this glider is pseudo-stable at a moderate step size of 0.1 and unstable for large and small step sizes above and below about 0.5 and 0.05, respectively._**
 
 ## Behavior of individual patterns can vary qualitatively at different step sizes
 
@@ -48,13 +48,13 @@ Glaberish CA dynamics reinstate the dependence on cell state found in SmoothLife
 
 ![Image](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/supplemental_item_1_step_size_behavior.gif)
 
-_For the frog pattern in Glaberish CA s613, varying step size leads to qualitatively different behaviors._
+**_For the frog pattern in Glaberish CA s613, varying step size leads to qualitatively different behaviors._**
 
 ## Conclusions
 
 This work demonstrates the consequences of varying step size in continuous CA. Patterns simulated in Lenia's _Scutium gravidus_ CA are unstable at either too large or too small step size, and different patterns occupy different step size ranges in otherwise identical CA rules. In the Glaberish CA s613, the frog pattern exhibits qualititatively different behavior at step sizes from 0.01 to 0.15, ranging from corkscrewing, meandering, hopping, surging, and finally bursting and disappearing. 
 
-The results we have observed for these patterns contrasts sharply with previous remarks concerning the similarity of continuous CA to Euler's method for solving ODEs with regard to step size [^Ch2019]. Observations of the mobile _Orbium_ pattern in Lenia were consistent with the premise that decreasing step size asymptotically approaches an ideal simulation of the _Orbium_ pattern [^Ch2019], but for gliders in _Scutium gravidus_ and s613 we have shown that the relationship between CA dynamics and step size is not that simple in general. This work demonstrates that for several patterns a lower step size does not entail a more accurate simulation, but different behavior or potential patterns entirely. Given the evidence presented in this work, it follows that step size should be given due consideration when searching for bioreminiscent patterns [^Ch2019] [^Ch2020], and for optimization and learning with CA, for example in training patterns to have the agency to negotiate obstacles [^Ha2022], or for training neural CA for a variety of tasks such as growing patterns [^Mo2020], classifying pixels [^Ra2020], learning to generate textures [^Ni2021], and control [^Va2021}.
+The results we have observed for these patterns contrasts sharply with previous remarks concerning the similarity of continuous CA to Euler's method for solving ODEs with regard to step size [^Ch2019]. Observations of the mobile _Orbium_ pattern in Lenia were consistent with the premise that decreasing step size asymptotically approaches an ideal simulation of the _Orbium_ pattern [^Ch2019], but for gliders in _Scutium gravidus_ and s613 we have shown that the relationship between CA dynamics and step size is not that simple in general. This work demonstrates that for several patterns a lower step size does not entail a more accurate simulation, but different behavior or potential patterns entirely. Given the evidence presented in this work, it follows that step size should be given due consideration when searching for bioreminiscent patterns [^Ch2019] [^Ch2020], and for optimization and learning with CA, for example in training patterns to have the agency to negotiate obstacles [^Ha2022], or for training neural CA for a variety of tasks such as growing patterns [^Mo2020], classifying pixels [^Ra2020], learning to generate textures [^Ni2021], and control [^Va2021].
 
 *Experiment with varying step size in this [notebook](https://mybinder.org/v2/gh/rivesunder/yuca/step_size_pages?labpath=notebooks%2Fconsequential_step_size.ipynb) in mybinder:* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/step_size_pages?labpath=notebooks%2Fconsequential_step_size.ipynb)
 
