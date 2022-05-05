@@ -1,45 +1,48 @@
 
 # Step Size is a Consequential Parameter in Continuous Cellular Automata
 
-It should come as no surprise to anyone who has experience with a physics simulator that has a user-configurable time step that stability breaks down with a poor choice of this parameter. Typically, the breakdown occurs with a time step set too high, as systematic erros accumulate to push the system under simulation into unstable regimes. A larger time step offers faster simulation times, however, and so setting the parameter is a trade-off between simulation stability (and physical fidelity) against execution time and an efficient use of computational resources. Setting the step size too small usually only punishes the programmer with long run times, however, while stability and accuracy can be expected to at least meet the performance of a critically set step size parameter.
+## Introduction
 
-Continuous cellular automata (CA), particularly implemented in the Lenia framework, also have a configurable parameter <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png"> that determines how large an update to undertake at each update step. In fact, the formula for updating the CA grid takes the same form as Euler's method for numerical estimation of differential equations. 
+Cellular automata (CA) dynamics with continuously-valued states and time steps can be generically written as[^note1]:
 
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/lenia.png"> 
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/generic_cca.png">
 
-Where <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/at_plus_dt.png">, the grid state at time step <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/t_plus_dt.png"> is determined by adding to the grid state at time <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/t.png"> the product of step size <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png"> and the results of a growth function <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/growth_fn.png"> applied to a 2D spatial convolution (<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/k_convolve_at.png">) of neighborhood kernel <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/k.png"> with the grid state at time <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/t.png">, <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/at.png">. As mentioned above, the Lenia update function resembles a very simple version (_i.e._ Euler's method) of a numerical method for solving a differential equation. More sophisticated differential equation solvers form the core of many physics simulators. Casual experimentation with one quickly yields the intuition that when one sets the step size too high, things fly apart (or otherwise act in a non-physical way). 
+In particular the equation above describes the Lenia framework for continuous CA, and as noted previously in that work [^Ch2019], the equation above has the same form as Euler's numerical method for solving differential equations, _i.e._ estimating CA dynamics if they are described by a differential equation <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/dat_over_dt.png" height=32>. CA updates under the Lenia framework are more particularly written as:
 
-To set the stage for later observations of modulated step size in Lenia, let us consider the following simulation of a robot drop in PyBullet [^pybullet] at varying step sizes. In the animation below, the bottom left corner (c) represents the default step size of 1/240 seconds, a reasonable trade-off between execution speed and simulation fidelity and stability. The top row a and b are based on the same initial conditions with step sizes 100 and 10 times shorter the c, respectively. The animation in c used a step size 100 times longer than the default step size in c. 
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/lenia.png">
 
+Where <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/at_plus_dt.png" height=16> is the grid of cell states at time <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/t_plus_dt.png" height=16>, <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/growth_fn.png" height=16> is the growth function, <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/k_convolve_at.png" height=16> is the 2d spatial convolution of neighborhood kernel <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/k.png" height=16> with cell states <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/at.png" height=16> at time <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/t.png" height=16>, and <img src="https://raw.githubusercontent.com/riveSunder/yuca/step_size_pages/assets/equations/dt.png" height=16> is the step size. 
+
+For numerical estimation of differential equations with [Euler's method](https://en.wikipedia.org/wiki/Euler_method), error depends on step size. That is to say that smaller step sizes lead to more accurate solutions. Those readers with familiarity in working with numerical methods for differential equations and/or physical simulations based on them will likely anticipate that a step size that is too large leads to unstable solutions and often, for simulations, catastrophic behavior. As an example, we can consider the following simulation of a robot drop in PyBullet [^pybullet] at varying step sizes. In the animation below, the bottom left corner (c) represents the default step size of 1/240 seconds, a reasonable trade-off between execution speed and simulation fidelity and stability. The top row a and b are based on the same initial conditions with step sizes 100 and 10 times smaller than c, respectively. The animation in d used a step size 100 times longer than the default step size in c. 
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/pybullet_step_size.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/pybullet_step_size.gif" width=50%><br>
 <em>Modulating time_step parameter in PyBullet. <strong>a</strong>: dt = 1/24000 s, <strong>b</strong>: dt = 1/2400 s,<strong>c</strong>: dt = 1/240 s,<strong>d</strong>: dt = 1/2.4 s. 1/240 seconds is the default and recommended step size in PyBullet. </em>
 </p>
 
-Only the final condition with a step size of ~0.4166 seconds displays noticeably non-physical and unstable behavior, while a step size 10 to 100 times shorter than default behaves qualitatively similar to the default step size (though there are differences in specific outcomes). When similar swings in step size are applied to self-organizing patterns in Lenia and related continuous CA, we see that stability can be compromised at too small a step size as well as too large, and that specific patterns occupy different ranges of stable step size. Patterns may also exhibit qualitatively different behaviors at different step sizes. Thus step size choice in continuous CA leads to more interesting differences in outcomes than in the PyBullet example, though I would expect that with a more complex simulation in PyBullet (say 100s to 1000s of spheres with mutual interactions) there might be emergent phenomena that exhibit interesting differences in their activity as a consequence of step size choice. 
+Only the final condition with a step size of ~0.4166 seconds displays noticeably non-physical and unstable behavior: the two-wheeled robots plunge through the ground plane before rising slowly like so many spring flowers. Small step sizes behave qualitatively similar to the default (though specific outcomes differ). In continuous CA, similar differences in step size leads to compromised stability at too small a step size as well as too large. Specific patterns under otherwise identical CA rules occupy different ranges of stable step size. Patterns may also exhibit qualitatively different behaviors at different step sizes. Thus step size choice in continuous CA leads to more interesting differences in outcomes than we see in the PyBullet example and typically expect in numerical physics simulations in general. There are many other physics-based models that support self-organizing solitons, such as chemical reaction-diffusion models (_e.g._ [^Mu2014]), particle swarms (_e.g._ [^Sc2016]),  or other n-body problems, and these may also exhibit interesting behavioral diversity over a range of step sizes. 
 
-## Pattern Stability Depends on Step Size
+## Pattern stability depends on step size
 
-
-A minimal glider in the style of the SmoothLife glider [^rafler2012] and implemented in the _Scutium gravidus_ CA under the Lenia framework is only stable in a range of step sizes from about 0.25 to 0.97. A choice of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png"> outside this range results in a vanishing glider. 
+A minimal glider in the style of the 
+Life glider [^rafler2012] and implemented in the _Scutium gravidus_ CA under the Lenia framework is only stable in a range of step sizes from about 0.25 to 0.97. A choice of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png"> outside this range results in a vanishing glider. 
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/single_scutium.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/single_scutium.gif" width=50%><br>
 </p>
 
 It is worth noting that this glider in Lenia's _Scutium_ CA rules closely resembles the SmoothLife glider mentioned by Rafler [^rafler2012], where, because SmoothLife initially used a replacement instead of a residual update function, it was essentially simulated with a step size of 1.0. Modified to use the notation of Lenia, the discrete SmoothLife update can be written as: 
 
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/smooth_life.png">
 
-Where <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;s(\cdot)"> is the SmoothLife update function. While this discrete version of SmoothLife (in which the first glider was found) does not have a time step but the update function does depend on both the neighborhood states <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;K \ast A^t"> _and_ the previous cell states <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;A^t">, a distinction discarded in Lenia. 
+Where <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/s_fn.png" height=16> is the SmoothLife update function. While this discrete version of SmoothLife (in which the first glider was found) does not have a time step but the update function does depend on both the neighborhood states <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/k_convolve_at.png" height=16> _and_ the previous cell states <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/at.png" height=16>, a distinction discarded in Lenia. 
 
 ## Otherwise Identical CA May Support Different Patterns in Mutually Exclusive Step Size Ranges
 
 A wide glider is typically stable for over 2000 steps at a <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png"> of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/point_1.png">, but disappears at step sizes of 0.05 or below and exhibits unrestrained growth at a step size of 0.5.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/superwide_scutium.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/superwide_scutium.gif" width=50%><br>
 </p>
 
 ## Behavior of Individual Patterns May Vary Qualitatively at Different Step Size While Maintaining Self-Organization
@@ -55,3 +58,9 @@ Glaberish CA dynamics reinstate the dependence on cell state found in SmoothLife
 </p>
 
 
+[^note1]: But note the different formulation for the original, discrete, SmoothLife, which had a discrete time-step (_i.e._ cell states were replaced at each time step): <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/smooth_life.png" height=18>
+[^Ra2012]: Rafler, Stephan. “Generalization of Conway's "Game of Life" to a continuous domain - SmoothLife.” arXiv: Cellular Automata and Lattice Gases (2011): [https://arxiv.org/abs/1111.1567](https://arxiv.org/abs/1111.1567)
+[^Ch2019]: Chan, Bert Wang-Chak. “Lenia - Biology of Artificial Life.” Complex Syst. 28 (2019): [https://arxiv.org/abs/1812.05433](https://arxiv.org/abs/1812.05433)
+[^Mu2014]: Munafo, Robert. “Stable localized moving patterns in the 2-D Gray-Scott model.” arXiv: Pattern Formation and Solitons (2014): [https://arxiv.org/abs/1501.01990](https://arxiv.org/abs/1501.01990)
+
+[^Sc2016]: Schmickl, Thomas et al. “How a life-like system emerges from a simple particle motion law.” Scientific Reports 6 (2016): n. pag.
