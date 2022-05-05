@@ -7,11 +7,11 @@
 
 ## A continuous cellular automata research library
 
-#### [Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis](https://rivesunder.github.io/yuca/evo_abio) (Under construction)
+####  Davis, Q, Tyrell and Bongard, Josh. [Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis](https://rivesunder.github.io/yuca/evo_abio). Accepted to Proceedings of the Genetic and Evolutionary Computation Conference Companion (2022). _(Under construction)_
 
 
 <br><br>
-#### [---Under Blind Review---](https://rivesunder.github.io/yuca/step_size) (Under construction)
+####  Davis, Q, Tyrell and Bongard, Josh. [Step Size is a Consequential Parameter in Continuous Cellular Automata](https://rivesunder.github.io/yuca/step_size). Accepted to The 2022 Conference on Artificial Life. (2022).
 
 
 <br><br>
