@@ -40,7 +40,11 @@ ca = CA()
 ca.no_grad()
 
 pattern_index = lib.index
-pattern, rule_string, entry_point, commit_hash = lib.load("orbium_orbium000")
+pattern, pattern_meta = lib.load("orbium_orbium000")
+rule_string = pattern_meta["ca_config"]
+entry_point = pattern_meta["entry_point"]
+commit_hash = pattern_meta["commit_hash"]
+notes = pattern_meta["notes"]
 
 place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3
 place_w = (grid.shape[-1] - pattern.shape[-1]) // 2 - 3
@@ -134,7 +138,12 @@ def reset_this_pattern():
 
     temp_pattern_name = lib.index.pop(-1)
 
-    pattern, rule_string, entry_point, commit_hash = lib.load(temp_pattern_name)
+    pattern, pattern_meta =lib.load(temp_pattern_name)
+    rule_string = pattern_meta["ca_config"]
+    entry_point = pattern_meta["entry_point"]
+    commit_hash = pattern_meta["commit_hash"]
+    notes = pattern_meta["notes"]
+
     lib.index.append(temp_pattern_name)
 
     ca.restore_config(rule_string)
@@ -154,7 +163,12 @@ def reset_this_pattern():
     pattern_message.text = f"(unofficial) moniker: {temp_pattern_name}"
     config_message.text = f"\nCA config: {ca_name} " 
     entry_message.text =  f"\nevolved with: \n{entry_point}" 
-    git_message.text = f"\nat git commit hash: \n{commit_hash}"
+
+    my_git_message = f"\nat git commit hash: \n{commit_hash}"
+    if len(notes):
+        my_git_message += f"\n\nnote: {notes}"
+
+    git_message.text = my_git_message
  
 def reset_next_pattern():
     
@@ -168,7 +182,11 @@ def reset_next_pattern():
 
     temp_pattern_name = lib.index.pop(0)
 
-    pattern, rule_string, entry_point, commit_hash = lib.load(temp_pattern_name)
+    pattern, pattern_meta =lib.load(temp_pattern_name)
+    rule_string = pattern_meta["ca_config"]
+    entry_point = pattern_meta["entry_point"]
+    commit_hash = pattern_meta["commit_hash"]
+    notes = pattern_meta["notes"]
 
     ca.restore_config(rule_string)
     place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3
@@ -209,7 +227,11 @@ def reset_prev_pattern():
     lib.index.insert(0, temp_pattern_name)
     temp_pattern_name = lib.index.pop(-1)
 
-    pattern, rule_string, entry_point, commit_hash = lib.load(temp_pattern_name)
+    pattern, pattern_meta =lib.load(temp_pattern_name)
+    rule_string = pattern_meta["ca_config"]
+    entry_point = pattern_meta["entry_point"]
+    commit_hash = pattern_meta["commit_hash"]
+    notes = pattern_meta["notes"]
 
     ca.restore_config(rule_string)
     place_h = (grid.shape[-2] - pattern.shape[-2]) // 2 - 3

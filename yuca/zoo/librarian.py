@@ -102,6 +102,12 @@ class Librarian():
                 entry_point = metadata[3].split(",")[1]
             except:
                 entry_point = "none"
+
+            try:
+                notes = metadata[2].split(",")[1]
+            except:
+                notes = ""
+
             try:
                 commit_hash = metadata[1].split(",")[1]
             except:
@@ -112,7 +118,12 @@ class Librarian():
             print(f"pattern {pattern_name} metadata loaded from {meta_path}")
 
 
-        return pattern, ca_config, entry_point, commit_hash
+        pattern_meta = {"ca_config": ca_config, \
+                "entry_point": entry_point, \
+                "commit_hash": commit_hash, \
+                "notes": notes}
+
+        return pattern, pattern_meta
 
 
     def crop(self, pattern: np.array, row: tuple, column: tuple) -> np.array:
