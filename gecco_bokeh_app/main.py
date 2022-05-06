@@ -160,7 +160,7 @@ def reset_this_pattern():
 
     ca_name = os.path.splitext(rule_string)[0]
 
-    pattern_message.text = f"(unofficial) moniker: {temp_pattern_name}"
+    pattern_message.text = f"alias: {temp_pattern_name}"
     config_message.text = f"\nCA config: {ca_name} " 
     entry_message.text =  f"\nevolved with: \n{entry_point}" 
 
@@ -203,7 +203,7 @@ def reset_next_pattern():
     #source_plot.stream(new_line, rollover=2000)
     ca_name = os.path.splitext(rule_string)[0]
 
-    pattern_message.text = f"(unofficial) moniker: {temp_pattern_name}"
+    pattern_message.text = f"alias: {temp_pattern_name}"
     config_message.text = f"\nCA config: {ca_name} " 
     entry_message.text =  f"\nevolved with: {entry_point}" 
     git_message.text = f"\nat git commit hash: \n {commit_hash}"
@@ -248,7 +248,7 @@ def reset_prev_pattern():
     #source_plot.stream(new_line, rollover=2000)
     ca_name = os.path.splitext(rule_string)[0]
 
-    pattern_message.text = f"(unofficial) moniker: {temp_pattern_name}"
+    pattern_message.text = f"alias: {temp_pattern_name}"
     config_message.text = f"\nCA config: {ca_name} " 
     entry_message.text =  f"\nevolved with: {entry_point}" 
     git_message.text = f"\nat git commit hash: \n {commit_hash}"

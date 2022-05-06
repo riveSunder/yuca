@@ -47,7 +47,7 @@ class Librarian():
 
     def store(self, pattern: np.array, pattern_name: str = "my_pattern",\
             config_name: str = "unspecified", entry_point="not specified",\
-            commit_hash="not_specified"):
+            commit_hash="not_specified", notes=None):
 
         counter = 0
         file_path = os.path.join(self.directory, f"{pattern_name}{counter:03}.npy")
@@ -71,6 +71,7 @@ class Librarian():
         with open(meta_path, "w") as f:
             f.write(f"ca_config,{config_name}")
             f.write(f"\ncommit_hash,{commit_hash}")
+            f.write(f"notes, {notes}")
             f.write(f"\nentry_point,{entry_point}")
 
         np.save(file_path, pattern) 
