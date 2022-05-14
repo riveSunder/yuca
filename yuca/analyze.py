@@ -17,6 +17,130 @@ from yuca.multiverse import CA
 from yuca.utils import query_kwargs, get_bite_mask, save_fig_sequence
 from yuca.cppn import CPPN
 
+def np_shift(grid, shift):
+    
+    new_grid = np.pad(grid, pad_width=(1,1), mode="wrap")
+    
+    dim_x, dim_y = grid.shape[0], grid.shape[1]
+    
+    new_grid = new_grid[1 + shift[0]:1 + dim_x + shift[0], 1 + shift[1]:1+ dim_y + shift[1]]
+    
+    return new_grid
+    
+def get_grid_entropy(grid):
+    """
+    $
+    H = -\sum{ p log_2(p)}
+    $
+    """
+    
+    eps = 1e-9
+    # convert grid to uint8
+    
+    stretched_grid = (grid - np.min(grid)) / np.max(grid - np.min(grid))
+    
+    uint8_grid = np.uint8(255*stretched_grid)
+    
+    p = np.zeros(256)
+    
+    for ii in range(p.shape[0]):
+        p[ii] = np.sum(uint8_grid == ii)
+        
+    # normalize p
+    p = p / p.sum()
+    
+    h = - np.sum( p * np.log2( eps+p))
+    
+    return h
+
+def get_spatial_entropy(grid, window_size=63):
+    
+    half_window = (window_size - 1) // 2
+    dim_grid = grid.shape
+    
+    padded_grid = np.pad(grid, pad_width=(0), mode="wrap")
+    
+    spatial_h = np.zeros_like(grid)
+    
+    for xx in range(dim_grid[0]): #half_window, half_window + dim_grid[0]):
+        for yy in range(dim_grid[1]): #half_window, half_window + dim_grid[1]):
+            
+            #spatial_h[xx, yy] = get_grid_entropy(\
+            #        padded_grid[xx+half_window:xx + 2*half_window+1, \
+            #        yy+half_window:yy +2*half_window+1])
+            x_start = int(max([xx-half_window, 0]))
+            x_end = int(min([xx+half_window,dim_grid[0]]))
+            y_start = int(max([yy-half_window, 0]))
+            y_end = int(min([yy+half_window, dim_grid[1]]))
+            spatial_h[xx,yy] = get_grid_entropy(grid[x_start:x_end, y_start:y_end])#.detach().cpu().numpy()) 
+            
+    return spatial_h
+            
+    
+def get_conditional_grid_entropy(grid, direction=0):
+    """
+    $
+    H = -\sum{ p(s,u) log_2( p(s|u) )}
+    $
+    
+    direction 
+        0 - top
+        1 - right
+        2 - bottom
+        3 - left
+    """
+    
+    eps = 1e-9
+    if direction == 0:
+        shift = [-1, 0]
+    if direction == 1:
+        shift = [0, 1]
+    if direction == 2:
+        shift = [1, 0]
+    if direction == 3:
+        shift = [0, -1]
+        
+    # convert grid to uint8
+    
+    stretched_grid = (grid - np.min(grid)) / np.max(grid - np.min(grid))
+    
+    uint8_grid = np.uint8(255*stretched_grid)
+    
+    uint8_grid_shifted = np_shift(uint8_grid, shift)
+    
+    
+    p = np.zeros((256, 256))
+    
+    for ii in range(p.shape[0]):
+        for jj in range(p.shape[1]):
+            p[ii,jj] = np.sum((uint8_grid == ii) == (uint8_grid_shifted == jj))
+    
+    # normalize p
+    p_su = p / p.sum()
+    
+    # P(s|u)
+    p_s_given_u = np.zeros_like(p)
+    
+    for kk in range(p_s_given_u.shape[0]):
+        for ll in range(p_s_given_u.shape[1]):
+            
+            p_s_given_u[kk, ll] = p[kk,ll] / np.sum(p[:,ll])
+            
+    
+    h = - np.sum( p_su * np.log2( eps+p_s_given_u))
+    
+    return h
+
+def get_multiconditional_grid_entropy(grid):
+    
+    result = 0.0
+    
+    for direction in range(4):
+        result += get_conditional_grid_entropy(grid, direction=direction) / 4
+        
+    return result
+        
+
 class Phanes():
     
     def __init__(self, **kwargs):
