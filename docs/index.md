@@ -15,4 +15,4 @@
 
 
 <br><br>
-####  Davis, Q, Tyrell and Bongard, Josh. [Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata](https://rivesunder.github.io/yuca/glaberish). Accepted to The 2022 Conference on Artificial Life. (2022). _(coming soon!)_
+####  Davis, Q, Tyrell and Bongard, Josh. Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata. Accepted to The 2022 Conference on Artificial Life. (2022). [Repository](https://github.com/rivesunder/yuca) -- [Supporting animations](https://rivesunder.github.io/yuca/glaberish) -- [Static figures notebook](https://mybinder.org/v2/gh/rivesunder/yuca/gecco_2022_pages?labpath=notebooks%2Fglaberish_static_figures.ipynb) [Animated figures notebook](https://mybinder.org/v2/gh/rivesunder/yuca/gecco_2022_pages?labpath=notebooks%2Fglaberish_animations.ipynb)
