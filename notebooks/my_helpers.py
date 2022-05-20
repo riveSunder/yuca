@@ -33,7 +33,7 @@ my_cmap = plt.get_cmap("magma")
 # plotting helpers
 
 def plot_kernel_growth(kernel, growth_fn, my_cmap=plt.get_cmap("magma"), \
-        titles=["Kernel", "Growth Function"], my_xrange=[-0.1, 1.1],\
+        titles=["Kernel", "Growth Function"], my_xrange=[-0.5, 1.1],\
         vmin=0, vmax=1, invert=True, cmap_offset=0):
     """
     Plot the neighborhood kernel and continuous growth/update function
@@ -86,7 +86,7 @@ def plot_kernel_growth(kernel, growth_fn, my_cmap=plt.get_cmap("magma"), \
     ax[2].set_xticklabels([0.0, 1.0], {"fontsize": 6})
     ax[2].set_title(titles[1], fontsize=8)
     
-    ax_twin.legend(fontsize=7)    
+    ax_twin.legend(fontsize=6)    
     plt.tight_layout()
     
     return fig, ax
@@ -158,7 +158,7 @@ def plot_kernel_genper(kernel, genesis_fn, persistence_fn, show_combined=False, 
 
 
     ax[2].set_title(titles[1], fontsize=8)
-    ax_twin.legend(fontsize=7)    
+    ax_twin.legend(fontsize=6)    
     
     plt.tight_layout()
     
