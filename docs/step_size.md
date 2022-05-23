@@ -1,8 +1,7 @@
 
 # Step Size is a Consequential Parameter in Continuous Cellular Automata
 
-*Experiment with varying step size in this [notebook](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) in mybinder:* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb)
-
+*Experiment with varying step size in an interactive [notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) on *: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) or in [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) 
 ## Introduction
 
 Cellular automata (CA) dynamics with continuously-valued states and time steps can be generically written as[^note1]:
@@ -68,7 +67,7 @@ This work demonstrates the consequences of varying step size in continuous CA. P
 
 The results we have observed for these patterns contrasts sharply with previous remarks concerning the similarity of continuous CA to Euler's method for solving ODEs with regard to step size [^Ch2019]. Observations of the mobile _Orbium_ pattern in Lenia were consistent with the premise that decreasing step size asymptotically approaches an ideal simulation of the _Orbium_ pattern [^Ch2019], but for gliders in _Scutium gravidus_ and s613 we have shown that the relationship between CA dynamics and step size is not that simple in general. This work demonstrates that for several patterns a lower step size does not entail a more accurate simulation, but different behavior or potential patterns entirely. Given the evidence presented in this work, it follows that step size should be given due consideration when searching for bioreminiscent patterns [^Ch2019] [^Ch2020], and for optimization and learning with CA, for example in training patterns to have the agency to negotiate obstacles [^Ha2022], or for training neural CA for a variety of tasks such as growing patterns [^Mo2020], classifying pixels [^Ra2020], learning to generate textures [^Ni2021], and control [^Va2021].
 
-*Experiment with varying step size in this [notebook](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) in mybinder:* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb)
+*Experiment with varying step size in an interactive [notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) on *: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) or in [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) 
 
 **This post has not been peer-reviewed itself, but provides supporting information for the following short article accepted to the 2022 Conference on Artificial Life:**
 
@@ -99,8 +98,7 @@ The results we have observed for these patterns contrasts sharply with previous 
 
 [^Ra2012]: Rafler, Stephan. “Generalization of Conway's "Game of Life" to a continuous domain - SmoothLife.” arXiv: Cellular Automata and Lattice Gases (2011): [https://arxiv.org/abs/1111.1567](https://arxiv.org/abs/1111.1567)
 
-[^Ra2020]: Randazzo, E. and Mordvintsev, A. and Niklasson, E. and Levin, M. and Greydanus, S. Self-classifying MNIST digits. Distill. (2020)
-[https://distill.pub/2020/selforg/mnist](https://distill.pub/2020/selforg/mnist).
+[^Ra2020]: Randazzo, E. and Mordvintsev, A. and Niklasson, E. and Levin, M. and Greydanus, S. Self-classifying MNIST digits. Distill. (2020) [https://distill.pub/2020/selforg/mnist](https://distill.pub/2020/selforg/mnist).
 
 [^Sc2016]: Schmickl, Thomas et al. "How a life-like system emerges from a simple particle motion law." Scientific Reports 6 (2016): [https://www.nature.com/articles/srep37969](https://www.nature.com/articles/srep37969)
 
