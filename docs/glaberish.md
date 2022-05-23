@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/supplemental_artifact_2_gliders.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/supplemental_artifact_2_gliders.gif"><br>
 Gliders in <em>Hydrogeminium natans</em> (Left, Lenia) and s613 (Right, in Glaberish, a variant of Lenia). The fast/wobbly gliders have similar behavior but different cell state values. This animation corresponds to Figure 11 in the paper. 
 </p>
 
@@ -7,7 +7,7 @@ Gliders in <em>Hydrogeminium natans</em> (Left, Lenia) and s613 (Right, in Glabe
 
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/random_init_s613_gem.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/random_init_s613_gem.gif"><br>
 Cellular automata rollouts for s613 (left) and <em>Hydrogeminium natans</em>, 155 time steps with 'typical' (random uniform) initial grid states. Grids start out with the same states, and this animation supports Figure 9 in the paper.
  </p>
   
