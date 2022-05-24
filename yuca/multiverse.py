@@ -145,9 +145,7 @@ class CA(nn.Module):
 
         default_directory = os.path.split(\
                 os.path.split(os.path.realpath(__file__))[0])[0]
-        print(default_directory)
         default_directory = os.path.join(default_directory, "ca_configs")
-        print(default_directory)
 
         if os.path.exists(filepath):
 
