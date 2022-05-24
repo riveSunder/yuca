@@ -7,7 +7,7 @@
 
 ## A continuous cellular automata research library
 
-####  Davis, Q, Tyrell and Bongard, Josh. [Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis](https://rivesunder.github.io/yuca/evo_abio). Accepted to Proceedings of the Genetic and Evolutionary Computation Conference Companion (2022). _(coming soon!)_
+####  Davis, Q, Tyrell and Bongard, Josh. [Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis](https://rivesunder.github.io/yuca/evo_abio). Accepted to Proceedings of the Genetic and Evolutionary Computation Conference Companion (2022).  ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
 
 
 <br><br>
@@ -19,7 +19,7 @@
 
 
 <br><br>
-####  Davis, Q, Tyrell and Bongard, Josh. Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata. Accepted to The 2022 Conference on Artificial Life. (2022). ArXiv -> (coming soon!) 
+####  Davis, Q, Tyrell and Bongard, Josh. Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata. Accepted to The 2022 Conference on Artificial Life. (2022). ArXiv -> [https://arxiv.org/abs/2205.10463](https://arxiv.org/abs/2205.10463)
 
 * [Repository](https://github.com/rivesunder/yuca) 
 * [Supporting animations](https://rivesunder.github.io/yuca/glaberish) 
