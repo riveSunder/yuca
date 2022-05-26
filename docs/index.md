@@ -11,7 +11,7 @@
 
 
 <br><br>
-####  Davis, Q, Tyrell and Bongard, Josh. [Step Size is a Consequential Parameter in Continuous Cellular Automata](https://rivesunder.github.io/yuca/step_size). Accepted to The 2022 Conference on Artificial Life. (2022). ArXiv -> (coming soon!)
+####  Davis, Q, Tyrell and Bongard, Josh. [Step Size is a Consequential Parameter in Continuous Cellular Automata](https://rivesunder.github.io/yuca/step_size). Accepted to The 2022 Conference on Artificial Life. (2022). ArXiv -> [https://arxiv.org/abs/2205.12728](https://arxiv.org/abs/2205.12728)
 
 * [Repository](https://github.com/rivesunder/yuca) 
 * [Blog post](https://rivesunder.github.io/yuca/step_size) 
