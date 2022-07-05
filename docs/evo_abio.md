@@ -6,7 +6,7 @@ ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
 </p>
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/s3_waiting_sedentary_pattern.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/frog_race.gif">
 </p>
 
 # Summary
@@ -39,7 +39,7 @@ The work received funding from the National Science Foundation under the Emergin
 
 # Appendix 1: Re-discovered pattern zoo (Lenia patterns)
 
-Most of the glider patterns evolved in Lenia CA were previously documented in [^Ch2018a], [^Ch2018b], and in an online interactive demo: [chakazul.github.io/Lenia/JavaScript/Lenia.html](https://chakazul.github.io/Lenia/JavaScript/Lenia.html).
+Most of the glider patterns evolved in Lenia CA were previously documented in [^Ch2018a], [^Ch2020], and in an online interactive demo: [chakazul.github.io/Lenia/JavaScript/Lenia.html](https://chakazul.github.io/Lenia/JavaScript/Lenia.html).
 
 
 ### _Hydrogeminium natans_ 
@@ -153,7 +153,9 @@ This CA rule set was "unevolved" _i.e._ instead of selection for halting/persist
 
 
 [^note1]: Consider the gap in diversity of domestic versus wild life. 
-[^note2]: See for example [conwaylife.com forums](https://conwaylife.com/forums/viewtopic.php?f=11&t=2597) or the built-in demos in CA simulation software [Golly](https://conwaylife.com/wiki/Golly) [^Golly2016].
+
+<!-- [^note2]: See for example [conwaylife.com forums](https://conwaylife.com/forums/viewtopic.php?f=11&t=2597) or the built-in demos in CA simulation software [Golly](https://conwaylife.com/wiki/Golly) [^Golly2016].-->
+
 [^note3]: There are exceptions that do not meet both criteria and yet are still capable of universal computation and interesting activity, many of which are mentioned in Eppstein's paper. One example, Life without Death (B3/S012345678), is the antithesis of a mortal CA but does support computationally complete structures uses a kind of rod logic (_e.g._ [https://conwaylife.com/forums/viewtopic.php?t=&p=106546#p106546](https://conwaylife.com/forums/viewtopic.php?t=&p=106546#p106546) )
 
 
@@ -162,5 +164,6 @@ This CA rule set was "unevolved" _i.e._ instead of selection for halting/persist
 [^Ca1984]: Carter, Brandon. "The anthropic principle and its implications for biological evolution." Philosophical Transactions of the Royal Society of London. Series A, Mathematical and Physical Sciences 310.1512 (1983): 347-363.
 [^Sa1980]: Carl Sagan. Cosmos. Random House, New York. 1980. ISBN: 0-394-50294-9 p. 218
 [^Ch2018a]:B. W.-C. Chan, "Lenia: Biology of Artificial Life," Complex Systems, 28(3), 2019 pp. 251–286. https://doi.org/10.25088/ComplexSystems.28.3.251
-[^Ch2018b]: [https://chakazul.github.io/Lenia/JavaScript/Lenia.html](https://chakazul.github.io/Lenia/JavaScript/Lenia.html)
+[^Ch2020]: Chan, Bert Wang-Chak. "Lenia and Expanded Universe." ALIFE 2020: The 2020 Conference on Artificial Life. MIT Press, 2020. [https://arxiv.org/abs/2005.03742](https://arxiv.org/abs/2005.03742)
 [^Golly2016]: Trevorrow, A., Rokicki, T., Hutton, T., Greene, D., Summers, J., Verver, M., Munafo, R., and Rowett, C. Golly version 2.8. (2016).
+[^Ep2010]: Eppstein, David. "Growth and decay in life-like cellular automata." Game of Life cellular automata. Springer, London, 2010. 71-97. [https://arxiv.org/abs/0911.2890](https://arxiv.org/abs/0911.2890)
