@@ -1,10 +1,15 @@
 # Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis
+<p align="center">
+Q. Tyrell Davis and Josh Bongard 
+
+ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
+</p>
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/s3_waiting_sedentary_pattern.gif">
 </p>
 
-# Introduction
+# Summary
 
 <blockquote>
 If you wish to make an apple pie from scratch, you must first invent the universe. ---Carl Sagan _Cosmos_ 1980 
@@ -14,71 +19,144 @@ If you wish to make an apple pie from scratch, you must first invent the univers
 
 Lucky for pie-lovers everywhere, we already have a universe with all the physical laws and pre-requisites for the existence of a wide range of baked goods and bakers to make them. That's convenient, because universe creation is not in our experimental repertoire, at least for the type of universe we reside in. We can, however, reason about and experiment with general principles for the emergence of life-like or bioreminiscent characteristics in simplified, artificial worlds, and in this work we focus on continuously-valued cellular automata (CA) as our substrate. 
 
-Recent work in continuous CA, in particular in the Lenia framework [^Ch2018a], continues to generate a vast taxonomy of bioreminiscent patterns. To date this has mostly been the product of manual exploration and human-directed interactive evolution [^Ch2018][^Ch2020], resulting in 100s of bioreminiscent patterns (I'll occasionally refer to these as pseudorganisms here) that move, interact, and maintain self-integrity to some degree. Limiting exploration of continuous CA to manual or semi-automated methods may limit the diversity of results [^note1], which may in turn limit the ideas considered as falsifiable hypotheses as the study of ALife in continuous CA matures. 
+Recent work in continuous CA, in particular in the Lenia framework [^Ch2018a], has generated a vast taxonomy of bioreminiscent patterns. To date this has mostly been the product of manual exploration and human-directed interactive evolution [^Ch2018][^Ch2020], resulting in 100s of life-like patterns (or "pseudorganisms") that move, interact, and maintain self-integrity to some degree. Limiting exploration of continuous CA to manual or semi-automated methods may limit the diversity of results [^note1], which may in turn limit the ideas considered as falsifiable hypotheses as the study of ALife in continuous CA matures. 
 
-I applied the evolutionary methods described here not as a replacement for, but a complement to, manual/semi-automated approaches. Not intending to replace manual and semi-automated approaches to exploration. Given the myriad constructions and discoveries in discrete CA, largely the product of human tinkering, it would be foolish to discount human-in-the-loop methods [^note2]. This work was also motivated by a desire to submit to an evolution-themed conference.
+Complicated and carefully engineered CA systems in the tradition of John Von Neumann's universal constructor CA [^Vo1966] can display life-like characteristics such as self-replication, movement, and growth. On the other hand Conway's Game of Life [^Be2004] and successors showed that very simple CA rules can give rise to complex systems with similar capabilities, and it seems that only minimal criteria need to be met in a simple complex system to achieve life-like traits and computational capability. 
 
-# Background
+Unlike Von Neumann's 29-state CA, we can describe the development of Conway's Life as evolution via selection for human preferences. One of the selection criteria that emerged under and encompassing search for something interesting was the simultaneous support for opposing capabilities to grow without bound or to vanish completely. In fact the inability to predict whether a given pattern under a given set of CA ruleswill persist or vanish is in fact a version of the halting _Entscheidungensproblem_ (decision problem).
 
-When Carl Sagan spoke of inventing a universe to make an apple pie he was principally talking about the construction of heavier elements from hydrogen, a process that takes place in the fusion cores of stars. Without a universe that supports stellar lives like our own, their would be no stars, and without stars we shouldn't expect the ingredients of a typical pie recipe to exist. But another requisite for making apple pies is a universe that can support the bakers.
+<iframe width="981" height="552" src="https://www.youtube.com/embed/R9Plq-D1gEk?t=480" title="Inventing Game of Life (John Conway) - Numberphile" frameborder="0" allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-In the great demotions (another Sagan-ism) kicked off with the Copernican revolution, humanity collectively came to realize that we are not, in fact, the center of the universe. (_*Examples*_). Coupled with the discovery of evolution, one may be tempted to conclude that the human perspective is not only not special, but absolutely typical of the way of things in the Cosmos. As a counter to this conclusion, which would lead us to expect a universe teeming with unmistakable civilizations just like our own, Brandon Carter introduced the anthropic principle [^Ca1974][^Ca1984]. There are two types of anthropic principle (and many variations thereof), the weak anthropic principle asserts that while sapient life like humans cannot expect to be central, it must recognize that its own perspective is necessarily privileged by the conditions required for its existence. A strong anthropic principle, on the other hand, often invokes a phrase in the style of Descartes: "cogito ergo mundus talis est," or "I think, therefore the world is such as it is [^Ca1974]. <!-- More extreme strong anthropic principles (of the type espoused by Barrow and Tipler) can lead to assuming a universe that _must_ produce intelligent life, that is brought into existence only by perception by intelligent observers contained therein, the necessity of a multiverse, and so on. --> 
+The casual heuristic of persistent and vanishing patterns that Conway and colleagues employed become the basis for Eppstein's _fertility_ and _mortality_ metrics. Eppstein's treatment was even more lenient in that it suggests that any Life-like CA that has one or more patterns that grow outside initial bound (feritlity) and one or more patterns that disappear (mortality) is likely complex enough to support universal computation [^Ep2010][^note3].
 
-Strong anthropic principles typically suggest the universe is fine-tuned for the existence of intelligent life, a premise for which Carter invokes the concept of world-ensembles: a set of universes occupying all possibe initial conditions and global laws. From these, it may be posited, only those that can support organisms that can act as observers, such as ours, will contain observers (anthropic principles are tautological) and perhaps with some philosophical flexibility one can guess at the prevalence of universes with necessary conditions for life. From an evolutionary perspective, which we adopt for this work, we can stretch the idea of anthropic principles to say that weak principles are characterized by life selected for by the constraints of their universe of residence, and strong principles invoke that universes are selected by their ability to produce life that may act as observers. These ideas are not particularly amenable to direct experimentation, but we can apply them as mental tools in considering the occurence of artificial life in physically consistent simulated universes, such as cellular automata (CA). We'll continue to use the abbreviation CA for both singular (cellular automaton) and plural instances.  
+Working in the substrate of continuous CA (Lenia and a variant called Glaberish), in this work we automatically evolved CA rules, followed by a second stage of evolution to evolve patterns within the new rule sets. We applied selection via halting unpredictability (using a new ensemble of 3 conv-nets to try to learn halting prediction for each CA rule candidate. We also used a simpler selection criteria based on an even proportion of persistent and quiescent grids after a specified number of update steps, starting from a grid of random uniform cell states. Compared to random samples from the starting distributions of these CA rule sets (starting with values near those of the _Hydrogeminium natans_ and _Orbium_ Lenia rules), both halting unpredictability and halting proportion evolution yields more rule sets that support persistent gliders in a subsequent pattern evolution step. Given the additional computational resources of training an ensemble of neural networks for halting prediction vs simply counting the number of grids with and without live cells at the end, it seems that selecting for the simple existence of halting and growth patterns under typical circumstances is preferable to evolving halting unpredictability.
 
-Von Neumann's universal construction CA is the archetypal example of a complex system that is carefully engineered for a specific purpose [^Vo1996]. The Von Neumann CA has 29 states, including a ground state, 8 transition states, 4 confluent states, 4 ordinary transmission states, and 4 special transmission states. The various states, which indicate direction as well as type, follow a complicated list of update rules. John H. Conway, on the other hand, supposed that detailed engineering was not strictly necessary to build a CA capable of interesting complexity. 
+This blog post is a description of work presented as a [poster](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/pos237s1.pdf) and more thoroughly as an accompanying [short paper](https://arxiv.org/abs/2204.07541) at [GECCO 2022](https://gecco-2022.sigevo.org/). A library called Your Universal Cellular Automata (yuca) was developed for and used to run experiments, and you can evolve your own CA rules and patterns using the open sourced MIT-licensed [code](https://github.com/rivesunder/yuca). 
+
+The work received funding from the National Science Foundation under the Emerging Frontiers in Research and Innovation (EFRI) program (EFMA-1830870)
+
+# Visual methods summary
+
+# Appendix 1: Re-discovered pattern zoo (Lenia patterns)
+
+Most of the glider patterns evolved in Lenia CA were previously documented in [^Ch2018a], [^Ch2018b], and in an online interactive demo: [chakazul.github.io/Lenia/JavaScript/Lenia.html](https://chakazul.github.io/Lenia/JavaScript/Lenia.html).
 
 
-# Evolved Lenia Zoo
-
-In general, the rule sets described in the Lenia framework are named for the patterns they support (see [^Ch2018a] and especially the interactive demo [^Ch2018b]] for examples), and these were developed in tandem via manual manipulation and interactive evolution. An automated evolutionary approach should at least be able to select for gliders in the Lenia CA that are already known to support them, even where the specific patterns may be different than the Lenia originals. 
-
-## Re-discoveries
-
-While some of the glider patterns evolved in Lenia CA were apparently not previously documented, quite a few are the same as the patterns described in [^Ch2018a][^Ch2018b]. We can view these re-discoveries below. 
-
-### _Orbium bicaudatus_
+### _Hydrogeminium natans_ 
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/zoo/lenia_zoo/discutium_valvatus_glider_00.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif">
 </p>
 
-_Orbium bicaudatus_ is a Lenia rule set with <img src="https://render.githubusercontent.com/render/math?math=\mu = 0.15"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma = 0.014">. It uses the _Orbium_ neighborhood kernel with <img src="https://render.githubusercontent.com/render/math?math=\mu_k = 0.5"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma_k = 0.15">. 
- 
-
-### _Hydrogemium natans_ 
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/zoo/lenia_zoo/hydrogeminium_natans_glider_00.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/hydrogeminum_natans_cucumberiform.gif">
 </p>
 
-_Hydrogeminium natans_ is a Lenia rule set with an update rule defined by $$\mu = 0.26$$ and $$\sigma = 0.036$$ and a neighborhood with three rings centered at $$\mu_{k_n} = (0.0938, 0.2814, 0.4690)$$, with $$\sigma_{k_n} = (0.033, 0.033, 0.033)$$ and weighted by $$(0.5, 1.0, 0.667)$$. 
-
-## Putatively new gliders in Lenia CA
 
 ### _Discutium solidus_ 
+
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/zoo/lenia_zoo/discutium_solidus_glider_00.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_discutium_solidus_pattern_1645113835_end_107_elite0_0777.gif">
 </p>
 
-_Discutium solidus_ is a Lenia rule set with <img src="https://render.githubusercontent.com/render/math?math=\mu = 0.356"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma = 0.063">. 
 
 ### _Discutium valvatus_ 
+
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/zoo/lenia_zoo/discutium_valvatus_glider_00.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_discutium_valvatus_pattern_1645176529_end_107_elite3_0636.gif">
 </p>
 
-_Discutium valvatus_ is a Lenia rule set with <img src="https://render.githubusercontent.com/render/math?math=\mu = 0.337"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma = 0.0595">. 
+### _Scutium gravidus_ 
 
-### _Hydrogemium natans 
 <p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/zoo/lenia_zoo/hydrogeminium_natans_glider_00.gif">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_scutium_gravidus_pattern_1645188721_end_107_elite4_0271.gif">
 </p>
 
-_Hydrogeminium natans_ is a Lenia rule set with an update rule defined by <img src="https://render.githubusercontent.com/render/math?math=\mu = 0.26"> and <img src="https://render.githubusercontent.com/render/math?math=\sigma = 0.036"> and a neighborhood with three rings centered at <img src="https://render.githubusercontent.com/render/math?math=\mu_{k_n} = (0.0938, 0.2814, 0.4690)">, with <img src="https://render.githubusercontent.com/render/math?math=\sigma_{k_n} = (0.033, 0.033, 0.033)"> and weighted by <img src="https://render.githubusercontent.com/render/math?math=(0.5, 1.0, 0.667)">. The glider shown here has the same behavior (but different cell values) than fast/wobbly gliders found in s613 and s643 evolved CA, which share the _Hydrogeminium_ neighborhood kernel. 
+### _Scutium solidus_ 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_scutium_solidus_pattern_1645085384_end_101_elite2_0483.gif">
+</p>
+
+### _Scutium valvatus_ 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_scutium_valvatus_pattern_1645188440_end_101_elite5_0525.gif">
+</p>
+
+### _Paraptera sinus labens_ 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_p_sinus_labens_pattern_1645194743_end_107_elite0_0288.gif">
+</p>
+
+### _Paraptera arcus labens_ 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_p_arcus_labens_pattern_1649914682_end_11_elite0_0518.gif">
+</p>
+
+### _Orbium_ 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_orbium_pattern_1645177361_end_107_elite1_0657.gif">
+</p>
+
+### _Orbium unicaudatus ignis_ 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_o_bicaudatus_ignis_pattern_1645072355_end_103_elite3_0472.gif">
+</p>
+
+### _Synorbium_ 
+
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif">
+</p>
+
+# Appendix 2: New patterns evolved in evolved CA
+
+This section includes a selection of glider patterns that don't resemble Lenia patterns, evolved under CA rules that were in turn evolved for halting/persistence or halting unpredictability. Other evolved rules yielded gliders as well, but with patterns that generally resembled previously described Lenia patterns (espeically _Orbia_) 
+
+
+### Evolved CA s613 (halting unpredictability selection) 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_s613_pattern_1645038142_end_107_elite0_0991.gif">
+</p>
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/s613_fast_glider.gif">
+</p>
+
+### Evolved CA s643 (Simple halting/persistence selection) 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_exp_simevgeminium_643_pattern_101_103_1643874810_end_101_elite0_0902.gif">
+</p>
+
+
+### Evolved CA s11 (Simple halting/persistence selection) 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/s11_slow.gif">
+</p>
+
+
+### Unevolved CA (random selection) 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/gif_rando_morpho_0955.gif">
+This CA rule set was "unevolved" _i.e._ instead of selection for halting/persistence or halting unpredictability, fitness was assigned at random. Nonetheless the rule set was able to support the glider pattern shown above, evolved with the same center-of-mass and homeostasis selection mechanisms as the gliders found in evolved CA rule sets. The pattern is only pseudo-stable, however, and undergoes several shape changes before breaking down. 
+</p>
 
 
 [^note1]: Consider the gap in diversity of domestic versus wild life. 
 [^note2]: See for example [conwaylife.com forums](https://conwaylife.com/forums/viewtopic.php?f=11&t=2597) or the built-in demos in CA simulation software [Golly](https://conwaylife.com/wiki/Golly) [^Golly2016].
+[^note3]: There are exceptions that do not meet both criteria and yet are still capable of universal computation and interesting activity, many of which are mentioned in Eppstein's paper. One example, Life without Death (B3/S012345678), is the antithesis of a mortal CA but does support computationally complete structures uses a kind of rod logic (_e.g._ [https://conwaylife.com/forums/viewtopic.php?t=&p=106546#p106546](https://conwaylife.com/forums/viewtopic.php?t=&p=106546#p106546) )
+
+
 [^Vo1966]: Neumann, John von and Arthur W. Burks. "Theory Of Self Reproducing Automata." University of Illinois Press, Urbana and London. (1966).
 [^Ca1974]: Carter, Brandon. "Large number coincidences and the anthropic principle in cosmology." Confrontation of cosmological theories with observational data. Springer, Dordrecht, 1974. 291-298.
 [^Ca1984]: Carter, Brandon. "The anthropic principle and its implications for biological evolution." Philosophical Transactions of the Royal Society of London. Series A, Mathematical and Physical Sciences 310.1512 (1983): 347-363.
