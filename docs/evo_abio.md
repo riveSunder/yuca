@@ -25,7 +25,7 @@ Complicated and carefully engineered CA systems in the tradition of John Von Neu
 
 Unlike Von Neumann's 29-state CA, we can describe the development of Conway's Life as evolution via selection for human preferences. One of the selection criteria that emerged under and encompassing search for something interesting was the simultaneous support for opposing capabilities to grow without bound or to vanish completely. In fact the inability to predict whether a given pattern under a given set of CA ruleswill persist or vanish is in fact a version of the halting _Entscheidungensproblem_ (decision problem).
 
-[![John Horton Conway](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/john_h_conway_2005_quote)](https://www.youtube.com/watch?v=R9Plq-D1gEk&t=490s) 
+[![John Horton Conway](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/john_h_conway_2005_quote.jpg)](https://www.youtube.com/watch?v=R9Plq-D1gEk&t=490s) 
 
 _In the article introducing the public to Conway's Game of Life (In Martin Gardner's 'Mathematical Games' column of Scientific American [^Ga1970]), a prize was offered for the first proof of a pattern in Life that exhibits indefinite growth. Quote is from a 2011 interview with John Conway by Dierk Schleicher [^Sc2011]. Image is adapted from [photograph CC BY Thane Plambeck](https://www.flickr.com/photos/thane/20366806)_
 
