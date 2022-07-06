@@ -9,7 +9,7 @@ ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/frog_race.gif" width=50%>
 </p>
 
-# Summary
+## Summary
 
 <blockquote>
 If you wish to make an apple pie from scratch, you must first invent the universe. ---Carl Sagan _Cosmos_ 1980 
@@ -35,9 +35,50 @@ This blog post is a description of work presented as a [poster](https://raw.gith
 
 The work received funding from the National Science Foundation under the Emerging Frontiers in Research and Innovation (EFRI) program (EFMA-1830870)
 
-# Visual methods summary
+## Visual methods summary
 
-# Appendix 1: Re-discovered pattern zoo (Lenia patterns)
+### Phase one: evolving CA rules
+
+In this first phase, CA rules were evolved according to selection for halting unpredictability or roughly equal halting/persistence proportions in a batch of grids initialized from a random uniform distribution. We'll refer to the first case as halting unpredictability evolution and the second a simple halting evolution. 
+
+'Halting unpredictability' was based on the (negative) average accuracy of an ensemble of convolutional neural networks trained to predict whether a CA pattern would persist or vanish (all cells go to zero) after a given number of CA steps. Simple halting was instead based on the total proportion of persistent versus vanished grids after a given number of time steps, specifically the difference between the proportion of persistent/vanished grids and an even 0.5/0.5 split. 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/halting_prediction_summary.png" width=50%>
+</p>
+
+An example command to run evolution with fitness based on halting unpredictability is
+
+```
+python -m yuca.evolve -b 64 -c 512 -d cuda -f HaltingWrapper -g 32 -p 64 -k 31 -l 3 -m 128 -s 42
+```
+
+The command above specifies (in order of flags) a batch size of 64, 512 CA steps, to run on GPU, halting unpredictability-based fitness, 32 generations, a population size of 64, 3 replicates (_i.e._ train 3 separate conv-nets per each episode), a grid dimension of 128 by 128, and a random seed of 42. 
+
+Using simple halting fitness is more economical in terms of computational resources, and seems to generate just as many glider-supporting CA as the more convoluted halting unpredictability fitness. The command is nearly the same: 
+
+```
+python -m yuca.evolve -b 64 -c 512 -d cuda -f SimpleHaltingWrapper -g 32 -p 64 -k 31 -l 3 -m 128 -s 42
+```
+
+### Phase two: evolving gliders
+
+Gliders (here referring to mobile CA patterns in general)  act as information carriers and can carry out computations in their collisions, and can be quite charismatic and/or aesthetically pleasing in their activity. A [recent project](https://developmentalsystems.org/sensorimotor-lenia/) described the nascent training of agency in Lenia-based gliders, which may provide the substrate for studying agency and learning under consistent physics (_i.e._ a glider operates under the same rules as its environment.  
+
+The glider evolution step in this project uses the same covariance matrix adaptation evolution strategy [^Ha2012] as for evolving CAs, coupled with a fitness metric comprised of motility and homeostasis components and compositional pattern-producing networks for encoding starting synthesis patterns [^St2007]. The motility component is calculated by finding the "center-of-mass" of active cells in the pattern, producing a positive reward when its position changes. A homeostasis component is a negative reward based on changes in the average cell value of all cells in the grid. Combined these metrics provide increased reward for patterns that move across the grid without growing too much or disappearing. There is also a large negative penalty for patterns that disappear before the simulation completes its run. 
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/cppn_flow.png" width=50%>
+</p>
+
+Glider evolution has the same entry point but uses a different reward wrapper. There's no point 
+in setting the replicates flag `-l` to a value other than 1, because each CPPN individual produces a static starting synthesis pattern. 
+
+```
+python -m yuca.evolve -b 64 -c 512 -d cuda -f GliderWrapper -g 32 -p 64 -k 31 -l 1 -m 128 -s 42
+```
+
+## Appendix 1: Re-discovered pattern zoo (Lenia patterns)
 
 Most of the glider patterns evolved in Lenia CA were previously documented in [^Ch2018a], [^Ch2020], and in an online interactive demo: [chakazul.github.io/Lenia/JavaScript/Lenia.html](https://chakazul.github.io/Lenia/JavaScript/Lenia.html).
 
@@ -115,7 +156,7 @@ Most of the glider patterns evolved in Lenia CA were previously documented in [^
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif" width=50%>
 </p>
 
-# Appendix 2: New patterns evolved in evolved CA
+## Appendix 2: New patterns evolved in evolved CA
 
 This section includes a selection of glider patterns that don't resemble Lenia patterns, evolved under CA rules that were in turn evolved for halting/persistence or halting unpredictability. Other evolved rules yielded gliders as well, but with patterns that generally resembled previously described Lenia patterns (espeically _Orbia_) 
 
@@ -149,7 +190,7 @@ This section includes a selection of glider patterns that don't resemble Lenia p
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/evolved/gif_rando_morpho_0955.gif" width=50%>
 <br>
-This CA rule set was "unevolved" <em>i.e.</em> instead of selection for halting/persistence or halting unpredictability, fitness was assigned at random. Nonetheless the rule set was able to support the glider pattern shown above, evolved with the same center-of-mass and homeostasis selection mechanisms as the gliders found in evolved CA rule sets. The pattern is only pseudo-stable, however, and undergoes several shape changes before breaking down. 
+This CA rule set was "unevolved" <em>i.e.</em> instead of selection for halting/persistence or halting unpredictability, fitness was assigned at random. Nonetheless the rule set was able to support the pseudo-glider pattern shown above, evolved with the same center-of-mass and homeostasis selection mechanisms as the gliders found in evolved CA rule sets. The pattern is only pseudo-stable, however, and undergoes several shape changes before breaking down. 
 </p>
 
 
@@ -168,3 +209,5 @@ This CA rule set was "unevolved" <em>i.e.</em> instead of selection for halting/
 [^Ch2020]: Chan, Bert Wang-Chak. "Lenia and Expanded Universe." ALIFE 2020: The 2020 Conference on Artificial Life. MIT Press, 2020. [https://arxiv.org/abs/2005.03742](https://arxiv.org/abs/2005.03742)
 [^Golly2016]: Trevorrow, A., Rokicki, T., Hutton, T., Greene, D., Summers, J., Verver, M., Munafo, R., and Rowett, C. Golly version 2.8. (2016).
 [^Ep2010]: Eppstein, David. "Growth and decay in life-like cellular automata." Game of Life cellular automata. Springer, London, 2010. 71-97. [https://arxiv.org/abs/0911.2890](https://arxiv.org/abs/0911.2890)
+[^Ha2012]: Auger, Anne, and Nikolaus Hansen. "Tutorial CMA-ES: evolution strategies and covariance matrix adaptation." Proceedings of the 14th annual conference companion on Genetic and evolutionary computation. 2012.
+[^St2007]: Stanley, Kenneth O. "Compositional pattern producing networks: A novel abstraction of development." Genetic programming and evolvable machines 8.2 (2007): 131-162.
