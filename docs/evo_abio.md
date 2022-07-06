@@ -25,7 +25,9 @@ Complicated and carefully engineered CA systems in the tradition of John Von Neu
 
 Unlike Von Neumann's 29-state CA, we can describe the development of Conway's Life as evolution via selection for human preferences. One of the selection criteria that emerged under and encompassing search for something interesting was the simultaneous support for opposing capabilities to grow without bound or to vanish completely. In fact the inability to predict whether a given pattern under a given set of CA ruleswill persist or vanish is in fact a version of the halting _Entscheidungensproblem_ (decision problem).
 
-<iframe width="981" height="552" src="https://www.youtube.com/embed/R9Plq-D1gEk?t=480" title="Inventing Game of Life (John Conway) - Numberphile" frameborder="0" allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![John Horton Conway](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/john_h_conway_2005_quote)](https://www.youtube.com/watch?v=R9Plq-D1gEk&t=490s) 
+
+_In the article introducing the public to Conway's Game of Life (In Martin Gardner's 'Mathematical Games' column of Scientific American [^Ga1970]), a prize was offered for the first proof of a pattern in Life that exhibits indefinite growth. Quote is from a 2011 interview with John Conway by Dierk Schleicher [^Sc2011]. Image is adapted from [photograph CC BY Thane Plambeck](https://www.flickr.com/photos/thane/20366806)_
 
 The casual heuristic of persistent and vanishing patterns that Conway and colleagues employed become the basis for Eppstein's _fertility_ and _mortality_ metrics. Eppstein's treatment was even more lenient in that it suggests that any Life-like CA that has one or more patterns that grow outside initial bound (feritlity) and one or more patterns that disappear (mortality) is likely complex enough to support universal computation [^Ep2010][^note3].
 
@@ -211,3 +213,5 @@ This CA rule set was "unevolved" <em>i.e.</em> instead of selection for halting/
 [^Ep2010]: Eppstein, David. "Growth and decay in life-like cellular automata." Game of Life cellular automata. Springer, London, 2010. 71-97. [https://arxiv.org/abs/0911.2890](https://arxiv.org/abs/0911.2890)
 [^Ha2012]: Auger, Anne, and Nikolaus Hansen. "Tutorial CMA-ES: evolution strategies and covariance matrix adaptation." Proceedings of the 14th annual conference companion on Genetic and evolutionary computation. 2012.
 [^St2007]: Stanley, Kenneth O. "Compositional pattern producing networks: A novel abstraction of development." Genetic programming and evolvable machines 8.2 (2007): 131-162.
+[^Ga1970]: Gardner, Martin. "The Fantastic Combinations of Jhon Conway's New Solitaire Game'Life." Sc. Am. 223 (1970): 20-123.
+[^Sc2011]: Dierk Schleicher. Interview with John Horton Conway. 2011 [https://www.ams.org/notices/201305/rnoti-p567.pdf](https://www.ams.org/notices/201305/rnoti-p567.pdf)
