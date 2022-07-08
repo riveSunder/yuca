@@ -5,6 +5,7 @@ Q. Tyrell Davis and Josh Bongard
 </p>
 ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
 
+{:style="text-align:center;"}
 [![Frog race](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/frog_race.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/frog_race.gif)
 
 ## Summary
@@ -65,9 +66,8 @@ Gliders (here referring to mobile CA patterns in general)  act as information ca
 
 The glider evolution step in this project uses the same covariance matrix adaptation evolution strategy [^Ha2012] as for evolving CAs, coupled with a fitness metric comprised of motility and homeostasis components and compositional pattern-producing networks for encoding starting synthesis patterns [^St2007]. The motility component is calculated by finding the "center-of-mass" of active cells in the pattern, producing a positive reward when its position changes. A homeostasis component is a negative reward based on changes in the average cell value of all cells in the grid. Combined these metrics provide increased reward for patterns that move across the grid without growing too much or disappearing. There is also a large negative penalty for patterns that disappear before the simulation completes its run. 
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/cppn_flow.png" width=50%>
-</p>
+{:style="text-align:center;"}
+![cppn glider evo](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/cppn_flow.png)
 
 Glider evolution has the same entry point but uses a different reward wrapper. There's no point 
 in setting the replicates flag `-l` to a value other than 1, because each CPPN individual produces a static starting synthesis pattern. 
@@ -83,9 +83,8 @@ Most of the glider patterns evolved in Lenia CA were previously documented in [^
 
 ### _Hydrogeminium natans_ 
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif" width=50%>
-</p>
+{:style="text-align:center;"}
+![hydrogeminium wobbly glider](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif)
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/hydrogeminum_natans_cucumberiform.gif" width=50%>
