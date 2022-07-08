@@ -53,7 +53,7 @@ In this first phase, CA rules were evolved according to selection for halting un
 
 'Halting unpredictability' was based on the (negative) average accuracy of an ensemble of convolutional neural networks trained to predict whether a CA pattern would persist or vanish (all cells go to zero) after a given number of CA steps. Simple halting was instead based on the total proportion of persistent versus vanished grids after a given number of time steps, specifically the difference between the proportion of persistent/vanished grids and an even 0.5/0.5 split. 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 [![Frog race](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/halting_prediction_summary.png)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/halting_prediction_summary.png)
 
 </div>
@@ -78,7 +78,7 @@ Gliders (here referring to mobile CA patterns in general)  act as information ca
 
 The glider evolution step in this project uses the same covariance matrix adaptation evolution strategy [^Ha2012] as for evolving CAs, coupled with a fitness metric comprised of motility and homeostasis components and compositional pattern-producing networks for encoding starting synthesis patterns [^St2007]. The motility component is calculated by finding the "center-of-mass" of active cells in the pattern, producing a positive reward when its position changes. A homeostasis component is a negative reward based on changes in the average cell value of all cells in the grid. Combined these metrics provide increased reward for patterns that move across the grid without growing too much or disappearing. There is also a large negative penalty for patterns that disappear before the simulation completes its run. 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 ![cppn glider evo](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/cppn_flow.png)
 </div>
@@ -97,7 +97,7 @@ Most of the glider patterns evolved in Lenia CA were previously documented in [^
 
 ### _Hydrogeminium natans_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![hydrogeminium wobbly glider](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif)
 </div>
@@ -108,73 +108,71 @@ Most of the glider patterns evolved in Lenia CA were previously documented in [^
 
 ### _Discutium solidus_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_discutium_solidus_pattern_1645113835_end_107_elite0_0777.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_discutium_solidus_pattern_1645113835_end_107_elite0_0777.gif)
 </div>
 
 ### _Discutium valvatus_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_discutium_valvatus_pattern_1645176529_end_107_elite3_0636.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_discutium_valvatus_pattern_1645176529_end_107_elite3_0636.gif)
 </div>
 
 ### _Scutium gravidus_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_scutium_gravidus_pattern_1645188721_end_107_elite4_0271.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_scutium_gravidus_pattern_1645188721_end_107_elite4_0271.gif)
 </div>
 
 ### _Scutium solidus_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_scutium_solidus_pattern_1645085384_end_101_elite2_0483.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_scutium_solidus_pattern_1645085384_end_101_elite2_0483.gif)
 </div>
 
 ### _Scutium valvatus_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_scutium_valvatus_pattern_1645188440_end_101_elite5_0525.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_scutium_valvatus_pattern_1645188440_end_101_elite5_0525.gif)
 </div>
 
 ### _Paraptera sinus labens_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_p_sinus_labens_pattern_1645194743_end_107_elite0_0288.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_p_sinus_labens_pattern_1645194743_end_107_elite0_0288.gif)
 </div>
 
 ### _Paraptera arcus labens_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_p_arcus_labens_pattern_1649914682_end_11_elite0_0518.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_p_arcus_labens_pattern_1649914682_end_11_elite0_0518.gif)
 </div>
 
 ### _Orbium_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_orbium_pattern_1645177361_end_107_elite1_0657.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_orbium_pattern_1645177361_end_107_elite1_0657.gif)
 </div>
 
 ### _Orbium unicaudatus ignis_ 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_o_bicaudatus_ignis_pattern_1645072355_end_103_elite3_0472.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_o_bicaudatus_ignis_pattern_1645072355_end_103_elite3_0472.gif)
 </div>
 
 ### _Synorbium_ 
 
-<div styl="width: 60%;">
-{:style="text-align:center;"}
+{:style="text-align:center; width: 60%"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif)
-</div>
 
 ## Appendix 2: New patterns evolved in evolved CA
 
@@ -183,7 +181,7 @@ This section includes a selection of glider patterns that don't resemble Lenia p
 
 ### Evolved CA s613 (halting unpredictability selection) 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/evolved/gif_exp_s613_pattern_1645038142_end_107_elite0_0991.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/evolved/gif_exp_s613_pattern_1645038142_end_107_elite0_0991.gif)
 </div>
@@ -193,21 +191,21 @@ This section includes a selection of glider patterns that don't resemble Lenia p
 
 ### Evolved CA s643 (Simple halting/persistence selection) 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/evolved/gif_exp_simevgeminium_643_pattern_101_103_1643874810_end_101_elite0_0902.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/evolved/gif_exp_simevgeminium_643_pattern_101_103_1643874810_end_101_elite0_0902.gif)
 </div>
 
 ### Evolved CA s11 (Simple halting/persistence selection) 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/evolved/s11_slow.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/evolved/s11_slow.gif)
 </div>
 
 ### Unevolved CA (random selection) 
 
-<div styl="width: 60%;">
+<div style="width: 60%;">
 {:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/evolved/gif_rando_morpho_0955.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/evolved/gif_rando_morpho_0955.gif)
 </div>
