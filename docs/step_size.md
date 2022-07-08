@@ -7,11 +7,13 @@
 
 Cellular automata (CA) dynamics with continuously-valued states and time steps can be generically written as[^note1]:
 
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/generic_cca.png">
+{:style="text-align:center;"}
+![generic cca eqn](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/generic_cca.png)
 
 In particular the equation above describes the Lenia framework for continuous CA, and as noted previously in that work [^Ch2019], the equation above has the same form as Euler's numerical method for solving differential equations, _i.e._ estimating CA dynamics if they are described by a differential equation <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/dat_over_dt.png" height=32>. CA updates under the Lenia framework are more particularly written as:
 
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/lenia.png">
+{:style="text-align:center;"}
+![alt text](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/lenia.png)
 
 Where <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/at_plus_dt.png" height=16> is the grid of cell states at time <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/t_plus_dt.png" height=16>, <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/growth_fn.png" height=16> is the growth function, <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/k_convolve_at.png" height=16> is the 2d spatial convolution of neighborhood kernel <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/k.png" height=16> with cell states <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/at.png" height=16> at time <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/t.png" height=16>, and <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/dt.png" height=16> is the step size. 
 
