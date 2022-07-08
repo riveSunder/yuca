@@ -1,12 +1,16 @@
 # Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis
-<p align="center">
+{:refdef: style="text-align: center;"}
 Q. Tyrell Davis and Josh Bongard 
 
-</p>
-ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
 
 {:style="text-align:center;"}
 [![Frog race](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/frog_race.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/frog_race.gif)
+
+* [Blog post (you are here)](https://rivesunder.github.io/yuca/evo_abio)
+* ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
+* [Summary poster](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/pos237s1.pdf)
+* [Bokeh app glider demo -- watch evolved gliders](https://mybinder.org/v2/gh/riveSunder/yuca/gecco_2022_pages?urlpath=/proxy/5006/gecco_bokeh_app) Note that this runs on [mybinder.org](https://mybinder.org), a great free cloud notebook service that can be a little slow. 
+ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
 
 ## Summary
 
@@ -22,7 +26,7 @@ Recent work in continuous CA, in particular in the Lenia framework [^Ch2018a], h
 
 Complicated and carefully engineered CA systems in the tradition of John Von Neumann's universal constructor CA [^Vo1966] can display life-like characteristics such as self-replication, movement, and growth. On the other hand Conway's Game of Life [^Be2004] and successors showed that very simple CA rules can give rise to complex systems with similar capabilities, and it seems that only minimal criteria need to be met in a simple complex system to achieve life-like traits and computational capability. 
 
-Unlike Von Neumann's 29-state CA, we can describe the development of Conway's Life as evolution via selection for human preferences. One of the selection criteria that emerged under and encompassing search for something interesting was the simultaneous support for opposing capabilities to grow without bound or to vanish completely. In fact the inability to predict whether a given pattern under a given set of CA ruleswill persist or vanish is in fact a version of the halting _Entscheidungensproblem_ (decision problem).
+Unlike Von Neumann's 29-state CA, we can describe the development of Conway's Life as evolution via selection for human preferences. One of the selection criteria that emerged under and encompassing search for something interesting was the simultaneous support for opposing capabilities to grow without bound or to vanish completely. In fact the inability to predict whether a given pattern under a given set of CA rules will persist or vanish is in fact a version of the halting _Entscheidungensproblem_ (decision problem).
 
 
 {:style="text-align:center;"}
@@ -30,7 +34,7 @@ Unlike Von Neumann's 29-state CA, we can describe the development of Conway's Li
 
 _In the article introducing the public to Conway's Game of Life (In Martin Gardner's 'Mathematical Games' column of Scientific American [^Ga1970]), a prize was offered for the first proof of a pattern in Life that exhibits indefinite growth. Quote is from a 2011 interview with John Conway by Dierk Schleicher [^Sc2011]. Image is adapted from [photograph CC BY Thane Plambeck](https://www.flickr.com/photos/thane/20366806)_
 
-The casual heuristic of persistent and vanishing patterns that Conway and colleagues employed become the basis for Eppstein's _fertility_ and _mortality_ metrics. Eppstein's treatment was even more lenient in that it suggests that any Life-like CA that has one or more patterns that grow outside initial bound (feritlity) and one or more patterns that disappear (mortality) is likely complex enough to support universal computation [^Ep2010][^note3].
+The casual heuristic of persistent and vanishing patterns that Conway and colleagues employed become the basis for Eppstein's _fertility_ and _mortality_ metrics. Eppstein's treatment was even more lenient in that it suggests that any Life-like CA that has one or more patterns that grow outside initial bound (fertility) and one or more patterns that disappear (mortality) is likely complex enough to support universal computation [^Ep2010][^note3].
 
 Working in the substrate of continuous CA (Lenia and a variant called Glaberish), in this work we automatically evolved CA rules, followed by a second stage of evolution to evolve patterns within the new rule sets. We applied selection via halting unpredictability (using a new ensemble of 3 conv-nets to try to learn halting prediction for each CA rule candidate. We also used a simpler selection criteria based on an even proportion of persistent and quiescent grids after a specified number of update steps, starting from a grid of random uniform cell states. Compared to random samples from the starting distributions of these CA rule sets (starting with values near those of the _Hydrogeminium natans_ and _Orbium_ Lenia rules), both halting unpredictability and halting proportion evolution yields more rule sets that support persistent gliders in a subsequent pattern evolution step. Given the additional computational resources of training an ensemble of neural networks for halting prediction vs simply counting the number of grids with and without live cells at the end, it seems that selecting for the simple existence of halting and growth patterns under typical circumstances is preferable to evolving halting unpredictability.
 
