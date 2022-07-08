@@ -2,12 +2,10 @@
 <p align="center">
 Q. Tyrell Davis and Josh Bongard 
 
+</p>
 ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
-</p>
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/frog_race.gif" width=50%>
-</p>
+[![Frog race](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/frog_race.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/frog_race.gif)
 
 ## Summary
 
@@ -45,9 +43,7 @@ In this first phase, CA rules were evolved according to selection for halting un
 
 'Halting unpredictability' was based on the (negative) average accuracy of an ensemble of convolutional neural networks trained to predict whether a CA pattern would persist or vanish (all cells go to zero) after a given number of CA steps. Simple halting was instead based on the total proportion of persistent versus vanished grids after a given number of time steps, specifically the difference between the proportion of persistent/vanished grids and an even 0.5/0.5 split. 
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/halting_prediction_summary.png" width=50%>
-</p>
+[![Frog race](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/halting_prediction_summary.png)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/halting_prediction_summary.png)
 
 An example command to run evolution with fitness based on halting unpredictability is
 
@@ -213,5 +209,5 @@ This CA rule set was "unevolved" <em>i.e.</em> instead of selection for halting/
 [^Ep2010]: Eppstein, David. "Growth and decay in life-like cellular automata." Game of Life cellular automata. Springer, London, 2010. 71-97. [https://arxiv.org/abs/0911.2890](https://arxiv.org/abs/0911.2890)
 [^Ha2012]: Auger, Anne, and Nikolaus Hansen. "Tutorial CMA-ES: evolution strategies and covariance matrix adaptation." Proceedings of the 14th annual conference companion on Genetic and evolutionary computation. 2012.
 [^St2007]: Stanley, Kenneth O. "Compositional pattern producing networks: A novel abstraction of development." Genetic programming and evolvable machines 8.2 (2007): 131-162.
-[^Ga1970]: Gardner, Martin. "The Fantastic Combinations of Jhon Conway's New Solitaire Game'Life." Sc. Am. 223 (1970): 20-123.
+[^Ga1970]: Gardner, Martin. "The Fantastic Combinations of John Conway's New Solitaire Game'Life." Sc. Am. 223 (1970): 20-123.
 [^Sc2011]: Dierk Schleicher. Interview with John Horton Conway. 2011 [https://www.ams.org/notices/201305/rnoti-p567.pdf](https://www.ams.org/notices/201305/rnoti-p567.pdf)
