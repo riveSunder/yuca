@@ -91,10 +91,10 @@ Most of the glider patterns evolved in Lenia CA were previously documented in [^
 
 ### _Hydrogeminium natans_ 
 
-{:style="text-align:center; width: 60%"}
+{:style="text-align:center;"}
 [![hydrogeminium wobbly glider](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif)
 
-{:style="text-align:center; width: 90%"}
+{:style="text-align:center;"}
 [![alt text](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/hydrogeminum_natans_cucumberiform.gif)](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/lenia/hydrogeminum_natans_cucumberiform.gif)
 
 
