@@ -47,7 +47,7 @@ class Librarian():
 
     def store(self, pattern: np.array, pattern_name: str = "my_pattern",\
             config_name: str = "unspecified", entry_point="not specified",\
-            commit_hash="not_specified"):
+            commit_hash="not_specified", notes=None):
 
         counter = 0
         file_path = os.path.join(self.directory, f"{pattern_name}{counter:03}.npy")
@@ -71,6 +71,7 @@ class Librarian():
         with open(meta_path, "w") as f:
             f.write(f"ca_config,{config_name}")
             f.write(f"\ncommit_hash,{commit_hash}")
+            f.write(f"notes, {notes}")
             f.write(f"\nentry_point,{entry_point}")
 
         np.save(file_path, pattern) 
@@ -102,6 +103,12 @@ class Librarian():
                 entry_point = metadata[3].split(",")[1]
             except:
                 entry_point = "none"
+
+            try:
+                notes = metadata[2].split(",")[1]
+            except:
+                notes = ""
+
             try:
                 commit_hash = metadata[1].split(",")[1]
             except:
@@ -112,7 +119,12 @@ class Librarian():
             print(f"pattern {pattern_name} metadata loaded from {meta_path}")
 
 
-        return pattern, ca_config, entry_point, commit_hash
+        pattern_meta = {"ca_config": ca_config, \
+                "entry_point": entry_point, \
+                "commit_hash": commit_hash, \
+                "notes": notes}
+
+        return pattern, pattern_meta
 
 
     def crop(self, pattern: np.array, row: tuple, column: tuple) -> np.array:

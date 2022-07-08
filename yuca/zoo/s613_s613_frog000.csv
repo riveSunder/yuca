@@ -1,0 +1,4 @@
+ca_config,s613.npy
+commit_hash,1eb25be2331d77bc1d7f339eb4057ab5c5901416
+notes, CA evolved for halting unpredictability
+entry_point,python yuca/evolve.py -b 1 -c 512 -cc ca_configs/s613.npy -d cuda:1 -e 2 -g 32 -l 1 -m 193 -p 512 -s 11 13 1337 -t s613_pattern -v circular
