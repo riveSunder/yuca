@@ -13,6 +13,7 @@
 * ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
 * [Blog post](https://rivesunder.github.io/yuca/evo_abio)
 * [Summary poster](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/halting_evo/pos237s1.pdf)
+* [Notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/halting_evo.ipynb) Cloud notebooks in: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) 
 * [Bokeh app glider demo -- watch evolved gliders](https://mybinder.org/v2/gh/riveSunder/yuca/gecco_2022_pages?urlpath=/proxy/5006/gecco_bokeh_app) Note that this runs on [mybinder.org](https://mybinder.org), a great free cloud notebook service that can be a little slow. 
 
 <br><br>
