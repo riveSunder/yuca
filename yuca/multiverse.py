@@ -181,8 +181,11 @@ class CA(nn.Module):
 
         # config for neighborhood kernel(s)
         if self.neighborhood_kernel_config is None:
-            print("kernel config is missing")
-            assert False,  "not implemented exception"
+            print("kernel config is missing, assuming GaussianMixture")
+            #assert False,  "not implemented exception"
+            neighborhood_kernel_config = "GaussianMixture"
+            self.neighborhood_kernel_config = "GaussianMixture"
+
         else:
             neighborhood_kernel_config = self.neighborhood_kernel_config
 
@@ -190,8 +193,10 @@ class CA(nn.Module):
 
         # genesis 
         if self.genesis_fn_config is None:
-            print("genesis fn config is missing")
-            assert False,  "not implemented exception"
+            print("genesis fn config is missing, assuming GaussianMixture")
+            #assert False,  "not implemented exception"
+            genesis_config = "GaussianMixture"
+            self.genesis_fn_config = "GaussianMixture"
         else:
             genesis_config = self.genesis_fn_config
             half_params = len(self.get_params()) // 2 
@@ -203,8 +208,10 @@ class CA(nn.Module):
             
         # persistence
         if self.persistence_fn_config is None:
-            print("genesis fn config is missing")
-            assert False,  "not implemented exception"
+            print("persistence fn config is missing, assuming GaussianMixture")
+            #assert False,  "not implemented exception"
+            persistence_config = "GaussianMixture"
+            self.persistence_fn_config = "GaussianMixture"
         else:
             persistence_config = self.persistence_fn_config
             half_params = len(self.get_params()) // 2 

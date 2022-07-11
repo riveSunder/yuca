@@ -79,6 +79,7 @@ class CMAES():
             self.starting_means = temp_agent.get_params()
             covar_weights = np.ones_like(self.starting_means)*0.15
             covar_weights[1:covar_weights.shape[0]] *= 5e-4 
+            
 
         self.starting_covar = np.abs(np.diag(covar_weights))
 
