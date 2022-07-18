@@ -79,7 +79,7 @@ class CODE(CA):
                 mean_error *= 1.0 * (small_step_grid > 0.0)
                 mean_error[mean_error > 0.0] = (mean_error / small_step_grid)[mean_error > 0.0]
 
-                step_mse = mean_error.mean() #.max()
+                step_mse = mean_error.max()
                 #torch.max((big_step_grid - small_step_grid)**2)
 
                 if step_mse < self.error_threshold:
