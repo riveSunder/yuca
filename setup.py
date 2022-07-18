@@ -9,8 +9,8 @@ setup(\
         install_requires=[\
                         "bokeh==2.4.1",\
                         "jupyter==1.0.0",\
-                        "notebook==6.3.0",\
-                        "numpy==1.18.4",\
+                        "notebook>=6.4.12",\
+                        "numpy>=1.22",\
                         "torch==1.5.1",\
                         "scikit-image==0.17.2",\
                         "jupyter_server_proxy",\

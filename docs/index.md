@@ -26,8 +26,9 @@
 
 
 <br><br>
-####  Davis, Q, Tyrell and Bongard, Josh. Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata. Accepted to The 2022 Conference on Artificial Life. (2022). ArXiv -> [https://arxiv.org/abs/2205.10463](https://arxiv.org/abs/2205.10463)
+####  Davis, Q, Tyrell and Bongard, Josh. Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata. Accepted to The 2022 Conference on Artificial Life. (2022). 
 
+* ArXiv -> [https://arxiv.org/abs/2205.10463](https://arxiv.org/abs/2205.10463)
 * [Repository](https://github.com/rivesunder/yuca) 
 * [Supporting animations](https://rivesunder.github.io/yuca/glaberish) 
 * [Static figures notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) 

@@ -45,10 +45,11 @@ class CODE(CA):
     def __init__(self, **kwargs):
         super(CODE, self).__init__(**kwargs)
     
-        self.prev_dt = 0.3
-        self.max_dt = 0.5
-        self.min_dt = 0.01
-        self.error_threshold = 1e-3
+        self.prev_dt = query_kwargs("prev_dt", 0.3, **kwargs)
+        self.max_dt = query_kwargs("max_dt", 0.5, **kwargs)
+        self.min_dt = query_kwargs("min_dt", 0.01, **kwargs)
+        self.error_threshold = query_kwargs("error_threshold", 1e-3, **kwargs)
+        self.static_dt = query_kwargs("static_dt", 1.0, **kwargs)
 
         self.reset()
 
@@ -56,7 +57,7 @@ class CODE(CA):
 
         self.t_count = 0.0
 
-    def adaptive_euler(self, grid):
+    def adaptive_euler(self, grid, total_step=0.0):
         
         keep = False
         
@@ -74,8 +75,9 @@ class CODE(CA):
                 small_step_grid = self.get_new_grid(grid)
                 small_step_grid = self.get_new_grid(small_step_grid)
 
-                mean_error = (big_step_grid - small_step_grid)**2
+                mean_error = torch.abs(big_step_grid - small_step_grid) #**2
                 mean_error *= 1.0 * (small_step_grid > 0.0)
+                mean_error[mean_error > 0.0] = (mean_error / small_step_grid)[mean_error > 0.0]
 
                 step_mse = mean_error.max()
                 #torch.max((big_step_grid - small_step_grid)**2)
@@ -87,6 +89,7 @@ class CODE(CA):
                     current_step = current_step * 0.75
 
 
+
             if not keep:
                 #print(f"{step_mse} does not meet error threshold, using min_dt of  {min_dt}")
                 current_step = self.min_dt
@@ -94,14 +97,25 @@ class CODE(CA):
             else:
                 pass
                 #print(f"{step_mse} does meet error threshold, using {ca.dt}")
-            
-        total_step = 0.0
-        
-        grid = self.get_new_grid(grid)
 
-        self.t_count += self.dt
-            
-        return grid, current_step
+        self.nmse = step_mse            
+        self.t_count += self.dt #min([self.dt, self.static_dt - total_step])
+        self.prev_dt = self.dt
+
+        grid = self.get_new_grid(grid)
+#        if self.static_dt -total_step > self.dt:
+#            total_step += self.dt
+#            grid = self.get_new_grid(grid)
+#            grid = self.adaptive_euler(grid, total_step=total_step)
+#        elif total_step >= self.static_dt:
+#            pass
+#        else:
+#            self.dt = self.static_dt - total_step
+#            total_step += self.dt
+#            grid = self.get_new_grid(grid)
+#            grid = self.adaptive_euler(grid, total_step=total_step)
+#            
+        return grid
     
     
     def update_universe(self, identity, neighborhoods):
@@ -131,7 +145,7 @@ class CODE(CA):
     
     def forward(self, universe, mode=0):
 
-        grid, self.prev_dt = self.adaptive_euler(universe)
+        grid = self.adaptive_euler(universe)
         
         return grid
 
