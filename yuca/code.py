@@ -102,18 +102,19 @@ class CODE(CA):
         self.t_count += self.dt #min([self.dt, self.static_dt - total_step])
         self.prev_dt = self.dt
 
-        if self.static_dt -total_step > self.dt:
-            total_step += self.dt
-            grid = self.get_new_grid(grid)
-            grid = self.adaptive_euler(grid, total_step=total_step)
-        elif total_step >= self.static_dt:
-            pass
-        else:
-            self.dt = self.static_dt - total_step
-            total_step += self.dt
-            grid = self.get_new_grid(grid)
-            grid = self.adaptive_euler(grid, total_step=total_step)
-            
+        grid = self.get_new_grid(grid)
+#        if self.static_dt -total_step > self.dt:
+#            total_step += self.dt
+#            grid = self.get_new_grid(grid)
+#            grid = self.adaptive_euler(grid, total_step=total_step)
+#        elif total_step >= self.static_dt:
+#            pass
+#        else:
+#            self.dt = self.static_dt - total_step
+#            total_step += self.dt
+#            grid = self.get_new_grid(grid)
+#            grid = self.adaptive_euler(grid, total_step=total_step)
+#            
         return grid
     
     
