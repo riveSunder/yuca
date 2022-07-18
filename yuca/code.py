@@ -75,7 +75,7 @@ class CODE(CA):
                 small_step_grid = self.get_new_grid(grid)
                 small_step_grid = self.get_new_grid(small_step_grid)
 
-                mean_error = np.abs(big_step_grid - small_step_grid) #**2
+                mean_error = torch.abs(big_step_grid - small_step_grid) #**2
                 mean_error *= 1.0 * (small_step_grid > 0.0)
                 mean_error[mean_error > 0.0] = (mean_error / small_step_grid)[mean_error > 0.0]
 
@@ -101,8 +101,6 @@ class CODE(CA):
         self.nmse = step_mse            
         self.t_count += self.dt #min([self.dt, self.static_dt - total_step])
         self.prev_dt = self.dt
-
-        
 
         if self.static_dt -total_step > self.dt:
             total_step += self.dt
