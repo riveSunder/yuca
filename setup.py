@@ -10,8 +10,23 @@ setup(\
                         "bokeh==2.4.1",\
                         "jupyter==1.0.0",\
                         "notebook>=6.4.12",\
-                        "numpy>=1.22",\
+                        "numpy>=1.21.6",\
                         "torch==1.5.1",\
+                        "cycler==0.11.0",\
+                        "decorator==4.4.2",\
+                        "future==0.18.2",\
+                        "imageio==2.14.1",\
+                        "kiwisolver==1.3.1",\
+                        "matplotlib==3.3.4",\
+                        "networkx==2.5.1",\
+                        "Pillow==9.0.1",\
+                        "pyparsing==3.0.7",\
+                        "python-dateutil==2.8.2",\
+                        "PyWavelets==1.1.1",\
+                        "scikit-image==0.17.2",\
+                        "scipy==1.5",\
+                        "six==1.16.0",\
+                        "tifffile==2020.9.3",\
                         "scikit-image==0.17.2",\
                         "jupyter_server_proxy",\
                         "matplotlib==3.3.3"]\
