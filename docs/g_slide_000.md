@@ -9,4 +9,4 @@ Slide Test
 
 
 {:style="text-align:center;"}
-[First slide](https://github.com/rivesunder/yuca/glaberish_slides/slide_000) -- [Next slide](https://github.com/rivesunder/yuca/glaberish_slides/slide_001)
+[First slide](https://rivesunder.github.io/yuca/g_slide_000) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_001)
