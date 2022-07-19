@@ -8,7 +8,7 @@
 ### The dynamics of Glaberish CA I have worked with are different from Lenia, but I suspect this has more to do with the selection strategy used to evolve CA rules than the structure of the framework itself.
 
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/random_init_s613_gem.gif)
+![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/teaser_figure.png)
 
 
 [^Pe2021]: Peña, Eric, and Hiroki Sayama. "Life Worth Mentioning: Complexity in Life-Like Cellular Automata." Artificial Life 27.2 (2021): 105-112. [https://doi.org/10.1162/artl_a_00348](https://doi.org/10.1162/artl_a_00348)
