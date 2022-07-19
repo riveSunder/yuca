@@ -13,11 +13,13 @@
 
 ## Note that Lenia CA _Astrium scintillans_ and two variants of _Pentafolium incarceratus_ have a more dynamic character.
 
+### _Hydrogeminium natans_ (Lenia)
 {:style="text-align:center;"}
 ![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/lenia_geminium.png)
 
+### s613 (glaberish)
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/lenia_geminium.png)
+![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/glaberish_s613.png)
 
 {:style="text-align:center;"}
 [Previous slide](https://rivesunder.github.io/yuca/g_slide_009) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_011)

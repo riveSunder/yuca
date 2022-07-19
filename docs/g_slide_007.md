@@ -10,7 +10,7 @@
 
 ## With growth split into genesis and persistence, glaberish recovers the ability to implement Morley and others. 
 
-![Morley puffer in Glaberish (works)](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/morley_puffer_lenia.gif)
+![Morley puffer in Glaberish (works)](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/morley_puffer_glaberish.gif)
 
 {:style="text-align:center;"}
 [Previous slide](https://rivesunder.github.io/yuca/g_slide_006) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_008)

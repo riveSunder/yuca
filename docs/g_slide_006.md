@@ -2,7 +2,7 @@
 
 ### Life-like CA with distinct  B/S rules don't fit into Lenia
 
-![Morley rules in Lenia](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/morley_in_puffer.png)
+![Morley rules in Lenia](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/morley_in_lenia.png)
 
 ### A dynamic puffer becomes a still life
 
