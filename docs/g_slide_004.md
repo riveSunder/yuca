@@ -2,7 +2,7 @@
 
 ## Cellular Automata (CA)
 
-### In general CA are dynamic systems that change due to rules applied to local context.
+### In general CA are dynamic systems that change due to rules applied in a local context.
 
 ### _i.e._ compute neighborhood > compute update
 
@@ -12,7 +12,7 @@
 
 ## Lenia
 
-### In Lenia, the neighborhood is defined by a smooth, continuously valued convolution kernel with a transition update defined by a smooth function call a Growth function (often one or more Gaussians)
+### In Lenia, the neighborhood is defined by a smooth, continuously valued convolution kernel with a transition update defined by a smooth function called a Growth function (usually a Gaussian)
 
 ![Lenia standard Orbium rule](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/lenia_orbium.png)
 

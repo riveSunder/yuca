@@ -14,7 +14,7 @@ Metapixel designed by Brice Due and [Kok's galaxy](https://conwaylife.com/wiki/K
 
 ### We could apply similar parsimony-based scrutiny to Lenia, SmoothLife, Larger-than-Life, and even anything more complicated to implement than the elementary cellular automata rule 110, the simplest universal CA I've heard of [^Co2004]. Is it fundamentally worth building these more complicated systems? 
 
-### One answer that I like to think about is the potential for artificial agents that learn and navigate obstacles in a physicaly consistent universe. Early work from Hamon _et al._ [^Ha2022] gives us an idea of how that might look. 
+### One answer that I like to think about is the potential for artificial agents that learn and navigate obstacles in a physically consistent universe. Early work from Hamon _et al._ [^Ha2022] gives us an idea of how that might look. 
 
 <div align="center">
 <embed src="https://web.archive.org/web/20220611163325/https://developmentalsystems.org/sensorimotor-lenia/public/resultObstacle.mp4" autostart="false" height="300" width="300">

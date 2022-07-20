@@ -1,4 +1,4 @@
-# How do typical Glaberish and Lenia CA compare?
+# How do typical glaberish and Lenia CA compare?
 
 ## One apparent difference is that most Lenia rules from Chan's taxonomy [^Ch2019] (Interactive online zoo [here](https://chakazul.github.io/Lenia/JavaScript/Lenia.html)) form Turing patterns from random uniform initializations. 
 

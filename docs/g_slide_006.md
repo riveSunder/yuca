@@ -1,6 +1,6 @@
 # ... But other Life-like CA don't work in Lenia
 
-### Life-like CA with distinct  B/S rules don't fit into Lenia
+### Life-like CA with distinct  B/S rules don't fit into Lenia. Consider Morley/Move (B368/S245):
 
 {:style="text-align:center;"}
 ![Morley rules in Lenia](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/morley_in_lenia.png)

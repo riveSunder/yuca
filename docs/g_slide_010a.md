@@ -1,4 +1,4 @@
-# How do typical Glaberish and Lenia CA compare (spatial entropy)?
+# How do typical glaberish and Lenia CA compare (spatial entropy)?
 
 ## Glaberish s613 CA compared to Lenia _Hydrogeminium natans_ CA in terms of spatial entropy maps.
 
