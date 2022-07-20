@@ -6,6 +6,8 @@
 
 {:style="text-align:center;"}
 ![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/lenia.png)
+
+{:style="text-align:center;"}
 ![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/glaberish.png)
 
 *This work was supported by the National Science Foundation under the Emerging Frontiers in Research and Innovation (EFRI) program (EFMA-1830870).*
