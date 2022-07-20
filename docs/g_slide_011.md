@@ -1,5 +1,4 @@
-
-# No alternative to showing gliders
+# What about gliders?
 
 {:style="text-align:center;"}
 ![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/geminium_s613_gliders.gif)

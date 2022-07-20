@@ -17,7 +17,7 @@
     * Compute entropy for each cell location according to 
 
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/spatial_entropy.png)
+![entropy equation](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/spatial_entropy_annotated.png)
 
 [^Ch2019]: Chan, Bert Wang-Chak. "Lenia - Biology of Artificial Life." Complex Syst. 28 (2019): [https://arxiv.org/abs/1812.05433](https://arxiv.org/abs/1812.05433).
 

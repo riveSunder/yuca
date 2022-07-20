@@ -8,7 +8,7 @@
 
 {:style="text-align:center;"}
 ![Moore Neighborhood](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/moore_neighborhood.png)
-![Morley glider](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/morley_glider_000.png)
+![Morley glider](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/morley_glider_0.png)
 
 ## Lenia
 
@@ -16,10 +16,10 @@
 
 ![Lenia standard Orbium rule](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/lenia_orbium.png)
 
-### The update takes the essential form of Euler's numerical method for differential equations.  
+### The update takes the essential form of Euler's numerical method for differential equations. 
 
 {:style="text-align:center;"}
-![Lenia equation](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/lenia.png)
+![Lenia equation](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/lenia_annotated.png)
 
 ## Life in Lenia
 

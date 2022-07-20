@@ -3,7 +3,7 @@
 ## Instead of a single growth function, we use two functions: genesis and persistence, conditioned on the current cell value
 
 {:style="text-align:center;"}
-![glaberish equation](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/glaberish.png)
+![glaberish equation](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/glaberish_annotated.png)
 
 ## This allows non-overlapping updates
 

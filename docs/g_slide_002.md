@@ -8,12 +8,13 @@
 [![Brice Due's OTCA metapixel from conwaylife.com](https://web.archive.org/web/20220228132429/https://conwaylife.com/w/images/3/3a/Otcametapixel.png)](https://conwaylife.com/wiki/OTCA_metapixel)
 {:style="text-align:center;"}
 [![Kok's galaxy in metapixels](https://web.archive.org/web/20220311083041/https://conwaylife.com/w/images/1/13/Otcametapixel_galaxy.png)](https://conwaylife.com/wiki/OTCA_metapixel)
+
 Metapixel designed by Brice Due and [Kok's galaxy](https://conwaylife.com/wiki/Kok's_galaxy) implemented in metapixels, from [conwaylife.com](https://conwaylife.com/wiki/OTCA_metapixel)
 {:style="text-align:center;"}
 
-### The spotlight on parsimony could also be turned on Lenia, SmoothLife, Larger-than-Life, and even anything more complicated to implement than the elementary cellular automata rule 110, the simplest universal CA I've heard of [^Co2004]. Is it fundamentally worth building these more complicated systems? 
+### We could apply similar parsimony-based scrutiny to Lenia, SmoothLife, Larger-than-Life, and even anything more complicated to implement than the elementary cellular automata rule 110, the simplest universal CA I've heard of [^Co2004]. Is it fundamentally worth building these more complicated systems? 
 
-### One answer that I like to think about is the potential for artificial agents that learn and navigate obstacles in a physicaly consistent universe. Early work from Hamon _et al._ [^Ha2022] gives us a glimpse. 
+### One answer that I like to think about is the potential for artificial agents that learn and navigate obstacles in a physicaly consistent universe. Early work from Hamon _et al._ [^Ha2022] gives us an idea of how that might look. 
 
 <div align="center">
 <embed src="https://web.archive.org/web/20220611163325/https://developmentalsystems.org/sensorimotor-lenia/public/resultObstacle.mp4" autostart="false" height="300" width="300">
