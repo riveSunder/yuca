@@ -7,7 +7,7 @@
 
 ## _Hydrogeminium natans_ and s613 share the same neighborhood kernel, and the s613 persistence function is placed nearly in the same position as the _'Geminium_ growth function. 
 
-## The behavior is very different. Is it the CA framework? It is at least as likely to be a result of the diffferent rule parameter selection strategy? 
+## The behavior is very different. Is it the CA framework? Isn't it at least as likely to be a result of the diffferent rule parameter selection strategy? 
 
 ## Lenia CA and patterns were mostly manually engineered or selected for human preferences [^Ch2019]. Most glaberish CA were selected specifically for halting (vanishing) proportion (50/50) or unpredictability [^Da2022]. 
 
