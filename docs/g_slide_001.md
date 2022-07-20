@@ -1,11 +1,11 @@
 
 # Conclusions 
 
-### Lenia Continuous Cellular Automata Framework does not have easy implementations for Life-like CA that have distinct *B*irth and *S*urvival rules. 
+### * The Lenia Continuous Cellular Automata Framework does not have easy implementations for Life-like CA that have distinct *B*irth and *S*urvival rules. 
 
-### We can "rescue" the ability to easily implement these CA with a new variant of Lenia called Glaberish; as a framework Glaberish is about twice as complicated. Life-like CA easily implemented in Glaberish but not in Lenia include Morley (B368/S245) and the optimal complexity CA, Dynamic Life (BS356/S23) from (Peña and Sayama 2021) [^Pe2021].
+### * We can "rescue" the ability to easily implement these CA with a new variant of Lenia called Glaberish; as a framework Glaberish is about twice as complicated. Life-like CA easily implemented in Glaberish but not in Lenia include Morley (B368/S245) and the optimal complexity CA, Dynamic Life (BS356/S23) from (Peña and Sayama 2021) [^Pe2021].
 
-### The dynamics of Glaberish CA I have worked with are different from Lenia, but I suspect this has more to do with the selection strategy used to evolve CA rules than the structure of the framework itself.
+### * The dynamics of Glaberish CA I have worked with are different from Lenia, but I suspect this has more to do with the selection strategy used to evolve CA rules than the structure of the framework itself.
 
 {:style="text-align:center;"}
 ![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/teaser_figure.png)

@@ -6,8 +6,9 @@
 
 ### _i.e._ compute neighborhood > compute update
 
+{:style="text-align:center;"}
 ![Moore Neighborhood](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/moore_neighborhood.png)
-![Morley glider](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/moore_neighborhood.png)
+![Morley glider](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/morley_glider_000.png)
 
 ## Lenia
 
@@ -17,6 +18,7 @@
 
 ### The update takes the essential form of Euler's numerical method for differential equations.  
 
+{:style="text-align:center;"}
 ![Lenia equation](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/lenia.png)
 
 ## Life in Lenia
@@ -25,6 +27,7 @@
 
 ### The Lenia framework can easily represent Conway's Game of Life with a Moore neighborhood convoluton kernel and smooth step functions corresponding to B3/S23.
 
+{:style="text-align:center;"}
 ![Lenia standard Orbium rule](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/life_in_lenia.png)
 
 

@@ -1,18 +1,20 @@
 # How do typical Glaberish and Lenia CA compare?
 
-## One apparent difference is that most Lenia rules from Chan's taxonomy (Interactive zoo from [^Ch2019] [here](https://chakazul.github.io/Lenia/JavaScript/Lenia.html)) form Turing patterns from random uniform initializations. 
+## One apparent difference is that most Lenia rules from Chan's taxonomy [^Ch2019] (Interactive online zoo [here](https://chakazul.github.io/Lenia/JavaScript/Lenia.html)) form Turing patterns from random uniform initializations. 
 
 {:style="text-align:center;"}
 ![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/typical_cca.gif)
 
-## Examples of continuous CA: a) CA evolved with random fitness b) Lenia CA from Chan's taxonomy [^Ch2019] c) CA in glaberish evolved for roughly even chances of random initial grids vanishing d) CA in glaberish evolved by selection for vanishing unpredictability [^Da2022] 
+### Examples of continuous CA: a) CA evolved with random fitness b) Lenia CA from Chan's taxonomy [^Ch2019] c) CA in glaberish evolved for roughly even chances of random initial grids vanishing d) CA in glaberish evolved by selection for vanishing unpredictability [^Da2022] 
+{:style="text-align:center;"}
 
 ## What about capturing the differences between CA dynamics with an information-theoretic measure [^note]
 
 1. Convert grid to 8-bit integer format
 2. For each neighborhood-sized window in the grid:
-    a. Compute relative proporitions of each of 256 cell values 
-    b. Compute entropy for each cell location according to 
+
+    * Compute relative proporitions of each of 256 cell values 
+    * Compute entropy for each cell location according to 
 
 {:style="text-align:center;"}
 ![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/spatial_entropy.png)
