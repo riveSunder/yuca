@@ -5,7 +5,7 @@
 
 ### Q. Tyrell Davis and Josh Bongard
 {:style="text-align:center;"}
-### 2022 Conference on Artificial Life 2022/07/20
+### 2022 Conference on Artificial Life 2022/07/22
 {:style="text-align:center;"}
 
 * [https://doi.org/10.1162/isal_a_00526](https://doi.org/10.1162/isal_a_00526) 
