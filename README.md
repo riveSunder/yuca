@@ -19,13 +19,6 @@ Install requirements:
 ```
 git clone https://github.com/riveSunder/yuca.git
 cd yuca
-pip install -r requirements.txt
-```
-
-Install repo:
-
-```
-# uses the setup.py file in the repo root
 pip install -e .
 ```
 

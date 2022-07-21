@@ -17,7 +17,7 @@
 * [Bokeh app glider demo -- watch evolved gliders](https://mybinder.org/v2/gh/riveSunder/yuca/gecco_2022_pages?urlpath=/proxy/5006/gecco_bokeh_app) Note that this runs on [mybinder.org](https://mybinder.org), a great free cloud notebook service that can be a little slow. 
 
 <br><br>
-####  Davis, Q, Tyrell and Bongard, Josh. [Step Size is a Consequential Parameter in Continuous Cellular Automata](https://rivesunder.github.io/yuca/step_size). Accepted to The 2022 Conference on Artificial Life. (2022). 
+####  Davis, Q, Tyrell and Bongard, Josh. Step Size is a Consequential Parameter in Continuous Cellular Automata. The 2022 Conference on Artificial Life. (2022). [https://doi.org/10.1162/isal_a_00526](https://doi.org/10.1162/isal_a_00526)
 
 * ArXiv -> [https://arxiv.org/abs/2205.12728](https://arxiv.org/abs/2205.12728)
 * [Repository](https://github.com/rivesunder/yuca) 
@@ -26,7 +26,7 @@
 
 
 <br><br>
-####  Davis, Q, Tyrell and Bongard, Josh. Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata. Accepted to The 2022 Conference on Artificial Life. (2022). 
+####  Davis, Q, Tyrell and Bongard, Josh. Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata. The 2022 Conference on Artificial Life. (2022). [https://doi.org/10.1162/isal_a_00530](https://doi.org/10.1162/isal_a_00530)
 
 * ArXiv -> [https://arxiv.org/abs/2205.10463](https://arxiv.org/abs/2205.10463)
 * [Repository](https://github.com/rivesunder/yuca) 
