@@ -1,8 +1,8 @@
-# Can we stabilize a wobbly glider with adaptive step size?
+# An adaptive step size can _destabilize_ a sometimes wobbly glider 
 
 
 {:style="text-align:center;"}
-![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/adaptive_ss_win.gif)
+![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/adaptive_ss_fail.gif)
 Pattern with an adaptive step size.
 {:style="text-align:center;"}
 
