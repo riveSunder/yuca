@@ -8,4 +8,4 @@ The wobbly glider in s613 actually becomes less stable when we try to use an ada
 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca/ss_slide_004.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_004b)
+[Previous slide](https://rivesunder.github.io/yuca/ss_slide_004) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_005)

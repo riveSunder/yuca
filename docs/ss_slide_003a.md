@@ -1,9 +1,9 @@
 # Continuous CA frameworks Lenia and glaberish
 
 {:style="text-align:center;"}
-![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/lenia.png)
+![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/lenia_orbium.png)
 
-Continuous CA dynamics are typically defined by computing a local context (neighborhood kernel convolution) followed by an update rule (growth function or genesis/persistence functions).
+Continuous CA dynamics are typically defined by computing a local context (neighborhood kernel convolution) followed by an update rule (growth function or genesis/persistence functions). The _Orbium_ rule in Lenia is shown above.
 {:style="text-align:center;"}
 
 {:style="text-align:center;"}

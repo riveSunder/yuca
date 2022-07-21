@@ -23,6 +23,7 @@
 * [Repository](https://github.com/rivesunder/yuca) 
 * [Blog post](https://rivesunder.github.io/yuca/step_size) 
 * [Notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) 
+* [ALife 2022 slides](https://rivesunder.github.io/yuca/ss_slide_000)
 
 
 <br><br>
