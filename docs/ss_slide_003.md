@@ -8,4 +8,4 @@ Pattern with an adaptive step size.
 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca/ss_slide_002.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_004)
+[Previous slide](https://rivesunder.github.io/yuca/ss_slide_003a.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_004)

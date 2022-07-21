@@ -11,6 +11,6 @@ Ball drop in PyBullet [^pybullet] with a simulation step size of 1/2.4 seconds p
 {:style="text-align:center;"}
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca/ss_slide_002.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_004)
+[Previous slide](https://rivesunder.github.io/yuca/ss_slide_003.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_005)
 
 [^pybullet]: [https://pybullet.org/][https://pybullet.org/]

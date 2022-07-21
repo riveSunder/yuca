@@ -1,4 +1,4 @@
-# We consider step size when exploring CA patterns
+# We should consider step size when exploring CA patterns
 
 ## * Rather than a simple tradeoff between accuracy and computational time, specific step sizes pair with particular patterns and their ability to organize themselves
 
