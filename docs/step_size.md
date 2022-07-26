@@ -27,7 +27,7 @@ For numerical estimation of differential equations with [Euler's method](https:/
 {: refdef}
 
 {:style="text-align:center;"}
-![Image](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/too_large_step_size_ball_drop.gif)
+![Image](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/too_big_step_size_ball_drop.gif)
 
 {:refdef: style="text-align: center;"}
 **Ball drop simulated in pybullet with catastrophic (too large) time step size.** *e)* 1/2.4 seconds per step. 
