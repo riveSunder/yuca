@@ -10,4 +10,4 @@
 [^Wu1999]: Wuensche, A. (1999). Classifying cellular automata automatically: Finding gliders, filtering, and relating space-time patterns, attractor basins, and the Z parameter. Complexity, 4(3):47–66.
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_009) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_010)
+[Previous slide](https://rivesunder.github.io/yuca/g_slide_009) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_010)

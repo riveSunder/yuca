@@ -13,4 +13,4 @@
 {:style="text-align:center;"}
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/ss_slide_004.md) -- [Next slide](https://rivesunder.github.io/yuca_docs/ss_slide_006)
+[Previous slide](https://rivesunder.github.io/yuca/ss_slide_004.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_006)

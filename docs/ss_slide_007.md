@@ -7,5 +7,5 @@
 
 
 {:style="text-align:center;"}
-[Back to first slide](https://rivesunder.github.io/yuca_docs/ss_slide_000) -- [Previous slide](https://rivesunder.github.io/yuca_docs/ss_slide_006) -- [Some CCA references](https://rivesunder.github.io/yuca_docs/g_ref) -- [Supporting resources index](https://rivesunder.github.io/yuca_docs/ss_slide_000)
+[Back to first slide](https://rivesunder.github.io/yuca/ss_slide_000) -- [Previous slide](https://rivesunder.github.io/yuca/ss_slide_006) -- [Some CCA references](https://rivesunder.github.io/yuca/g_ref) -- [Supporting resources index](https://rivesunder.github.io/yuca/ss_slide_000)
 

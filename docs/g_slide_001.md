@@ -14,4 +14,4 @@
 [^Pe2021]: Peña, Eric, and Hiroki Sayama. "Life Worth Mentioning: Complexity in Life-Like Cellular Automata." Artificial Life 27.2 (2021): 105-112. [https://doi.org/10.1162/artl_a_00348](https://doi.org/10.1162/artl_a_00348)
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_000) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_002)
+[Previous slide](https://rivesunder.github.io/yuca/g_slide_000) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_002)

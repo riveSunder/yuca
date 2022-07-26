@@ -16,4 +16,4 @@
 ![Morley puffer in glaberish (works)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/glaberish/morley_puffer_glaberish.gif)
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_006) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_008)
+[Previous slide](https://rivesunder.github.io/yuca/g_slide_006) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_008)

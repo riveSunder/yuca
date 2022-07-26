@@ -26,4 +26,4 @@
 [^Da2022]: Davis, Q. Tyrell, and Josh Bongard. "Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis." GECCO Companion Proceedings (2022). [https://arxiv.org/abs/2205.10463](https://arxiv.org/abs/2205.10463)
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_009) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_011)
+[Previous slide](https://rivesunder.github.io/yuca/g_slide_009) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_011)

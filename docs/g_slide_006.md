@@ -11,4 +11,4 @@
 ![Morley puffer in Lenia (doesn't work)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/glaberish/morley_puffer_lenia.gif)
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_005) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_007)
+[Previous slide](https://rivesunder.github.io/yuca/g_slide_005) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_007)

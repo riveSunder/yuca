@@ -19,4 +19,4 @@ glaberish dynamics for the s613 dataset and 'frog' pattern.
 {:style="text-align:center;"}
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/ss_slide_002.md) -- [Next slide](https://rivesunder.github.io/yuca_docs/ss_slide_003)
+[Previous slide](https://rivesunder.github.io/yuca/ss_slide_002.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_003)

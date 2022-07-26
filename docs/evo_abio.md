@@ -6,7 +6,7 @@ Q. Tyrell Davis and Josh Bongard
 {:style="text-align:center;"}
 [![Frog race](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/frog_race.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/frog_race.gif)
 
-* [Blog post (you are here)](https://rivesunder.github.io/yuca_docs/evo_abio)
+* [Blog post (you are here)](https://rivesunder.github.io/yuca/evo_abio)
 * ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
 * [Summary poster](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/pos237s1.pdf)
 * [Bokeh app glider demo -- watch evolved gliders](https://mybinder.org/v2/gh/riveSunder/yuca_docs/master?urlpath=/proxy/5006/gecco_bokeh_app) Note that this runs on [mybinder.org](https://mybinder.org), a great free cloud notebook service that can be a little slow. 

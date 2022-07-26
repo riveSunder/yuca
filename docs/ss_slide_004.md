@@ -8,4 +8,4 @@ This pattern, here running with step size 0.1 in a CA called s613, starts to wob
 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/ss_slide_003.md) -- [Next slide](https://rivesunder.github.io/yuca_docs/ss_slide_004b)
+[Previous slide](https://rivesunder.github.io/yuca/ss_slide_003.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_004b)

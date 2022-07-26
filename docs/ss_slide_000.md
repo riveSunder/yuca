@@ -13,4 +13,4 @@
 * [Supporting Information](https://rivesunder.github.io/yuca)
 
 {:style="text-align:center;"}
-[Supporting resources](https://rivesunder.github.io/yuca) -- [Next slide](https://rivesunder.github.io/yuca_docs/ss_slide_001)
+[Supporting resources](https://rivesunder.github.io/yuca) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_001)

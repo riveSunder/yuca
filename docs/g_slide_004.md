@@ -32,4 +32,4 @@
 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_003) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_005)
+[Previous slide](https://rivesunder.github.io/yuca/g_slide_003) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_005)

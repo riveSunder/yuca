@@ -8,5 +8,5 @@
 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/ss_slide_005.md) -- [Next slide](https://rivesunder.github.io/yuca_docs/ss_slide_007)
+[Previous slide](https://rivesunder.github.io/yuca/ss_slide_005.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_007)
 

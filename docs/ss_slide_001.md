@@ -7,4 +7,4 @@
 ## * Qualitative differences in behavior also become apparent at different step sizes for some patterns. 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/ss_slide_000.md) -- [Next slide](https://rivesunder.github.io/yuca_docs/ss_slide_002)
+[Previous slide](https://rivesunder.github.io/yuca/ss_slide_000.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_002)

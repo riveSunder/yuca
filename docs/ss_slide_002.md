@@ -18,4 +18,4 @@ Chan, Bert Wang-Chak. "Lenia-biology of artificial life." arXiv preprint arXiv:1
 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/ss_slide_001.md) -- [Next slide](https://rivesunder.github.io/yuca_docs/ss_slide_003a)
+[Previous slide](https://rivesunder.github.io/yuca/ss_slide_001.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_003a)

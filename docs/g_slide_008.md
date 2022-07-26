@@ -28,4 +28,4 @@
 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_007) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_009)
+[Previous slide](https://rivesunder.github.io/yuca/g_slide_007) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_009)
