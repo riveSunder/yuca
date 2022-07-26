@@ -11,7 +11,7 @@
 
 ## Lenia CA and patterns were mostly manually engineered or selected for human preferences [^Ch2019]. Most glaberish CA were selected specifically for halting (vanishing) proportion (50/50) or unpredictability [^Da2022]. 
 
-## Note that Lenia CA _Astrium scintillans_ and two variants of _Pentafolium incarceratus_ have a more dynamic character. Check them here: [https://chakazul.github.io/Lenia/JavaScript/Lenia.html](https://chakazul.github.io/Lenia/JavaScript/Lenia.html)
+## Note that Lenia CA _Astrium scintillans_ and two variants of _Pentafolium incarceratus_ have a more dynamic character. Check them [here](https://chakazul.github.io/Lenia/JavaScript/Lenia.html)
 
 ### _Hydrogeminium natans_ (Lenia)
 {:style="text-align:center;"}
