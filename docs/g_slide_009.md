@@ -3,7 +3,7 @@
 ### Glaberish s613 CA compared to Lenia _Hydrogeminium natans_ CA from a random uniform initalization.
 
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/random_init_s613_gem.gif)
+![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/glaberish/random_init_s613_gem.gif)
 
 ### * Clearly both CA are capable of escaping a bounding box, meeting the heuristic of _fertility_ from (Eppstein 2010) [^Ep2010]
 

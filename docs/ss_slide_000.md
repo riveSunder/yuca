@@ -1,7 +1,7 @@
 # Step Size is a Consequential Parameter in Continuous Cellular Automata
 
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/lenia_annotated.png)
+![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/lenia_annotated.png)
 
 ### Q. Tyrell Davis and Josh Bongard
 {:style="text-align:center;"}

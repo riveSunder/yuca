@@ -1,14 +1,14 @@
 # Inspiration
 
 {:style="text-align:center;"}
-![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/nodes_abstract.png)
+![lenia title](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/nodes_abstract.png)
     
 Chen, Ricky TQ, et al. "Neural ordinary differential equations." Advances in neural information processing systems 31 (2018). [https://arxiv.org/abs/1806.07366](https://arxiv.org/abs/1806.07366)
 
 
 {:style="text-align:center;"}
-![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/lenia_title.png)
-![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/lenia_fig_6.png)
+![lenia title](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/lenia_title.png)
+![lenia title](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/lenia_fig_6.png)
 {:style="text-align:center;"}
 
 
