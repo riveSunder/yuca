@@ -1,14 +1,14 @@
 # Inspiration
 
 {:style="text-align:center;"}
-![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/nodes_abstract.png)
+![lenia title](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/nodes_abstract.png)
     
 Chen, Ricky TQ, et al. "Neural ordinary differential equations." Advances in neural information processing systems 31 (2018). [https://arxiv.org/abs/1806.07366](https://arxiv.org/abs/1806.07366)
 
 
 {:style="text-align:center;"}
-![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/lenia_title.png)
-![lenia title](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/lenia_fig_6.png)
+![lenia title](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/lenia_title.png)
+![lenia title](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/lenia_fig_6.png)
 {:style="text-align:center;"}
 
 
@@ -18,4 +18,4 @@ Chan, Bert Wang-Chak. "Lenia-biology of artificial life." arXiv preprint arXiv:1
 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca/ss_slide_001.md) -- [Next slide](https://rivesunder.github.io/yuca/ss_slide_003a)
+[Previous slide](https://rivesunder.github.io/yuca_docs/ss_slide_001.md) -- [Next slide](https://rivesunder.github.io/yuca_docs/ss_slide_003a)

@@ -7,6 +7,6 @@
 ### 3. Some comparisons of Lenia CA _Hydrogeminium natans_ and s613, a glaberish CA with the same neighborhood.
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca/g_slide_002) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_004)
+[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_002) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_004)
 
 

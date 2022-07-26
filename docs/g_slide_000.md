@@ -2,7 +2,7 @@
 # Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata 
 
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/morley_timelapse.png)
+![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/glaberish/morley_timelapse.png)
 
 ### Q. Tyrell Davis and Josh Bongard
 {:style="text-align:center;"}
@@ -15,4 +15,4 @@
 
 
 {:style="text-align:center;"}
-[Supporting resources](https://rivesunder.github.io/yuca) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_001)
+[Supporting resources](https://rivesunder.github.io/yuca) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_001)

@@ -7,4 +7,4 @@
 ## *This work was supported by the National Science Foundation under the Emerging Frontiers in Research and Innovation (EFRI) program (EFMA-1830870).*
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca/g_slide_010) -- [References](https://rivesunder.github.io/yuca/g_ref)
+[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_010) -- [References](https://rivesunder.github.io/yuca_docs/g_ref)

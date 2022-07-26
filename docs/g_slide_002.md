@@ -27,4 +27,4 @@ An example of "sensorimotor Lenia" pattern interacting with immutable obstacles 
 [^Ha2022]: Hamon _et al._ 2022 [https://developmentalsystems.org/sensorimotor-lenia](https://developmentalsystems.org/sensorimotor-lenia)
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca/g_slide_001) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_003)
+[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_001) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_003)

@@ -1,33 +1,33 @@
 
 # Step Size is a Consequential Parameter in Continuous Cellular Automata
 
-*Experiment with varying step size in an interactive* [notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) *on*: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) or in [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) 
+*Experiment with varying step size in an interactive* [notebook](https://github.com/riveSunder/yuca_docs/blob/master/notebooks/consequential_step_size.ipynb) *on*: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca_docs/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca_docs/master?labpath=notebooks%2Fconsequential_step_size.ipynb) or in [colab](https://colab.research.google.com/github/rivesunder/yuca_docs/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca_docs/blob/master/notebooks/consequential_step_size.ipynb) 
 
 ## Introduction
 
 Cellular automata (CA) dynamics with continuously-valued states and time steps can be generically written as[^note1]:
 
 {:style="text-align:center;"}
-![generic cca eqn](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/generic_cca.png)
+![generic cca eqn](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/generic_cca.png)
 
-In particular the equation above describes the Lenia framework for continuous CA, and as noted previously in that work [^Ch2019], the equation above has the same form as Euler's numerical method for solving differential equations, _i.e._ estimating CA dynamics if they are described by a differential equation <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/dat_over_dt.png" height=32>. CA updates under the Lenia framework are more particularly written as:
+In particular the equation above describes the Lenia framework for continuous CA, and as noted previously in that work [^Ch2019], the equation above has the same form as Euler's numerical method for solving differential equations, _i.e._ estimating CA dynamics if they are described by a differential equation <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/dat_over_dt.png" height=32>. CA updates under the Lenia framework are more particularly written as:
 
 {:style="text-align:center;"}
-![alt text](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/lenia.png)
+![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/lenia.png)
 
-Where <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/at_plus_dt.png" height=16> is the grid of cell states at time <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/t_plus_dt.png" height=16>, <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/growth_fn.png" height=16> is the growth function, <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/k_convolve_at.png" height=16> is the 2d spatial convolution of neighborhood kernel <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/k.png" height=16> with cell states <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/at.png" height=16> at time <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/t.png" height=16>, and <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/dt.png" height=16> is the step size. 
+Where <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/at_plus_dt.png" height=16> is the grid of cell states at time <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/t_plus_dt.png" height=16>, <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/growth_fn.png" height=16> is the growth function, <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/k_convolve_at.png" height=16> is the 2d spatial convolution of neighborhood kernel <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/k.png" height=16> with cell states <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/at.png" height=16> at time <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/t.png" height=16>, and <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/dt.png" height=16> is the step size. 
 
 For numerical estimation of differential equations with [Euler's method](https://en.wikipedia.org/wiki/Euler_method), error depends on step size. Smaller step sizes typically lead to more accurate solutions. Step sizes that are larger will be less accurate, and if they are too large this can be catastrophic. In the ball drop animation below, simulated with PyBullet [^pybullet], the simulation is qualitatively the same across 4 orders of magnitude of step size. It's not until a time step 100 times larger than PyBullet's default of 1/240 seconds that catastrophic failure occurs.
 
 {:style="text-align:center;"}
-![Image](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/step_size_ball_drop.gif)
+![Image](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/step_size_ball_drop.gif)
 
 {:refdef: style="text-align: center;"}
 **Ball drop simulated in pybullet with different time step sizes.** Frames are sampled so that animations have the same frame rate, but simulation time step spans 4 orders of magnitude: *a)* 1/24000 seconds per step, *b)* 1/2400 seconds per step, *c)* 1/240 seconds per step (PyBullet default), and *d)* 1/24 seconds per step. 
 {: refdef}
 
 {:style="text-align:center;"}
-![Image](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/too_large_step_size_ball_drop.gif)
+![Image](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/too_large_step_size_ball_drop.gif)
 
 {:refdef: style="text-align: center;"}
 **Ball drop simulated in pybullet with catastrophic (too large) time step size.** *e)* 1/2.4 seconds per step. 
@@ -38,19 +38,19 @@ Only the final condition with a step size of ~0.4166 seconds displays noticeably
 ## Pattern stability depends on step size
 
 A minimal glider in the style of the 
-SmoothLife glider [^Ra2012] and implemented in the _Scutium gravidus_ CA under the Lenia framework is only stable in a range of step sizes from about 0.25 to 0.97. A choice of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png"> outside this range results in a vanishing glider. 
+SmoothLife glider [^Ra2012] and implemented in the _Scutium gravidus_ CA under the Lenia framework is only stable in a range of step sizes from about 0.25 to 0.97. A choice of <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/dt.png"> outside this range results in a vanishing glider. 
 
 {:style="text-align:center;"}
-![Image](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/single_scutium.gif)
+![Image](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/single_scutium.gif)
 
 {:refdef: style="text-align: center;"}
 **A minimal glider in Lenia's _Scutium gravidus_ rule set [^Ch2019], similar to the SmoothLife glider [^Ra2012], is unstable at step sizes below about 0.25 and above about 0.97.**
 {: refdef}
 
-A wide glider in the same CA rule set is typically stable for over 2000 steps at a <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/dt.png" height=16> of <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/point_1.png" height=16>, but disappears at step sizes of 0.05 or below and is also unstable at a step size of 0.5 or above, usually exhibiting unconstrained growth at large step sizes.
+A wide glider in the same CA rule set is typically stable for over 2000 steps at a <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/dt.png" height=16> of <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/point_1.png" height=16>, but disappears at step sizes of 0.05 or below and is also unstable at a step size of 0.5 or above, usually exhibiting unconstrained growth at large step sizes.
 
 {:style="text-align:center;"}
-![Image](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/consequential_step_size/superwide_scutium.gif)
+![Image](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/superwide_scutium.gif)
 
 {:refdef: style="text-align: center;"}
 **A wide glider in _Scutium gravidus_. Unlike the narrow glider, this glider is pseudo-stable at a moderate step size of 0.1 and unstable for large and small step sizes above and below about 0.5 and 0.05, respectively.**
@@ -58,14 +58,14 @@ A wide glider in the same CA rule set is typically stable for over 2000 steps at
 
 ## Behavior of individual patterns can vary qualitatively at different step sizes
 
-A more striking consequence of step size is qualitatively different behavior at different step sizes. The following example is a "frog" pattern implemented in an extension of Lenia called Glaberish [^Da2022]. In Lenia, the growth function <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/growth_fn.png" height=16>  depends only on the results of a 2D convolution of the neighborhood kernel and the cell state grid <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/k_convolve_at.png" height=16>. Glaberish splits this growth function into _persistence_ (<img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/persistence_fn.png" height=16>) and _genesis_ (<img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/genesis_fn.png" height=16>) functions, each contributes to the overal change in cell state according to the current grid states.  
+A more striking consequence of step size is qualitatively different behavior at different step sizes. The following example is a "frog" pattern implemented in an extension of Lenia called Glaberish [^Da2022]. In Lenia, the growth function <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/growth_fn.png" height=16>  depends only on the results of a 2D convolution of the neighborhood kernel and the cell state grid <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/k_convolve_at.png" height=16>. Glaberish splits this growth function into _persistence_ (<img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/persistence_fn.png" height=16>) and _genesis_ (<img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/genesis_fn.png" height=16>) functions, each contributes to the overal change in cell state according to the current grid states.  
 
-<img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/glaberish.png">
+<img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/glaberish.png">
 
-Glaberish CA dynamics reinstate the dependence on cell state found in SmoothLife, Conway's Life [^Ga1970], as well as other Life-like CA, while maintaining the flexibility of Lenia's growth function. The following frog pattern can be found in a Glaberish CA with evolved persistence ang genesis parameters called s613 (see [^Da2022b] for details on how this CA was evolved). While the narrow and wide gliders in Lenia's _Scutium gravidus_ CA occupy particular ranges of <img src="https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/dt.png" height=16>, the s613 frog pattern exhibits qualitatively different behavior across a range of step sizes from about 0.01 to about 0.13.  
+Glaberish CA dynamics reinstate the dependence on cell state found in SmoothLife, Conway's Life [^Ga1970], as well as other Life-like CA, while maintaining the flexibility of Lenia's growth function. The following frog pattern can be found in a Glaberish CA with evolved persistence ang genesis parameters called s613 (see [^Da2022b] for details on how this CA was evolved). While the narrow and wide gliders in Lenia's _Scutium gravidus_ CA occupy particular ranges of <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/dt.png" height=16>, the s613 frog pattern exhibits qualitatively different behavior across a range of step sizes from about 0.01 to about 0.13.  
 
 {:style="text-align:center;"}
-![Image](https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/consequential_step_size/supplemental_item_1_step_size_behavior.gif)
+![Image](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/supplemental_item_1_step_size_behavior.gif)
 
 {:refdef: style="text-align: center;"}
 **For the frog pattern in Glaberish CA s613, varying step size leads to qualitatively different behaviors.**
@@ -77,7 +77,7 @@ This work demonstrates the consequences of varying step size in continuous CA. P
 
 The results we have observed for these patterns contrasts sharply with previous remarks concerning the similarity of continuous CA to Euler's method for solving ODEs with regard to step size [^Ch2019]. Observations of the mobile _Orbium_ pattern in Lenia were consistent with the premise that decreasing step size asymptotically approaches an ideal simulation of the _Orbium_ pattern [^Ch2019], but for gliders in _Scutium gravidus_ and s613 we have shown that the relationship between CA dynamics and step size is not that simple in general. This work demonstrates that for several patterns a lower step size does not entail a more accurate simulation, but different behavior or potential patterns entirely. Given the evidence presented in this work, it follows that step size should be given due consideration when searching for bioreminiscent patterns [^Ch2019] [^Ch2020], and for optimization and learning with CA, for example in training patterns to have the agency to negotiate obstacles [^Ha2022], or for training neural CA for a variety of tasks such as growing patterns [^Mo2020], classifying pixels [^Ra2020], learning to generate textures [^Ni2021], and control [^Va2021].
 
-*Experiment with varying step size in an interactive* [notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) *on*: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) or in [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) 
+*Experiment with varying step size in an interactive* [notebook](https://github.com/riveSunder/yuca_docs/blob/master/notebooks/consequential_step_size.ipynb) *on*: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca_docs/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca_docs/master?labpath=notebooks%2Fconsequential_step_size.ipynb) or in [colab](https://colab.research.google.com/github/rivesunder/yuca_docs/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca_docs/blob/master/notebooks/consequential_step_size.ipynb) 
 
 **This post has not been peer-reviewed itself, but provides supporting information for the following short article accepted to the 2022 Conference on Artificial Life:**
 
@@ -85,7 +85,7 @@ The results we have observed for these patterns contrasts sharply with previous 
 
 ## References and Footnotes
 
-[^note1]: **Note:** The different formulation for the original, discrete, SmoothLife, which had a discrete time-step (_i.e._ cell states were replaced at each time step): <img src="https://raw.githubusercontent.com/riveSunder/yuca/gecco_2022_pages/assets/equations/smooth_life.png" height=18>
+[^note1]: **Note:** The different formulation for the original, discrete, SmoothLife, which had a discrete time-step (_i.e._ cell states were replaced at each time step): <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/smooth_life.png" height=18>
 
 [^pybullet]: [https://pybullet.org/][https://pybullet.org/]
 

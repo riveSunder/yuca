@@ -3,7 +3,7 @@
 ## One apparent difference is that most Lenia rules from Chan's taxonomy [^Ch2019] (Interactive online zoo [here](https://chakazul.github.io/Lenia/JavaScript/Lenia.html)) form Turing patterns from random uniform initializations. 
 
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/typical_cca.gif)
+![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/glaberish/typical_cca.gif)
 
 ### Examples of continuous CA: a) CA evolved with random fitness b) Lenia CA from Chan's taxonomy [^Ch2019] c) CA in glaberish evolved for roughly even chances of random initial grids vanishing d) CA in glaberish evolved by selection for vanishing unpredictability [^Da2022] 
 {:style="text-align:center;"}
@@ -17,7 +17,7 @@
     * Compute entropy for each cell location according to 
 
 {:style="text-align:center;"}
-![entropy equation](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/equations/spatial_entropy_annotated.png)
+![entropy equation](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/spatial_entropy_annotated.png)
 
 [^Ch2019]: Chan, Bert Wang-Chak. "Lenia - Biology of Artificial Life." Complex Syst. 28 (2019): [https://arxiv.org/abs/1812.05433](https://arxiv.org/abs/1812.05433).
 
@@ -28,4 +28,4 @@
 
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca/g_slide_007) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_009)
+[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_007) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_009)

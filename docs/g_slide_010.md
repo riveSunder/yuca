@@ -3,7 +3,7 @@
 ## s613 demonstrates greater spatial entropy variation over time compared to _Hydrogeminium natans_
 
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/spatial_entropy_plot.png)
+![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/glaberish/spatial_entropy_plot.png)
 
 ## _Hydrogeminium natans_ and s613 share the same neighborhood kernel, and the s613 persistence function is placed nearly in the same position as the _'Geminium_ growth function. 
 
@@ -15,15 +15,15 @@
 
 ### _Hydrogeminium natans_ (Lenia)
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/lenia_geminium.png)
+![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/glaberish/lenia_geminium.png)
 
 ### s613 (glaberish)
 {:style="text-align:center;"}
-![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca/master/assets/glaberish/glaberish_s613.png)
+![teaser figure showing Orbium and s613 CA](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/glaberish/glaberish_s613.png)
 
 [^Ch2019]: Chan, Bert Wang-Chak. "Lenia - Biology of Artificial Life." Complex Syst. 28 (2019): [https://arxiv.org/abs/1812.05433](https://arxiv.org/abs/1812.05433).
 
 [^Da2022]: Davis, Q. Tyrell, and Josh Bongard. "Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis." GECCO Companion Proceedings (2022). [https://arxiv.org/abs/2205.10463](https://arxiv.org/abs/2205.10463)
 
 {:style="text-align:center;"}
-[Previous slide](https://rivesunder.github.io/yuca/g_slide_009) -- [Next slide](https://rivesunder.github.io/yuca/g_slide_011)
+[Previous slide](https://rivesunder.github.io/yuca_docs/g_slide_009) -- [Next slide](https://rivesunder.github.io/yuca_docs/g_slide_011)
