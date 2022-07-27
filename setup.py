@@ -28,8 +28,7 @@ setup(\
                         "six==1.16.0",\
                         "tifffile==2020.9.3",\
                         "scikit-image==0.17.2",\
-                        "jupyter_server_proxy",\
-                        "matplotlib==3.3.3"]\
+                        "jupyter_server_proxy"]\
     )
 
 

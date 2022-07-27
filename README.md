@@ -6,6 +6,10 @@
 
 [https://mybinder.org/v2/gh/riveSunder/yuca/gecco_2022_pages?urlpath=/proxy/5006/gecco_bokeh_app](https://mybinder.org/v2/gh/riveSunder/yuca/gecco_2022_pages?urlpath=/proxy/5006/gecco_bokeh_app)
 
+# Where are the log files and assets?
+
+I've cleaned up this repository to make for a lighter `git clone` and install. Check [https://github.com/rivesunder/yuca_docs](https://github.com/rivesunder/yuca_docs) for log files and assets.
+
 # Quick Start
 
 ## Installation
@@ -17,7 +21,8 @@ source /my/env_path/bin/activate
 Install requirements:
 
 ```
-git clone https://github.com/riveSunder/yuca.git
+# use a shallow depth to avoid a big download 
+git clone --depth 1  https://github.com/riveSunder/yuca.git
 cd yuca
 pip install -e .
 ```
