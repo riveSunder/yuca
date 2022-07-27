@@ -145,8 +145,8 @@ Most of the glider patterns evolved in Lenia CA were previously documented in [^
 
 ### _Synorbium_ 
 
-{:style="text-align:center; width: 60%"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif)
+{:style="text-align:center;"}
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif){: width="512" style="text-align:center;"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif)
 
 ## Appendix 2: New patterns evolved in evolved CA
 
