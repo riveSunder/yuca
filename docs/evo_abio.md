@@ -51,7 +51,7 @@ In this first phase, CA rules were evolved according to selection for halting un
 
 'Halting unpredictability' was based on the (negative) average accuracy of an ensemble of convolutional neural networks trained to predict whether a CA pattern would persist or vanish (all cells go to zero) after a given number of CA steps. Simple halting was instead based on the total proportion of persistent versus vanished grids after a given number of time steps, specifically the difference between the proportion of persistent/vanished grids and an even 0.5/0.5 split. 
 
-[![Frog race](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/halting_prediction_summary.png)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/halting_prediction_summary.png)
+[![Frog race](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/halting_prediction_summary.png){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/halting_prediction_summary.png)
 
 
 An example command to run evolution with fitness based on halting unpredictability is
@@ -92,61 +92,61 @@ Most of the glider patterns evolved in Lenia CA were previously documented in [^
 ### _Hydrogeminium natans_ 
 
 {:style="text-align:center;"}
-[![hydrogeminium wobbly glider](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif)
+[![hydrogeminium wobbly glider](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_gemini_pattern_101_103_107_109_1643777919_end_101_elite0_0278.gif)
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/hydrogeminum_natans_cucumberiform.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/hydrogeminum_natans_cucumberiform.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/hydrogeminum_natans_cucumberiform.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/hydrogeminum_natans_cucumberiform.gif)
 
 
 ### _Discutium solidus_ 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_discutium_solidus_pattern_1645113835_end_107_elite0_0777.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_discutium_solidus_pattern_1645113835_end_107_elite0_0777.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_discutium_solidus_pattern_1645113835_end_107_elite0_0777.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_discutium_solidus_pattern_1645113835_end_107_elite0_0777.gif)
 
 ### _Discutium valvatus_ 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_discutium_valvatus_pattern_1645176529_end_107_elite3_0636.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_discutium_valvatus_pattern_1645176529_end_107_elite3_0636.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_discutium_valvatus_pattern_1645176529_end_107_elite3_0636.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_discutium_valvatus_pattern_1645176529_end_107_elite3_0636.gif)
 
 ### _Scutium gravidus_ 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_gravidus_pattern_1645188721_end_107_elite4_0271.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_gravidus_pattern_1645188721_end_107_elite4_0271.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_gravidus_pattern_1645188721_end_107_elite4_0271.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_gravidus_pattern_1645188721_end_107_elite4_0271.gif)
 
 ### _Scutium solidus_ 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_solidus_pattern_1645085384_end_101_elite2_0483.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_solidus_pattern_1645085384_end_101_elite2_0483.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_solidus_pattern_1645085384_end_101_elite2_0483.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_solidus_pattern_1645085384_end_101_elite2_0483.gif)
 
 ### _Scutium valvatus_ 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_valvatus_pattern_1645188440_end_101_elite5_0525.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_valvatus_pattern_1645188440_end_101_elite5_0525.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_valvatus_pattern_1645188440_end_101_elite5_0525.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_scutium_valvatus_pattern_1645188440_end_101_elite5_0525.gif)
 
 ### _Paraptera sinus labens_ 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_p_sinus_labens_pattern_1645194743_end_107_elite0_0288.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_p_sinus_labens_pattern_1645194743_end_107_elite0_0288.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_p_sinus_labens_pattern_1645194743_end_107_elite0_0288.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_p_sinus_labens_pattern_1645194743_end_107_elite0_0288.gif)
 
 ### _Paraptera arcus labens_ 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_p_arcus_labens_pattern_1649914682_end_11_elite0_0518.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_p_arcus_labens_pattern_1649914682_end_11_elite0_0518.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_p_arcus_labens_pattern_1649914682_end_11_elite0_0518.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_p_arcus_labens_pattern_1649914682_end_11_elite0_0518.gif)
 
 ### _Orbium_ 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_orbium_pattern_1645177361_end_107_elite1_0657.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_orbium_pattern_1645177361_end_107_elite1_0657.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_orbium_pattern_1645177361_end_107_elite1_0657.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_orbium_pattern_1645177361_end_107_elite1_0657.gif)
 
 ### _Orbium unicaudatus ignis_ 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_o_bicaudatus_ignis_pattern_1645072355_end_103_elite3_0472.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_o_bicaudatus_ignis_pattern_1645072355_end_103_elite3_0472.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_o_bicaudatus_ignis_pattern_1645072355_end_103_elite3_0472.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_o_bicaudatus_ignis_pattern_1645072355_end_103_elite3_0472.gif)
 
 ### _Synorbium_ 
 
 {:style="text-align:center; width: 60%"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/lenia/gif_exp_synorbium_pattern_1645177716_end_107_elite0_0592.gif)
 
 ## Appendix 2: New patterns evolved in evolved CA
 
@@ -156,25 +156,25 @@ This section includes a selection of glider patterns that don't resemble Lenia p
 ### Evolved CA s613 (halting unpredictability selection) 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_exp_s613_pattern_1645038142_end_107_elite0_0991.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_exp_s613_pattern_1645038142_end_107_elite0_0991.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_exp_s613_pattern_1645038142_end_107_elite0_0991.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_exp_s613_pattern_1645038142_end_107_elite0_0991.gif)
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/s613_fast_glider.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/s613_fast_glider.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/s613_fast_glider.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/s613_fast_glider.gif)
 
 ### Evolved CA s643 (Simple halting/persistence selection) 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_exp_simevgeminium_643_pattern_101_103_1643874810_end_101_elite0_0902.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_exp_simevgeminium_643_pattern_101_103_1643874810_end_101_elite0_0902.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_exp_simevgeminium_643_pattern_101_103_1643874810_end_101_elite0_0902.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_exp_simevgeminium_643_pattern_101_103_1643874810_end_101_elite0_0902.gif)
 
 ### Evolved CA s11 (Simple halting/persistence selection) 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/s11_slow.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/s11_slow.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/s11_slow.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/s11_slow.gif)
 
 ### Unevolved CA (random selection) 
 
 {:style="text-align:center;"}
-[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_rando_morpho_0955.gif)](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_rando_morpho_0955.gif)
+[![alt text](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_rando_morpho_0955.gif){: width="512"}](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/evolved/gif_rando_morpho_0955.gif)
 
 {:refdef: style="text-align: center;"}
 This CA rule set was "unevolved" _i.e._ instead of selection for halting/persistence or halting unpredictability, fitness was assigned at random. Nonetheless the rule set was able to support the pseudo-glider pattern shown above, evolved with the same center-of-mass and homeostasis selection mechanisms as the gliders found in evolved CA rule sets. The pattern is only pseudo-stable, however, and undergoes several shape changes before breaking down. 
