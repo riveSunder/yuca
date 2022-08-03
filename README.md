@@ -22,7 +22,10 @@ Install requirements:
 
 ```
 # use a shallow depth to avoid a big download 
-git clone --depth 1  https://github.com/riveSunder/yuca.git
+git clone -d 1 2022-07-28  https://github.com/riveSunder/yuca.git
+# or
+#git clone --shallow-since 2022-07-28  https://github.com/riveSunder/yuca.git
+
 cd yuca
 pip install -e .
 ```
