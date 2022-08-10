@@ -651,7 +651,7 @@ class CA(nn.Module):
                 f"and {neighborhoods.shape[1]} neighborhoods"
         assert neighborhoods.shape[1] == len(self.persistence_fns), error_msg 
 
-        updated_grid = torch.Tensor().to(self.my_device)
+        updated_grid = torch.Tensor().to(self.my_device).to(self.my_dtype)
 
         for ii in range(len(self.persistence_fns)):
 
@@ -668,14 +668,16 @@ class CA(nn.Module):
                 f"and {neighborhoods.shape[1]} neighborhoods"
         assert neighborhoods.shape[1] == len(self.genesis_fns), error_msg 
 
-        updated_grid = torch.Tensor().to(self.my_device)
+        for p in self.parameters():
+            self.my_dtype = p.dtype
+
+        updated_grid = torch.Tensor().to(self.my_device).to(self.my_dtype)
 
         for ii in range(len(self.genesis_fns)):
 
             temp_grid = self.genesis_fns[ii](neighborhoods[:,ii:ii+1,:,:]) 
 
             updated_grid = torch.cat([updated_grid, temp_grid], dim=1)
-
         return updated_grid
 
 
