@@ -706,12 +706,19 @@ class CA(nn.Module):
 
     def update_universe(self, identity, neighborhoods):
 
-        generate = (1.0 - identity) * self.genesis(neighborhoods)
-        persist = identity * self.persistence(neighborhoods)
+        if neighborhoods.dtype == torch.float16 and torch.device(self.my_device).type != "cuda":
+            generate = ((1.0 - identity.to(torch.float32)) * self.genesis(neighborhoods.to(torch.float32))).to(torch.float16)
+            persist = (identity.to(torch.float32) * self.persistence(neighborhoods.to(torch.float32))).to(torch.float16)
 
-        genper = generate + persist
+            genper = (generate.to(torch.float32) + persist.to(torch.float32)).to(torch.float16)
 
-        update = self.weights_layer(genper)
+            update = self.weights_layer(genper.to(torch.float32)).to(torch.float16)
+        else:
+            generate = (1.0 - identity) * self.genesis(neighborhoods)
+            persist = identity * self.persistence(neighborhoods)
+
+            genper = generate + persist
+            update = self.weights_layer(genper)
 
         return update 
 
@@ -720,13 +727,21 @@ class CA(nn.Module):
         if universe.shape[1] >= 4:
             universe = self.alive_mask(universe)
 
-        identity = self.id_conv(universe)
-        neighborhoods = self.neighborhood_conv(universe)
+        if universe.dtype == torch.float16 and torch.device(self.my_device).type != "cuda":
+            identity = self.id_conv(universe.to(torch.float32)).to(torch.float16)
+            neighborhoods = self.neighborhood_conv(universe.to(torch.float32)).to(torch.float16)
 
-        update = self.update_universe(identity, neighborhoods)
-        
-        new_universe = torch.clamp(universe + self.dt * update, 0, 1.0)
-        
+            update = self.update_universe(identity, neighborhoods)
+            
+            new_universe = torch.clamp(universe.to(torch.float32) + self.dt * update.to(torch.float32), 0, 1.0).to(torch.float16)
+        else:
+ 
+            identity = self.id_conv(universe)
+            neighborhoods = self.neighborhood_conv(universe)
+
+            update = self.update_universe(identity, neighborhoods)
+            
+            new_universe = torch.clamp(universe + self.dt * update, 0, 1.0)
         #new_universe = self.weights_layer(new_universe)
         self.t_count += self.dt
 
