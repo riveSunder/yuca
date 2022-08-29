@@ -10,7 +10,9 @@ from testing.yuca.test_utils import TestQueryKwargs,\
         TestGetBiteMask,\
         TestGetAperture,\
         TestPrepInput, \
-        TestMakeTarget
+        TestMakeTarget, \
+        TestPlotGridNbhd,\
+        TestPlotKernelGrowth
 
 if __name__ == "__main__":
     

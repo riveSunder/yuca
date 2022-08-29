@@ -3,13 +3,18 @@ import unittest
 import numpy as np
 import torch
 
+import matplotlib.pyplot as plt
+
+
 from yuca.utils import query_kwargs, \
         seed_all, \
         get_mask, \
         get_bite_mask, \
         get_aperture, \
         prep_input, \
-        make_target
+        make_target, \
+        plot_grid_nbhd, \
+        plot_kernel_growth
 
 class TestQueryKwargs(unittest.TestCase):
 
@@ -38,10 +43,49 @@ class TestQueryKwargs(unittest.TestCase):
             self.assertEqual(result_typo, default)
             self.assertNotEqual(result_typo, value)
 
+
+class TestPlotKernelGrowth(unittest.TestCase):
+    """
+
+    def plot_grid_nbhd(grid, nbhd, update, my_cmap=plt.get_cmap("magma"), \
+            titles=None, vmin=0, vmax=1):
+    """ 
+    def setUp(self):
+        pass
+
+    def test_plot_grid_nbhd(self):
+
+        kernel = np.random.rand(32,32)
+        growth_fn = lambda x: np.sin(x)
+        
+        fig = plot_kernel_growth(kernel, growth_fn)
+        fig2 = plt.figure()
+
+        self.assertEqual(type(fig2), type(fig))
+
+class TestPlotGridNbhd(unittest.TestCase):
+    """
+
+    def plot_grid_nbhd(grid, nbhd, update, my_cmap=plt.get_cmap("magma"), \
+            titles=None, vmin=0, vmax=1):
+    """ 
+    def setUp(self):
+        pass
+
+    def test_plot_grid_nbhd(self):
+
+        grid = np.random.rand(32,32)
+        nbhd = np.random.rand(32,32)
+        update = np.random.rand(32,32)
+        
+        fig = plot_grid_nbhd(grid, nbhd, update)
+        fig2 = plt.figure()
+
+        self.assertEqual(type(fig2), type(fig))
+
 class TestPrepInput(unittest.TestCase):
 
     def setUp(self):
-
         pass
 
     def test_prep_input(self):
