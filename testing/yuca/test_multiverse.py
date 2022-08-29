@@ -155,6 +155,6 @@ class TestCA(unittest.TestCase):
                             torch.device(my_device).type)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": #pragma: no cover
 
     unittest.main()

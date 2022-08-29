@@ -305,6 +305,6 @@ class TestSeedAll(unittest.TestCase):
             self.assertAlmostEqual(0.0, (temp_ab-temp_bb).sum())
             self.assertAlmostEqual(0.0, (temp_ac-temp_bc).sum())
 
-if __name__ == "__main__":
+if __name__ == "__main__": #pragma: no cover
     
     unittest.main(verbosity = 2)
