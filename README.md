@@ -6,6 +6,8 @@
 
 [https://mybinder.org/v2/gh/riveSunder/yuca/gecco_2022_pages?urlpath=/proxy/5006/gecco_bokeh_app](https://mybinder.org/v2/gh/riveSunder/yuca/gecco_2022_pages?urlpath=/proxy/5006/gecco_bokeh_app)
 
+### Check test line coverage -> [here](coverage.txt) 
+
 # Where are the log files and assets?
 
 I've cleaned up this repository to make for a lighter `git clone` and install. Check [https://github.com/rivesunder/yuca_docs](https://github.com/rivesunder/yuca_docs) for log files and assets.
