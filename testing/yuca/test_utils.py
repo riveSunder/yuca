@@ -1,8 +1,9 @@
 import unittest
 
 import numpy as np
+import torch
 
-from yuca.utils import query_kwargs
+from yuca.utils import query_kwargs, seed_all
 
 class TestQueryKwargs(unittest.TestCase):
 
@@ -30,6 +31,77 @@ class TestQueryKwargs(unittest.TestCase):
             self.assertEqual(result, value)
             self.assertEqual(result_typo, default)
             self.assertNotEqual(result_typo, value)
+
+class TestSeedAll(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_seed_all_00(self):
+        
+        my_seeds = [13, 1337, 42, 12345, 100000]
+        for seed in my_seeds:
+
+            seed_all(seed)
+
+            temp_a = np.random.randint(100)
+
+            seed_all(seed)
+
+            temp_b = np.random.randint(100)
+
+            self.assertEqual(temp_a, temp_b)
+    
+    def test_seed_all_01(self):
+        
+        my_seeds = [13, 1337, 42, 12345, 100000]
+        for seed in my_seeds:
+
+            seed_all(seed)
+
+            temp_a = np.random.rand(100)
+
+            seed_all(seed)
+
+            temp_b = np.random.rand(100)
+
+            self.assertEqual(0.0, np.sum(temp_a - temp_b))
+
+    def test_seed_all_02(self):
+        
+        my_seeds = [13, 1337, 42, 12345, 100000]
+        for seed in my_seeds:
+
+            seed_all(seed)
+
+            temp_a = np.random.randn(100)
+
+            seed_all(seed)
+
+            temp_b = np.random.randn(100)
+
+            self.assertEqual(0.0, np.sum(temp_a - temp_b))
+
+    def test_seed_all_03(self):
+        
+        my_seeds = [13, 1337, 42, 12345, 100000]
+        for seed in my_seeds:
+
+            seed_all(seed)
+
+            temp_aa = torch.randn(100)
+            temp_ab = torch.rand(100)
+            temp_ac = torch.randint(0, 100, size=(100,))
+
+            seed_all(seed)
+
+            temp_ba = torch.randn(100)
+            temp_bb = torch.rand(100)
+            temp_bc = torch.randint(0, 100, size=(100,))
+
+            self.assertAlmostEqual(0.0, (temp_aa-temp_ba).sum())
+            self.assertAlmostEqual(0.0, (temp_ab-temp_bb).sum())
+            self.assertAlmostEqual(0.0, (temp_ac-temp_bc).sum())
 
 if __name__ == "__main__":
     
