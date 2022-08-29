@@ -84,7 +84,7 @@ def prep_input(img, external_channels=None, \
 
     return batch
 
-def make_target(img, batch_size):
+def make_target(img):
 
     target = torch.tensor(img).reshape(1, img.shape[0], \
             img.shape[1], img.shape[2])
