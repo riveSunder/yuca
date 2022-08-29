@@ -3,7 +3,13 @@ import unittest
 import numpy as np
 import torch
 
-from yuca.utils import query_kwargs, seed_all, get_mask, get_bite_mask, get_aperture
+from yuca.utils import query_kwargs, \
+        seed_all, \
+        get_mask, \
+        get_bite_mask, \
+        get_aperture, \
+        prep_input, \
+        make_target
 
 class TestQueryKwargs(unittest.TestCase):
 
@@ -32,6 +38,43 @@ class TestQueryKwargs(unittest.TestCase):
             self.assertEqual(result_typo, default)
             self.assertNotEqual(result_typo, value)
 
+class TestPrepInput(unittest.TestCase):
+
+    def setUp(self):
+
+        pass
+
+    def test_prep_input(self):
+        # minimal test
+        img = np.random.rand(1,1,256,256)
+
+        batch = prep_input(img)
+
+        self.assertEqual(batch.shape[-1], img.shape[-1])
+
+    def test_prep_input_batch_size(self):
+        # test batch size arg
+        
+        img = np.random.rand(1,1,256,256)
+
+        for batch_size in [1,4,8,32]:
+            batch = prep_input(img, batch_size=batch_size)
+
+            self.assertEqual(batch.shape[0], batch_size)
+
+class TestMakeTarget(unittest.TestCase):
+
+    def setUp(self):
+
+        pass
+
+    def test_make_target(self):
+        # simple throughput test
+
+        img = np.random.rand(1, 256,256)
+        target = make_target(img)
+
+        self.assertEqual(img.shape[-1], target.shape[-1])
 
 class TestGetAperture(unittest.TestCase):
 

@@ -8,7 +8,9 @@ from testing.yuca.test_utils import TestQueryKwargs,\
         TestSeedAll, \
         TestGetMask, \
         TestGetBiteMask,\
-        TestGetAperture
+        TestGetAperture,\
+        TestPrepInput, \
+        TestMakeTarget
 
 if __name__ == "__main__":
     
