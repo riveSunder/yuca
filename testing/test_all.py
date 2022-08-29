@@ -7,7 +7,8 @@ from testing.yuca.test_activations import TestGaussian, TestDoGaussian
 from testing.yuca.test_utils import TestQueryKwargs,\
         TestSeedAll, \
         TestGetMask, \
-        TestGetBiteMask
+        TestGetBiteMask,\
+        TestGetAperture
 
 if __name__ == "__main__":
     

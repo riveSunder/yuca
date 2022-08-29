@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import torch
 
-from yuca.utils import query_kwargs, seed_all, get_mask, get_bite_mask
+from yuca.utils import query_kwargs, seed_all, get_mask, get_bite_mask, get_aperture
 
 class TestQueryKwargs(unittest.TestCase):
 
@@ -32,6 +32,57 @@ class TestQueryKwargs(unittest.TestCase):
             self.assertEqual(result_typo, default)
             self.assertNotEqual(result_typo, value)
 
+
+class TestGetAperture(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_aperture_full(self):
+
+        img = np.random.rand(1,1, 256,256)
+        aperture_radius = 0.98
+        
+        aperture = get_aperture(img, aperture_radius)
+
+        self.assertEqual(img.shape, aperture.shape)
+        self.assertEqual(1.0, aperture.mean())
+
+    def test_aperture_shape(self):
+
+        img = np.random.rand(1,1, 256,256)
+        aperture_radius = np.clip(np.random.rand(),0.1,0.95)
+        
+        aperture = get_aperture(img, aperture_radius)
+
+        self.assertEqual(img.shape, aperture.shape)
+
+    def test_aperture_sum(self):
+
+        for my_seed in [1234, 2345, 3456]: 
+
+            seed_all(my_seed)
+            img = np.random.rand(1,1, 256,256)
+            aperture_radius = np.clip(np.random.rand(),0.1,0.95)
+            
+            aperture = get_aperture(img, aperture_radius)
+            
+
+            self.assertGreater(img.sum(), (img*aperture).sum())
+
+    def test_aperture_center(self):
+
+        for my_seed in [1234, 2345, 3456]: 
+
+            seed_all(my_seed)
+            img = np.random.rand(1,1, 256,256)
+            aperture_radius = np.clip(np.random.rand(),0.1,0.95)
+            
+            aperture = get_aperture(img, aperture_radius)
+            
+            half_dim = img.shape[2] // 2
+
+            self.assertEqual(1.0, aperture[0,0,half_dim,half_dim])
 
 class TestGetMask(unittest.TestCase):
 
