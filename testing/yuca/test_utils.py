@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import torch
 
-from yuca.utils import query_kwargs, seed_all
+from yuca.utils import query_kwargs, seed_all, get_mask, get_bite_mask
 
 class TestQueryKwargs(unittest.TestCase):
 
@@ -31,6 +31,70 @@ class TestQueryKwargs(unittest.TestCase):
             self.assertEqual(result, value)
             self.assertEqual(result_typo, default)
             self.assertNotEqual(result_typo, value)
+
+
+class TestGetMask(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_mask_shape(self):
+
+        img = np.random.rand(1,1, 256,256)
+        
+        mask = get_mask(img, radius=.1)
+
+        self.assertEqual(img.shape, mask.shape)
+
+    def test_mask_sum(self):
+
+        for my_seed in [1234, 2345, 3456]: 
+
+            seed_all(my_seed)
+            img = np.random.rand(1,1, 256,256)
+            
+            mask = get_mask(img, radius=.5)
+
+            self.assertGreater(img.sum(), (img*mask).sum())
+
+    def test_mask_center(self):
+
+        for my_seed in [1234, 2345, 3456]: 
+
+            seed_all(my_seed)
+            img = np.random.rand(1,1, 256,256)
+            
+            mask = get_mask(img, radius=.5)
+
+            half_dim = img.shape[2] // 2
+
+            self.assertEqual(0.0, mask[0,0,half_dim,half_dim])
+
+class TestGetBiteMask(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_bite_mask_shape(self):
+
+        img = np.random.rand(1,1, 256,256)
+        
+        bite_mask = get_bite_mask(img, bite_radius=.1)
+
+        self.assertEqual(img.shape, bite_mask.shape)
+
+    def test_bite_mask_sum(self):
+
+        for my_seed in [1234, 2345, 3456]: 
+
+            seed_all(my_seed)
+            img = np.random.rand(1,1, 256,256)
+            
+            bite_mask = get_bite_mask(img, bite_radius=.5)
+
+            self.assertLess(img.sum(), bite_mask.sum())
+
+            
 
 class TestSeedAll(unittest.TestCase):
 
