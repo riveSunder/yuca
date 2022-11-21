@@ -7,17 +7,14 @@
 
 ## A continuous cellular automata research library
 
+### Intention to explore the role of discretization in the emergence of self-organization in certain approximations of continuous cellular automata and dynamic systems
 
-####  Davis, Q, Tyrell and Bongard, Josh. Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis. Companion Proceedings of the Genetic and Evolutionary Computation Conference Companion (2022).  
+* [Intention Outline (pdf)](https://github.com/riveSunder/DisContinuous/blob/gh-pages/docs/assets/discretization_intention_apa6.pdf) - [arXiv:2208.09444](https://arxiv.org/abs/2208.09444)
+* [Experiments outline script](https://raw.githubusercontent.com/riveSunder/DisContinuous/master/scripts/exp_0x00_outline.py)
+* [Animations](https://rivesunder.github.io/DisContinuous/disco_demo)
+* [Notebook](https://github.com/riveSunder/DisContinuous/blob/master/notebooks/disco_demo.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/DisContinuous/master?labpath=notebooks%2Fdisco_demo.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/DisContinuous/master?labpath=notebooks%2Fdisco_demo.ipynb), [colab](https://colab.research.google.com/github/rivesunder/DisContinuous/blob/master/notebooks/disco_demo.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/DisContinuous/blob/master/notebooks/disco_demo.ipynb) 
 
-* Paper -> [https://doi.org/10.1145/3520304.3529037](https://dl.acm.org/doi/10.1145/3520304.3529037)
-* ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
-* [Blog post](https://rivesunder.github.io/yuca/evo_abio)
-* [Summary poster](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/pos237s1.pdf)
-* [Notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/halting_evo.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) 
-* [Bokeh app glider demo -- watch evolved gliders](https://mybinder.org/v2/gh/riveSunder/yuca_docs/master?urlpath=/proxy/5006/gecco_bokeh_app) Note that this runs on [mybinder.org](https://mybinder.org), a great free cloud notebook service that can be a little slow. 
 
-<br><br>
 ####  Davis, Q, Tyrell and Bongard, Josh. Step Size is a Consequential Parameter in Continuous Cellular Automata. The 2022 Conference on Artificial Life. (2022). 
 
 * Paper -> [https://doi.org/10.1162/isal_a_00526](https://doi.org/10.1162/isal_a_00526)
@@ -28,7 +25,6 @@
 * [ALife 2022 slides](https://rivesunder.github.io/yuca/ss_slide_000)
 
 
-<br><br>
 ####  Davis, Q, Tyrell and Bongard, Josh. Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata. The 2022 Conference on Artificial Life. (2022). 
 
 * Paper -> [https://doi.org/10.1162/isal_a_00530](https://doi.org/10.1162/isal_a_00530)
@@ -38,3 +34,14 @@
 * [Static figures notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) 
 * [Animations notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_animations.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_animations.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) 
 * [ALife 2022 slides](https://rivesunder.github.io/yuca/g_slide_000)
+
+
+####  Davis, Q, Tyrell and Bongard, Josh. Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis. Companion Proceedings of the Genetic and Evolutionary Computation Conference Companion (2022).  
+
+* Paper -> [https://doi.org/10.1145/3520304.3529037](https://dl.acm.org/doi/10.1145/3520304.3529037)
+* ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
+* [Blog post](https://rivesunder.github.io/yuca/evo_abio)
+* [Summary poster](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/pos237s1.pdf)
+* [Notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/halting_evo.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) 
+* [Bokeh app glider demo -- watch evolved gliders](https://mybinder.org/v2/gh/riveSunder/yuca_docs/master?urlpath=/proxy/5006/gecco_bokeh_app) Note that this runs on [mybinder.org](https://mybinder.org), a great free cloud notebook service that can be a little slow. 
+
