@@ -1,11 +1,11 @@
 Name                               Stmts   Miss  Cover
 ------------------------------------------------------
 testing/__init__.py                    0      0   100%
-testing/test_all.py                   10      0   100%
+testing/test_all.py                    5      0   100%
 testing/yuca/__init__.py               0      0   100%
-testing/yuca/test_activations.py      36      1    97%
-testing/yuca/test_multiverse.py       86     23    73%
-testing/yuca/test_utils.py           166      1    99%
+testing/yuca/test_activations.py      34      0   100%
+testing/yuca/test_multiverse.py       84     22    74%
+testing/yuca/test_utils.py           164      0   100%
 yuca/__init__.py                       0      0   100%
 yuca/activations.py                  197    105    47%
 yuca/configs.py                       89     82     8%
@@ -14,4 +14,4 @@ yuca/multiverse.py                   546    259    53%
 yuca/patterns.py                      59     43    27%
 yuca/utils.py                        121     47    61%
 ------------------------------------------------------
-TOTAL                               1428    660    54%
+TOTAL                               1417    657    54%
