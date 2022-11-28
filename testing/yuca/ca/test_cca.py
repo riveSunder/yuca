@@ -4,7 +4,7 @@ import numpy as np
 
 import torch
 
-from yuca.cca import CCA
+from yuca.ca.continuous import CCA
 
 
 class TestCCA(unittest.TestCase):

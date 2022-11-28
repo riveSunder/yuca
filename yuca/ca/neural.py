@@ -37,11 +37,11 @@ from yuca.patterns import get_orbium, \
 
 import matplotlib.pyplot as plt
 
-from yuca.multiverse import CA
+from yuca.ca.common import CA
 
-class UNCA(CA):
+class NCA(CA):
     """
-    UNCA - Universal Neural Cellular Automata
+    NCA - Neural Cellular Automata
 
     Similar to and inheriting from CA
 
@@ -49,7 +49,8 @@ class UNCA(CA):
     """
 
     def __init__(self, **kwargs):
-        super(UNCA, self).__init__()
+        self.hidden_channels = query_kwargs("hidden_channels", 32, **kwargs)
+        super(NCA, self).__init__()
 
         # CA mode. Options are 'neural' or 'functional'.
         # these are initialized in parent class CA but won't be used by UNCA
@@ -57,6 +58,53 @@ class UNCA(CA):
 #        self.genesis_fns = []
 #        self.persistence_fns = []
 
+
+        self.default_init()
+
+    def initialize_id_layer(self):
+
+        padding = (self.id_dim - 1) // 2 
+
+        #id layer is an input to weights layer
+        self.id_layer = nn.Conv2d(self.external_channels, \
+                self.external_channels, self.id_dim, padding=padding, \
+                padding_mode = self.conv_mode, bias=False)
+
+        for param in self.id_layer.named_parameters():
+            param[1].requires_grad = False
+            param[1][:] = self.id_kernel
+
+    def default_init(self):
+
+        self.add_identity_kernel()
+        self.initialize_id_layer()
+
+        nbhd_kernels = None 
+
+        for mm in range(self.internal_channels):
+
+            my_radius = self.kernel_radius
+
+            mu = np.random.rand() 
+            sigma = np.random.rand() 
+
+            mu = np.clip(mu, 0.05, 0.95)
+            sigma = np.clip(sigma, 0.0005, 0.1)
+            
+            nbhd_kernel = get_gaussian_kernel(radius=my_radius, \
+                    mu=mu, sigma=sigma)
+
+            if nbhd_kernels is None:
+                nbhd_kernels = nbhd_kernel
+            else:
+                nbhd_kernels = torch.cat([nbhd_kernels, nbhd_kernel], dim=0)
+
+        self.add_neighborhood_kernel(nbhd_kernels)
+        self.initialize_neighborhood_layer()
+
+        self.initialize_weight_layer()
+
+        self.dt = 0.1
 
     def load_config(self, config):
         
@@ -74,19 +122,6 @@ class UNCA(CA):
         # TODO: Implement for nca
         pass
 
-    def default_init3(self):
-
-        # TODO: consolidate initializations
-        pass
-
-    def default_init2(self):
-        # TODO: consolidate initializations
-        pass
-
-    def default_init(self):
-
-        # TODO: consolidate initializations
-        pass
 
     def random_init(self):
         
@@ -98,12 +133,13 @@ class UNCA(CA):
         
         self.weights_layer = nn.Sequential(\
                 nn.Conv2d(\
-                    self.internal_channels, self.internal_channels, 1, \
+                    self.external_channels + self.internal_channels,\
+                    self.hidden_channels, 1, \
                     padding=0, \
                     padding_mode = self.conv_mode, bias=False),\
                 nn.ReLU(), \
                 nn.Conv2d(\
-                    self.internal_channels, self.external_channels, 1, \
+                    self.hidden_channels, self.external_channels, 1, \
                     padding=0, \
                     padding_mode = self.conv_mode, bias=False)\
                 )
@@ -155,7 +191,9 @@ class UNCA(CA):
     def update_universe(self, identity, neighborhoods):
 
         # TODO: NCA version
-        pass
+        model_input = torch.cat([identity, neighborhoods], dim=1)
+        update = self.weights_layer(model_input)
+        return update 
 
         #return update 
 
@@ -179,7 +217,7 @@ class UNCA(CA):
             update = self.update_universe(identity, neighborhoods)
             
             new_universe = torch.clamp(universe + self.dt * update, 0, 1.0)
-        #new_universe = self.weights_layer(new_universe)
+
         self.t_count += self.dt
 
         return new_universe
@@ -204,10 +242,6 @@ class UNCA(CA):
             return new_universe, neighborhoods, update 
         elif mode == 4:
             return new_universe, universe, neighborhoods, update 
-
-    def fit_growth(self, target, **kwargs):
-        
-        # remove entirely 
 
     def to_device(self, my_device):
         """
@@ -236,6 +270,7 @@ class UNCA(CA):
     
         params = np.array([])
 
+
         for hh, param in enumerate(self.weights_layer.named_parameters()):
             params = np.append(params, param[1].detach().numpy().ravel())
 
@@ -248,17 +283,15 @@ class UNCA(CA):
 
         # weights are not a learnable parameter for functional CA
         for hh, param in self.weights_layer.named_parameters():
-            if not len(param.shape):
-                param = param.reshape(1)
 
-                param_stop = param_start + reduce(lambda x,y: x*y, param.shape)
-                param[:] = nn.Parameter( \
-                        torch.tensor( \
-                        params[param_start:param_stop].reshape(param.shape),\
-                        requires_grad = self.use_grad), \
-                        requires_grad = self.use_grad)
+            param_stop = param_start + reduce(lambda x,y: x*y, param.shape)
+            param[:] = nn.Parameter( \
+                    torch.tensor( \
+                    params[param_start:param_stop].reshape(param.shape),\
+                    requires_grad = self.use_grad), \
+                    requires_grad = self.use_grad)
 
-                param_start = param_stop
+            param_start = param_stop
 
     def no_grad(self):
 

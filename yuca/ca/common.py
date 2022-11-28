@@ -37,14 +37,12 @@ from yuca.patterns import get_orbium, \
 
 import matplotlib.pyplot as plt
 
-from yuca.multiverse import CA
-
-class CCA(CA):
+class CA(nn.Module):
     """
     """
 
     def __init__(self, **kwargs):
-        super(CCA, self).__init__()
+        super(CA, self).__init__()
 
         self.kernel_radius = query_kwargs("kernel_radius", 13, **kwargs)
         self.my_device = query_kwargs("device", "cpu", **kwargs)
@@ -73,23 +71,13 @@ class CCA(CA):
         self.genesis_fn_config = None
         self.persistence_fn_config = None
 
+        self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
             
-        if "orbi" in self.tag.lower():
-            self.load_config(get_orbium_config(radius=self.kernel_radius))
-        elif "len" in self.tag.lower():
-            self.load_config(get_orbium_config(radius=self.kernel_radius))
-        elif "gemin" in self.tag.lower():
-            self.load_config(get_geminium_config(radius=self.kernel_radius))
-        elif "init3" in self.tag.lower():
-            self.default_init3()
-        else:
-            self.random_init()
-
         if "ca_config" in kwargs.keys():
             if kwargs["ca_config"] is not None:
                 self.restore_config(kwargs["ca_config"])
-
-        self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
+        else:
+            self.default_init()
 
         if self.input_filepath is not None:
 
@@ -237,197 +225,6 @@ class CCA(CA):
 
         np.save(filepath, config)
 
-    def default_init3(self):
-
-        self.genesis_fns = []
-        self.persistence_fns = []
-
-        self.add_identity_kernel()
-        self.initialize_id_layer()
-
-        nbhd_kernel = get_cosx2_kernel(radius=self.kernel_radius)
-
-        self.add_neighborhood_kernel(nbhd_kernel)
-        self.initialize_neighborhood_layer()
-
-        self.initialize_weight_layer()
-
-        self.dt = 0.1
-
-        params_g = torch.tensor([0.22, 0.008, 0.525, 0.007])
-        params_p = torch.tensor([0.15, 0.008, .295, 0.007])
-
-        genesis_config = {"name": "GaussianMixture",\
-                "parameters": params_g, \
-                "mode": 1}
-
-        persistence_config = {"name": "GaussianMixture",\
-                "parameters": params_p, \
-                "mode": 1}
-
-        self.add_genesis_fn(genesis_config)
-        self.add_persistence_fn(persistence_config)
-
-        self.include_parameters()
-
-    def default_init2(self):
-
-        self.genesis_fns = []
-        self.persistence_fns = []
-        
-        self.add_identity_kernel()
-        self.initialize_id_layer()
-
-        nbhd_kernel = get_gaussian_kernel(radius=self.kernel_radius)
-
-        self.add_neighborhood_kernel(nbhd_kernel)
-        self.initialize_neighborhood_layer()
-
-        self.initialize_weight_layer()
-
-        self.dt = 0.1
-        
-
-        params_g = torch.tensor([0.15, 0.005, 0.525, 0.005])
-        params_p = torch.tensor([0.22, 0.005, .295, 0.005])
-
-        genesis_config = {"name": "GaussianMixture",\
-                "parameters": params_g, \
-                "mode": 1}
-
-        persistence_config = {"name": "GaussianMixture",\
-                "parameters": params_p, \
-                "mode": 1}
-
-        self.add_genesis_fn(genesis_config)
-        self.add_persistence_fn(persistence_config)
-
-        self.include_parameters()
-
-    def default_init(self):
-
-        self.genesis_fns = []
-        self.persistence_fns = []
-        
-        self.add_identity_kernel()
-        self.initialize_id_layer()
-
-        nbhd_kernel = get_gaussian_kernel(radius=self.kernel_radius)
-
-        self.add_neighborhood_kernel(nbhd_kernel)
-        self.initialize_neighborhood_layer()
-
-        self.initialize_weight_layer()
-
-        self.dt = 0.1
-        
-        genesis_config = {"name": "Gaussian",\
-                "mu": 0.15, \
-                "sigma": 0.015, \
-                "mode": 1}
-
-        self.add_genesis_fn(genesis_config)
-        self.add_persistence_fn(genesis_config)
-
-        self.include_parameters()
-
-    def random_init(self):
-
-        self.genesis_fns = []
-        self.persistence_fns = []
-        self.add_identity_kernel()
-        self.initialize_id_layer()
-
-        nbhd_kernels = None 
-
-        for mm in range(self.internal_channels):
-
-                
-            my_radius = 1
-            if mm == 0:
-                nbhd_kernel = torch.zeros(1,1, my_radius*2+1, my_radius*2+1)
-                nbhd_kernel[0,0, my_radius, my_radius] = 1.0
-
-            else:
-                mu = np.random.rand() 
-                sigma = np.random.rand() 
-
-                mu = np.clip(mu, 0.05, 0.95)
-                sigma = np.clip(sigma, 0.0005, 0.1)
-                
-                #get_gaussian_kernel(radius=13, mu=0.5, sigma=0.15, r_scale=1.0):
-                if mm < (3 * self.internal_channels) // 4:
-                    nbhd_kernel = get_gaussian_kernel(radius=my_radius, \
-                            mu=mu, sigma=sigma)
-                else:
-                    nbhd_kernel = get_gaussian_edge_kernel(radius=my_radius, \
-                            mu=mu, sigma=sigma, mode=mm % 2)
-
-            if nbhd_kernels is None:
-                nbhd_kernels = nbhd_kernel
-            else:
-                nbhd_kernels = torch.cat([nbhd_kernels, nbhd_kernel], dim=0)
-
-        self.add_neighborhood_kernel(nbhd_kernels)
-        self.initialize_neighborhood_layer()
-
-        self.initialize_weight_layer()
-
-        if self.ca_mode == "functional" or self.ca_mode == "neurofunctional":
-            for pp in range(self.internal_channels):
-                
-                if (pp > 8):
-                    # close to the edge of chaos, from Lenia papers
-                    gen_mu = 0.15 * (1 + np.random.randn() * 0.00001)
-                    gen_sigma = 0.015 * (1 + np.random.randn() * 0.0001)
-
-                    if np.random.randint(2):
-                        genesis_config = {"name": "Gaussian",\
-                                "mu": gen_mu, \
-                                "sigma": gen_sigma, \
-                                "mode": 1}
-                    else:
-                        genesis_config = {"name": "DoGaussian",\
-                                "mu": gen_mu, \
-                                "sigma": gen_sigma, \
-                                "mode": 1}
-
-                    per_mu = 0.15 * (1 + np.random.randn() * 0.001) 
-                    per_sigma = 0.015 * (1 + np.random.randn() * 0.001) 
-
-
-                    if np.random.randint(2):
-                        persistence_config = {"name": "Gaussian",\
-                                "mu": per_mu, \
-                                "sigma": per_sigma, \
-                                "mode": 1}
-                    else:
-                        persistence_config = {"name": "DoGaussian",\
-                                "mu": per_mu, \
-                                "sigma": per_sigma, \
-                                "mode": 1}
-                    
-                else:
-                    num_coefficients = 8
-                    scaler = torch.tensor(\
-                            [10**ii for ii in range(num_coefficients)])
-
-                    per_coefficients = torch.rand(num_coefficients,) / scaler
-                    gen_coefficients = torch.rand(num_coefficients,) / scaler
-
-                    genesis_config = {"name": "Polynomial", \
-                            "coefficients": gen_coefficients}
-
-                    persistence_config = {"name": "Polynomial", \
-                            "coefficients": per_coefficients}
-
-                self.add_genesis_fn(genesis_config)
-                self.add_persistence_fn(persistence_config)
-
-
-        self.dt = 0.1
-
-        self.include_parameters()
         
     def add_identity_kernel(self, **kwargs):
         
@@ -844,6 +641,8 @@ class CCA(CA):
                         requires_grad = self.use_grad), \
                         requires_grad = self.use_grad)
 
+                
+
                 param_start = param_stop
 
     def no_grad(self):
@@ -863,4 +662,5 @@ class CCA(CA):
         
 
 if __name__ == "__main__":
+
     pass

@@ -2,7 +2,8 @@ import unittest
 
 import torch
 
-from testing.yuca.test_multiverse import TestCCA
+from testing.yuca.ca.test_cca import TestCCA
+from testing.yuca.ca.test_nca import TestNCA
 from testing.yuca.test_activations import TestGaussian, TestDoGaussian
 from testing.yuca.test_utils import TestQueryKwargs,\
         TestSeedAll, \

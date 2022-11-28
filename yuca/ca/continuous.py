@@ -37,12 +37,14 @@ from yuca.patterns import get_orbium, \
 
 import matplotlib.pyplot as plt
 
-class CA(nn.Module):
+from yuca.ca.common import CA
+
+class CCA(CA):
     """
     """
 
     def __init__(self, **kwargs):
-        super(CA, self).__init__()
+        super(CCA, self).__init__()
 
         self.kernel_radius = query_kwargs("kernel_radius", 13, **kwargs)
         self.my_device = query_kwargs("device", "cpu", **kwargs)
@@ -71,13 +73,24 @@ class CA(nn.Module):
         self.genesis_fn_config = None
         self.persistence_fn_config = None
 
-        self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
             
+        if "orbi" in self.tag.lower():
+            self.load_config(get_orbium_config(radius=self.kernel_radius))
+        elif "len" in self.tag.lower():
+            self.load_config(get_orbium_config(radius=self.kernel_radius))
+        elif "gemin" in self.tag.lower():
+            self.load_config(get_geminium_config(radius=self.kernel_radius))
+        elif "init3" in self.tag.lower():
+            self.default_init3()
+        else:
+            self.random_init()
+
         if "ca_config" in kwargs.keys():
             if kwargs["ca_config"] is not None:
                 self.restore_config(kwargs["ca_config"])
-        else:
-            self.default_init()
+
+        self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
+
         if self.input_filepath is not None:
 
             my_data = np.load(self.input_filepath, allow_pickle=True).reshape(1)[0]
@@ -224,7 +237,7 @@ class CA(nn.Module):
 
         np.save(filepath, config)
 
-    def default_init(self):
+    def default_init3(self):
 
         self.genesis_fns = []
         self.persistence_fns = []
@@ -850,5 +863,4 @@ class CA(nn.Module):
         
 
 if __name__ == "__main__":
-
     pass
