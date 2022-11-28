@@ -19,7 +19,7 @@ setup(\
                         "kiwisolver==1.3.1",\
                         "matplotlib==3.3.4",\
                         "networkx==2.5.1",\
-                        "Pillow==9.0.1",\
+                        "Pillow==9.2.0",\
                         "pyparsing==3.0.7",\
                         "python-dateutil==2.8.2",\
                         "PyWavelets==1.1.1",\
