@@ -52,8 +52,9 @@ class CA(nn.Module):
         # CA mode. Options are 'neural' or 'functional'.
         self.ca_mode = query_kwargs("ca_mode", "functional", **kwargs)
 
-        self.internal_channels = query_kwargs("internal_channels", 1, **kwargs)
+
         self.external_channels = query_kwargs("external_channels", 1, **kwargs)
+        self.internal_channels = query_kwargs("internal_channels", 1, **kwargs)
         self.alive_threshold = query_kwargs("alive_threshold", 0.1, **kwargs)
 
         self.use_grad = query_kwargs("use_grad", False, **kwargs)
@@ -180,10 +181,13 @@ class CA(nn.Module):
 
         padding = (self.neighborhood_dim - 1) // 2 
 
+        groups = 1 if self.internal_channels % self.external_channels \
+                else self.external_channels
+
         self.neighborhood_layer = nn.Conv2d(self.external_channels, \
                 self.internal_channels, \
                 self.neighborhood_dim, padding=padding, \
-                groups=self.external_channels, \
+                groups=groups, \
                 padding_mode = self.conv_mode, bias=False)
 
 

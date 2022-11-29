@@ -263,7 +263,7 @@ class CCA(CA):
         if self.ca_mode == "functional" or self.ca_mode == "neurofunctional":
             for pp in range(self.internal_channels):
                 
-                if (pp > 8):
+                if (pp < 8):
                     # close to the edge of chaos, from Lenia papers
                     gen_mu = 0.15 * (1 + np.random.randn() * 0.00001)
                     gen_sigma = 0.015 * (1 + np.random.randn() * 0.0001)
@@ -481,29 +481,6 @@ class CCA(CA):
             updated_grid = torch.cat([updated_grid, temp_grid], dim=1)
         return updated_grid
 
-
-
-    def id_conv(self, universe):
-        """
-        """
-        
-        return self.id_layer(universe)
-    
-    def neighborhood_conv(self, universe):
-
-        return self.neighborhood_layer(universe)
-
-    def alive_mask(self, universe):
-        """
-        zero out cells not meeting a threshold in the alpha channel
-        
-        """
-
-        alive_mask = torch.zeros_like(universe[:, 3:4, :, :])
-
-        alive_mask[universe[:, 3:4, :, :] > self.alive_threshold] = 1.0
-
-        return universe * alive_mask
 
     def update_universe(self, identity, neighborhoods):
 
