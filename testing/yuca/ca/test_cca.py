@@ -16,7 +16,7 @@ class TestCCA(unittest.TestCase):
 
         for mode in ["functional", "neurofunctional"]:
             ca = CCA(ca_mode = mode)
-            ca.random_init()
+            ca.default_init()
 
             for vectorization in [1,2,4,9]:
 
@@ -94,7 +94,7 @@ class TestCCA(unittest.TestCase):
 
             self.assertNotIn(False, params.round(4) == params_again.round(4))
 
-            ca.random_init()
+            ca.default_init()
 
             params = ca.get_params() 
             params = np.random.rand(*params.shape)
@@ -108,7 +108,7 @@ class TestCCA(unittest.TestCase):
     def test_multiverse_to(self):
 
         ca = CCA()
-        ca.random_init()
+        ca.default_init()
         ca.include_parameters()
 
         for my_device in ["cpu", torch.device("cpu"), "cuda", torch.device("cuda")]:
