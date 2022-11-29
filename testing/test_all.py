@@ -14,6 +14,7 @@ from testing.yuca.test_utils import TestQueryKwargs,\
         TestMakeTarget, \
         TestPlotGridNbhd,\
         TestPlotKernelGrowth
+from testing.yuca.test_configs import TestConfigs
 
 if __name__ == "__main__": #pragma: no cover
     
