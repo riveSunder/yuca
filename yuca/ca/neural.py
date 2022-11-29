@@ -60,19 +60,7 @@ class NCA(CA):
 
 
         self.default_init()
-
-    def initialize_id_layer(self):
-
-        padding = (self.id_dim - 1) // 2 
-
-        #id layer is an input to weights layer
-        self.id_layer = nn.Conv2d(self.external_channels, \
-                self.external_channels, self.id_dim, padding=padding, \
-                padding_mode = self.conv_mode, bias=False)
-
-        for param in self.id_layer.named_parameters():
-            param[1].requires_grad = False
-            param[1][:] = self.id_kernel
+        self.reset()
 
     def default_init(self):
 
@@ -106,28 +94,6 @@ class NCA(CA):
 
         self.dt = 0.1
 
-    def load_config(self, config):
-        
-        # TODO: Implement for nca
-        pass
-        
-    def make_config(self):
-
-        # TODO: Implement for nca
-        pass
-        #return copy.deepcopy(config)
-
-    def save_config(self, filepath, config=None):
-
-        # TODO: Implement for nca
-        pass
-
-
-    def random_init(self):
-        
-        # TODO: consolidate initializations
-        pass
-
         
     def initialize_weight_layer(self):
         
@@ -143,27 +109,7 @@ class NCA(CA):
                     padding=0, \
                     padding_mode = self.conv_mode, bias=False)\
                 )
-
-    def add_genesis_fn(self,  config):
-        # Not used in nca
-        pass
-
-    def add_persistence_fn(self, config):
-        # Not used in nca
-        pass
     
-    def include_parameters(self):
-        # Not used in nca?
-        # (neural parameters should be registered/tracked automatically)
-        pass
-
-    def persistence(self, neighborhoods):
-        # Not used in nca
-        pass
-    
-    def genesis(self, neighborhoods):
-        # Not used in nca
-        pass
 
     def id_conv(self, universe):
         # shared with CCA
@@ -175,73 +121,12 @@ class NCA(CA):
 
         return self.neighborhood_layer(universe)
 
-    def alive_mask(self, universe):
-        """
-        zero out cells not meeting a threshold in the alpha channel
-        """
-
-        # shared with CCA
-
-        alive_mask = torch.zeros_like(universe[:, 3:4, :, :])
-
-        alive_mask[universe[:, 3:4, :, :] > self.alive_threshold] = 1.0
-
-        return universe * alive_mask
-
     def update_universe(self, identity, neighborhoods):
 
         # TODO: NCA version
         model_input = torch.cat([identity, neighborhoods], dim=1)
         update = self.weights_layer(model_input)
         return update 
-
-        #return update 
-
-    def forward(self, universe, mode=0):
-
-        if universe.shape[1] >= 4:
-            universe = self.alive_mask(universe)
-
-        if universe.dtype == torch.float16 and torch.device(self.my_device).type != "cuda":
-            identity = self.id_conv(universe.to(torch.float32)).to(torch.float16)
-            neighborhoods = self.neighborhood_conv(universe.to(torch.float32)).to(torch.float16)
-
-            update = self.update_universe(identity, neighborhoods)
-            
-            new_universe = torch.clamp(universe.to(torch.float32) + self.dt * update.to(torch.float32), 0, 1.0).to(torch.float16)
-        else:
- 
-            identity = self.id_conv(universe)
-            neighborhoods = self.neighborhood_conv(universe)
-
-            update = self.update_universe(identity, neighborhoods)
-            
-            new_universe = torch.clamp(universe + self.dt * update, 0, 1.0)
-
-        self.t_count += self.dt
-
-        return new_universe
-
-    def get_frame(self, universe, mode=0):
-
-        identity = self.id_conv(universe)
-        neighborhoods = self.neighborhood_conv(universe)
-
-        update = self.update_universe(identity, neighborhoods)
-
-        new_universe = torch.clamp(universe + self.dt * update, 0, 1.0)
-
-        if mode == 0:
-            return new_universe
-        elif mode == 1:
-            return new_universe, neighborhoods
-        elif mode == 2:
-            return new_universe, update
-
-        elif mode == 3:
-            return new_universe, neighborhoods, update 
-        elif mode == 4:
-            return new_universe, universe, neighborhoods, update 
 
     def to_device(self, my_device):
         """
@@ -257,13 +142,6 @@ class NCA(CA):
         self.neighborhood_layer.to(my_device)
         self.weights_layer.to(my_device)
 
-    def get_genesis_params(self):
-        # Not used in nca
-        pass
-
-    def get_persistence_params(self):
-        # Not used in nca
-        pass
 
     def get_params(self):
         # TODO: implement nca version (simpler)
@@ -299,6 +177,9 @@ class NCA(CA):
 
         for hh, param in enumerate(self.weights_layer.parameters()):
             param.requires_grad = False
+
+    def include_parameters(self):
+        pass
         
 
 if __name__ == "__main__":

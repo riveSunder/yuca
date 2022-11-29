@@ -320,6 +320,7 @@ class CCA(CA):
         self.initialize_weight_layer()
 
         self.dt = 0.1
+
         
         genesis_config = {"name": "Gaussian",\
                 "mu": 0.15, \
@@ -468,80 +469,6 @@ class CCA(CA):
 
         self.id_dim = dim_x
 
-
-    def initialize_id_layer(self):
-
-        padding = (self.id_dim - 1) // 2 
-
-        self.id_layer = nn.Conv2d(self.external_channels, \
-                self.internal_channels, self.id_dim, padding=padding, \
-                padding_mode = self.conv_mode, bias=False)
-
-        for param in self.id_layer.named_parameters():
-            param[1].requires_grad = False
-            param[1][:] = self.id_kernel
-        
-
-    def add_neighborhood_kernel(self, kernel):
-        """
-        add kernels defining CA neighborhoods.
-
-        Planned functionality will make it possible to
-        add additional neighborhood kernels to an existing
-        stack, but for now the input argument kernel replaces
-        any existing neighborhood kernels
-        """
-
-        if type(kernel) is not torch.Tensor:
-            kernel = torch.tensor(kernel, requires_grad=False)
-        else:
-            kernel = kernel.clone().detach().requires_grad_(False)
-
-        if len(kernel.shape) == 2:
-            kernel = torch.reshape(kernel, \
-                    (1, 1, \
-                    kernel.shape[0], \
-                    kernel.shape[1]))
-        elif len(kernel.shape) == 3:
-            kernel = torch.reshape(kernel, \
-                    (1, kernel.shape[0], \
-                    kernel.shape[1]))
-
-        kernel_dims = len(kernel.shape)
-        
-        error_msg = f"id kernel expected to have dim 4," \
-                f" had dim {kernel_dims} instead"
-
-        assert len(kernel.shape) == 4, error_msg
-
-        dim_x = kernel.shape[-1]
-        dim_y = kernel.shape[-2]
-
-        error_msg = f"expected square kernel, got {dim_x} by {dim_y}"
-
-        assert dim_x == dim_y, error_msg
-
-        self.neighborhood_kernels = kernel 
-        self.neighborhood_dim = dim_x 
-
-    def initialize_neighborhood_layer(self):
-        """
-        initialized a convolutional layer containing neighborhod functions
-        """
-
-        padding = (self.neighborhood_dim - 1) // 2 
-
-        self.neighborhood_layer = nn.Conv2d(self.external_channels, \
-                self.internal_channels, \
-                self.neighborhood_dim, padding=padding, \
-                groups=self.external_channels, \
-                padding_mode = self.conv_mode, bias=False)
-
-
-        for param in self.neighborhood_layer.named_parameters():
-            param[1].requires_grad = False
-            param[1][:] = self.neighborhood_kernels
-        
         
     def initialize_weight_layer(self):
 
