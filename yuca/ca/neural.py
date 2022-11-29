@@ -49,7 +49,7 @@ class NCA(CA):
     """
 
     def __init__(self, **kwargs):
-        self.hidden_channels = query_kwargs("hidden_channels", 32, **kwargs)
+        self.hidden_channels = query_kwargs("hidden_channels", 128, **kwargs)
         super(NCA, self).__init__()
 
         # CA mode. Options are 'neural' or 'functional'.
@@ -102,7 +102,7 @@ class NCA(CA):
                     self.external_channels + self.internal_channels,\
                     self.hidden_channels, 1, \
                     padding=0, \
-                    padding_mode = self.conv_mode, bias=False),\
+                    padding_mode = self.conv_mode, bias=True),\
                 nn.ReLU(), \
                 nn.Conv2d(\
                     self.hidden_channels, self.external_channels, 1, \
