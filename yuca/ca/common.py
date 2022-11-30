@@ -92,14 +92,12 @@ class CA(nn.Module):
                 self.id_kernel = torch.reshape(self.id_kernel, \
                         (1, self.id_kernel.shape[0], \
                         self.id_kernel.shape[1]))
-            
 
         else:
             self.id_kernel = torch.tensor([[[\
                     [0, 0.0, 0,], \
                     [0, 1.0, 0], \
                     [0, 0.0, 0]]]])
-
 
         kernel_dims = len(self.id_kernel.shape)
         
@@ -221,7 +219,7 @@ class CA(nn.Module):
         return universe * alive_mask
 
 
-    def forward(self, universe, mode=0):
+    def forward(self, universe):
 
         if universe.shape[1] >= 4:
             universe = self.alive_mask(universe)

@@ -50,11 +50,11 @@ class RxnDfn(CA):
         """
 
         # Gray-Scott parameters
-        self.f = 0.06
-        self.k = 0.06093
-        self.r_u = 0.01
-        self.r_v = 0.005
-        self.dt = 1.0
+        self.f = torch.tensor([0.06])
+        self.k = torch.tensor([0.06093])
+        self.r_u = torch.tensor([0.01])
+        self.r_v = torch.tensor([0.005])
+        self.dt = torch.tensor([1.0])
 
     def add_neighborhood_kernel(self, kernel=None):
         """
@@ -135,3 +135,32 @@ class RxnDfn(CA):
         # no alive_mask in Gray-Scott reaction-diffusion models
         return universe
 
+    def get_params(self):
+
+        params = np.array([])
+
+        for hh, param in enumerate(self.named_parameters()):
+            params = np.append(params, param[1].detach().numpy().ravel())
+
+        return params
+
+    def set_params(self, params):
+
+        param_start = 0
+
+        for hh, param in self.named_parameters():
+
+            param_stop = param_start + reduce(lambda x,y: x*y, param.shape)
+            param[:] = nn.Parameter( \
+                    torch.tensor( \
+                    params[param_start:param_stop].reshape(param.shape),\
+                    requires_grad = self.use_grad), \
+                    requires_grad = self.use_grad)
+
+            param_start = param_stop
+
+    def include_parameters(self):
+
+        for jj, param in zip(["r_u", "r_v", "f", "k"],\
+                [self.r_u, self.r_v, self.f, self.k]):
+            self.register_parameter(f"rd_{jj}", param)
