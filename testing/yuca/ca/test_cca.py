@@ -30,7 +30,7 @@ class TestCCA(unittest.TestCase):
             elif True in (frame_mode == np.array([4])):
                 self.assertEqual(4, len(frame_return))
             
-    def test_alive_maxk(self):
+    def test_alive_mask(self):
 
         ca = CCA(external_channels=4)
         ca.default_init()

@@ -12,7 +12,6 @@ from yuca.configs import get_smooth_life_config,\
     get_geminium_config
 
 
-
 class TestConfigs(unittest.TestCase):
 
     def setUp(self):

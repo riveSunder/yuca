@@ -34,7 +34,6 @@ from yuca.kernels import get_kernel, \
 from yuca.patterns import get_orbium, \
         get_smooth_puffer
 
-
 import matplotlib.pyplot as plt
 
 class CA(nn.Module):
