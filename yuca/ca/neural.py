@@ -159,7 +159,6 @@ class NCA(CA):
 
         param_start = 0
 
-        # weights are not a learnable parameter for functional CA
         for hh, param in self.weights_layer.named_parameters():
 
             param_stop = param_start + reduce(lambda x,y: x*y, param.shape)

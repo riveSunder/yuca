@@ -50,11 +50,11 @@ class RxnDfn(CA):
         """
 
         # Gray-Scott parameters
-        self.f = torch.tensor([0.06])
+        self.f = torch.tensor([0.062])
         self.k = torch.tensor([0.06093])
-        self.r_u = torch.tensor([0.01])
-        self.r_v = torch.tensor([0.005])
-        self.dt = torch.tensor([1.0])
+        self.r_u = torch.tensor([0.64])
+        self.r_v = torch.tensor([0.32])
+        self.dt = torch.tensor([0.2])
 
     def add_neighborhood_kernel(self, kernel=None):
         """
