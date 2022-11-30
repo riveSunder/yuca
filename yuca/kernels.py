@@ -52,6 +52,10 @@ def get_kernel(kernel_config):
     return kernel
    
 
+def get_laplacian_kernel(radius=1):
+
+    return torch.tensor([[0,1.,0],[1.,-4.,1.],[0,1.,0]])
+
 def get_cosx2_kernel(radius=13, mu=0.5, omega=12.56, r_scale=1.0):
     
     eps = 1e-9
@@ -63,7 +67,6 @@ def get_cosx2_kernel(radius=13, mu=0.5, omega=12.56, r_scale=1.0):
 
     my_fn  = CosOverX2(mu=mu, omega=omega)
     
-    print(omega)
     kernel = my_fn(grid.reshape(1, 1, radius * 2 + 1, radius * 2 + 1))
     kernel = kernel - kernel.min()
     kernel = kernel / (eps + kernel.sum())
@@ -154,33 +157,4 @@ def get_dogaussian_edge_kernel(radius=13, mu=0.5, sigma=0.15, mode=0, dx=0.01):
 
 if __name__ == "__main__":
 
-    kernel = get_gaussian_kernel()
-
-    print(kernel.shape)
-
-    plt.figure()
-    plt.imshow(kernel[0,0,:,:], cmap="magma")
-
-
-    kernel = get_dogaussian_kernel()
-    plt.figure()
-    plt.imshow(kernel[0,0,:,:], cmap="magma")
-
-    kernel_x = get_gaussian_edge_kernel()
-    kernel_y = get_gaussian_edge_kernel(mode=1)
-    plt.figure()
-    plt.subplot(121)
-    plt.imshow(kernel_x[0,0,:,:], cmap="magma")
-    plt.subplot(122)
-    plt.imshow(kernel_y[0,0,:,:], cmap="magma")
-    
-
-    kernel_x = get_dogaussian_edge_kernel()
-    kernel_y = get_dogaussian_edge_kernel(mode=1)
-
-    plt.figure()
-    plt.subplot(121)
-    plt.imshow(kernel_x[0,0,:,:], cmap="magma")
-    plt.subplot(122)
-    plt.imshow(kernel_y[0,0,:,:], cmap="magma")
-    plt.show()
+    pass

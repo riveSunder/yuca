@@ -15,6 +15,12 @@ from testing.yuca.test_utils import TestQueryKwargs,\
         TestPlotGridNbhd,\
         TestPlotKernelGrowth
 from testing.yuca.test_configs import TestConfigs
+from testing.yuca.test_kernels import TestGenericKernel,\
+        TestGaussianKernel,\
+        TestGaussianEdgeKernel,\
+        TestDOGaussianKernel,\
+        TestDOGaussianEdgeKernel,\
+        TestLaplacianKernel
 
 if __name__ == "__main__": #pragma: no cover
     
