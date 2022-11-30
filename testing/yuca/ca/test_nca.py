@@ -4,62 +4,63 @@ import numpy as np
 
 import torch
 
-from yuca.multiverse import CA
+from yuca.ca.neural import NCA
 
 
-class TestCA(unittest.TestCase):
+class TestNCA(unittest.TestCase):
 
     def setUp(self):
         pass
 
     def test_multiverse_forward(self):
 
-        for mode in ["functional", "neurofunctional", "neural"]:
-            ca = CA(ca_mode = mode)
-            ca.random_init()
+        ca = NCA()
+        ca.no_grad()
 
-            for vectorization in [1,2,4,9]:
+        ca.default_init()
 
-                ca.to_device("cpu")
+        for vectorization in [1,2,4,9]:
 
-                x = torch.randn(vectorization, 1, 32, 32)
+            ca.to_device("cpu")
+
+            x = torch.randn(vectorization, 1, 32, 32)
+            new_x = ca.forward(x)
+
+            self.assertEqual(new_x.shape, x.shape)
+            
+            if torch.cuda.is_available():
+
+                ca.to_device("cuda")
+
+                x = torch.randn(vectorization, 1, 32, 32).to("cuda")
                 new_x = ca.forward(x)
 
                 self.assertEqual(new_x.shape, x.shape)
                 
-                if torch.cuda.is_available():
+        ca = NCA()
+        ca.default_init()
 
-                    ca.to_device("cuda")
+        for vectorization in [1,2,4,9]:
 
-                    x = torch.randn(vectorization, 1, 32, 32).to("cuda")
-                    new_x = ca.forward(x)
+            ca.to_device("cpu")
 
-                    self.assertEqual(new_x.shape, x.shape)
-                    
-            ca = CA(ca_mode = mode)
-            ca.default_init()
+            x = torch.randn(vectorization, 1, 32, 32)
+            new_x = ca.forward(x)
 
-            for vectorization in [1,2,4,9]:
+            self.assertEqual(new_x.shape, x.shape)
+            
+            if (0): #torch.cuda.is_available():
 
-                ca.to_device("cpu")
+                ca.to_device("cuda")
 
-                x = torch.randn(vectorization, 1, 32, 32)
+                x = torch.randn(vectorization, 1, 32, 32).to("cuda")
                 new_x = ca.forward(x)
 
                 self.assertEqual(new_x.shape, x.shape)
-                
-                if (0): #torch.cuda.is_available():
-
-                    ca.to_device("cuda")
-
-                    x = torch.randn(vectorization, 1, 32, 32).to("cuda")
-                    new_x = ca.forward(x)
-
-                    self.assertEqual(new_x.shape, x.shape)
 
     def test_multiverse_id_layer(self):
 
-        ca = CA()
+        ca = NCA()
         ca.default_init()
 
         input_x = torch.randn(1, 1, 32, 32)
@@ -70,7 +71,7 @@ class TestCA(unittest.TestCase):
 
     def test_multiverse_id_conv(self):
 
-        ca = CA()
+        ca = NCA()
         ca.default_init()
 
         input_x = torch.randn(1, 1, 32, 32)
@@ -81,34 +82,33 @@ class TestCA(unittest.TestCase):
 
     def test_multiverse_set_params(self):
 
-        for ca_mode in ["neural", "functional", "neurofunctional"]:
-            ca = CA(ca_mode=ca_mode)
-            ca.default_init()
+        ca = NCA()
+        ca.default_init()
 
-            params = ca.get_params() 
-            params = np.random.rand(*params.shape)
+        params = ca.get_params() 
+        params = np.random.rand(*params.shape)
 
-            ca.set_params(params)
+        ca.set_params(params)
 
-            params_again = ca.get_params() 
+        params_again = ca.get_params() 
 
-            self.assertNotIn(False, params.round(4) == params_again.round(4))
+        self.assertNotIn(False, params.round(4) == params_again.round(4))
 
-            ca.random_init()
+        ca.default_init()
 
-            params = ca.get_params() 
-            params = np.random.rand(*params.shape)
+        params = ca.get_params() 
+        params = np.random.rand(*params.shape)
 
-            ca.set_params(params)
+        ca.set_params(params)
 
-            params_again = ca.get_params() 
+        params_again = ca.get_params() 
 
-            self.assertNotIn(False, params.round(4) == params_again.round(4))
+        self.assertNotIn(False, params.round(4) == params_again.round(4))
 
     def test_multiverse_to(self):
 
-        ca = CA()
-        ca.random_init()
+        ca = NCA()
+        ca.default_init()
         ca.include_parameters()
 
         for my_device in ["cpu", torch.device("cpu"), "cuda", torch.device("cuda")]:
@@ -132,7 +132,7 @@ class TestCA(unittest.TestCase):
                             torch.device(my_device).type)
                 
 
-        ca = CA()
+        ca = NCA()
         ca.default_init()
 
         for my_device in ["cpu", torch.device("cpu"), "cuda", torch.device("cuda")]:

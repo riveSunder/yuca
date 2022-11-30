@@ -2,7 +2,8 @@ import unittest
 
 import torch
 
-from testing.yuca.test_multiverse import TestCA
+from testing.yuca.ca.test_cca import TestCCA
+from testing.yuca.ca.test_nca import TestNCA
 from testing.yuca.test_activations import TestGaussian, TestDoGaussian
 from testing.yuca.test_utils import TestQueryKwargs,\
         TestSeedAll, \
@@ -13,6 +14,7 @@ from testing.yuca.test_utils import TestQueryKwargs,\
         TestMakeTarget, \
         TestPlotGridNbhd,\
         TestPlotKernelGrowth
+from testing.yuca.test_configs import TestConfigs
 
 if __name__ == "__main__": #pragma: no cover
     
