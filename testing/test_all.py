@@ -14,6 +14,7 @@ from testing.yuca.test_utils import TestQueryKwargs,\
         TestPrepInput, \
         TestMakeTarget, \
         TestPlotGridNbhd,\
+        TestSaveFigSequence,\
         TestPlotKernelGrowth
 from testing.yuca.test_configs import TestConfigs
 from testing.yuca.test_kernels import TestGenericKernel,\

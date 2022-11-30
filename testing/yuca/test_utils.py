@@ -1,3 +1,5 @@
+import os
+
 import unittest
 
 import numpy as np
@@ -13,8 +15,11 @@ from yuca.utils import query_kwargs, \
         get_aperture, \
         prep_input, \
         make_target, \
+        save_fig_sequence, \
         plot_grid_nbhd, \
         plot_kernel_growth
+
+from yuca.ca.reaction_diffusion import RxnDfn
 
 class TestQueryKwargs(unittest.TestCase):
 
@@ -305,6 +310,41 @@ class TestSeedAll(unittest.TestCase):
             self.assertAlmostEqual(0.0, (temp_ab-temp_bb).sum())
             self.assertAlmostEqual(0.0, (temp_ac-temp_bc).sum())
 
+class TestSaveFigSequence(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_save_fig_sequence(self):
+        
+        rxn = RxnDfn()
+
+        grid = torch.rand(1,2,64,64)
+
+        file_path = os.path.abspath(__file__)
+
+        this_file_path = os.path.split(file_path)[0]
+        testing_path = os.path.split(this_file_path)[0]
+
+        gif_path = os.path.join(testing_path, "gif_temp*gif")
+
+        save_fig_sequence(grid, rxn, num_steps=10, \
+                tag="temp", gif_path=testing_path)
+
+
+        dir_list = os.listdir(testing_path)
+
+        gif_present = False
+        for item in dir_list:
+            if item.startswith("gif_temp"):
+                gif_present = True
+
+        self.assertTrue(gif_present)
+
+        os.system(f"rm {testing_path}/*gif")
+
+
 if __name__ == "__main__": #pragma: no cover
+
     
     unittest.main(verbosity = 2)

@@ -19,7 +19,7 @@ class TestLaplacianKernel(unittest.TestCase):
 
         laplacian = get_laplacian_kernel(radius=1)
 
-        target = torch.tensor([[0,1.,0],[1.,-4.,1.],[0,1.,0]])
+        target = torch.tensor([[[[0,1.,0],[1.,-4.,1.],[0,1.,0]]]])
 
         self.assertNotIn(False, target == laplacian)
         self.assertTrue(type(laplacian) == torch.Tensor)

@@ -217,6 +217,16 @@ def save_fig_sequence(grid, ca, num_steps=10, \
         elif grid.shape[1] == 3:
             img = np.uint8(255 * grid[0,0:3,:,:].detach().cpu().numpy())
             img = img.transpose(1,2,0)
+        elif grid.shape[1] == 2:
+
+            img_grid = np.zeros((3,grid.shape[-2], grid.shape[-1]),\
+                    dtype=np.uint8)
+            img_grid[0,:,:] = np.uint8(255 * grid[0,0,:,:].detach().cpu().numpy())
+            img_grid[2,:,:] = np.uint8(255 * 0.5*grid[0,1,:,:].detach().cpu().numpy())
+            img_grid[2,:,:] += np.uint8(255 * 0.5*grid[0,0,:,:].detach().cpu().numpy())
+            img_grid[1,:,:] = np.uint8(255 * grid[0,0,:,:].detach().cpu().numpy())
+
+            img = img_grid.transpose(1,2,0)
         else:
             img = np.uint8(255 * cmap(grid[0,0,:,:].detach().cpu().numpy()))
 
