@@ -20,8 +20,9 @@ from yuca.ca.common import CA
 
 class RxnDfn(CA):
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         super().__init__()
+        # kwargs are not used, because this model is rigidly defined
         
         self.internal_channels = 2
         self.external_channels = 2

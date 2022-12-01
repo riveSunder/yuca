@@ -37,6 +37,20 @@ class TestRxnDfn(unittest.TestCase):
 
         self.assertEqual(x.shape, next_x.shape)
 
+    def test_id_conv(self):
+
+
+        for channels in [2]:
+            rxn = RxnDfn(internal_channels=channels, \
+                    external_channels=channels)
+            grid = torch.rand(1,channels,32,32)
+
+            id_grid = rxn.id_conv(grid)
+
+            sum_difference = (grid - id_grid).sum()
+
+            self.assertAlmostEqual(0.0, sum_difference)
+
 
     def test_multiverse_set_params(self):
 
