@@ -24,6 +24,12 @@ class RxnDfn(CA):
         super().__init__()
         # kwargs are not used, because this model is rigidly defined
         
+        for key in ["internal_channels", "external_channels"]:
+            if key in kwargs.keys() and kwargs[key] != 2:
+                warning = f"Gray-Scott model allows only exactly 2 channels, but "\
+                        f"{kwargs[key]} provided for {key}"
+
+            
         self.internal_channels = 2
         self.external_channels = 2
 
@@ -41,7 +47,7 @@ class RxnDfn(CA):
     
         """
         Gray-Scott model 
-        updates accordin gto 
+        updates according to 
 
         $\frac{\partial u}{\partial t} = diffusion_u \nabla^2 u - uv^2 + f(1-u)$
 
@@ -116,7 +122,7 @@ class RxnDfn(CA):
     def update_universe(self, identity, neighborhoods):
         """
         Gray-Scott model 
-        updates accordin gto 
+        updates according to 
 
         $\frac{\partial u}{\partial t} = diffusion_u \nabla^2 u - uv^2 + f(1-u)$
 

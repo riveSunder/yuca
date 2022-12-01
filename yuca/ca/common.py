@@ -123,6 +123,11 @@ class CA(nn.Module):
         groups = 1 if self.internal_channels % self.external_channels \
                 else self.external_channels
 
+        if groups != self.internal_channels or groups != self.external_channels:
+            print(f"warning, id_layer has {groups} groups, but "\
+                    f"{self.internal_channels},{self.external_channels} channels, "\
+                    f"id convolution will mix channels!")
+
         self.id_layer = nn.Conv2d(self.external_channels, \
                 self.internal_channels, self.id_dim, padding=padding, \
                 groups = groups,\

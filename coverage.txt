@@ -13,13 +13,13 @@ testing/yuca/test_utils.py                     188      0   100%
 yuca/__init__.py                                 0      0   100%
 yuca/activations.py                            197     60    70%
 yuca/ca/__init__.py                              0      0   100%
-yuca/ca/common.py                              125     20    84%
+yuca/ca/common.py                              127     20    84%
 yuca/ca/continuous.py                          352     40    89%
 yuca/ca/neural.py                               74      0   100%
-yuca/ca/reaction_diffusion.py                   85      4    95%
+yuca/ca/reaction_diffusion.py                   88      5    94%
 yuca/configs.py                                 89     21    76%
 yuca/kernels.py                                 98     11    89%
 yuca/patterns.py                                59     43    27%
 yuca/utils.py                                  127      7    94%
 ----------------------------------------------------------------
-TOTAL                                         1757    256    85%
+TOTAL                                         1762    257    85%

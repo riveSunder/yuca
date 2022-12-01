@@ -224,8 +224,6 @@ def save_fig_sequence(grid, ca, num_steps=10, \
             img_grid = np.zeros((3,grid.shape[-2], grid.shape[-1]),\
                     dtype=np.uint8)
             img_grid[1,:,:] = np.uint8(255 * grid[0,0,:,:].detach().cpu().numpy())
-#            img_grid[2,:,:] = np.uint8(255 * 0.5*grid[0,1,:,:].detach().cpu().numpy())
-#            img_grid[2,:,:] += np.uint8(255 * 0.5*grid[0,0,:,:].detach().cpu().numpy())
             img_grid[2,:,:] = np.uint8(255 * grid[0,1,:,:].detach().cpu().numpy())
 
             img = img_grid.transpose(1,2,0)
