@@ -120,8 +120,12 @@ class CA(nn.Module):
 
         padding = (self.id_dim - 1) // 2 
 
+        groups = 1 if self.internal_channels % self.external_channels \
+                else self.external_channels
+
         self.id_layer = nn.Conv2d(self.external_channels, \
                 self.internal_channels, self.id_dim, padding=padding, \
+                groups = groups,\
                 padding_mode = self.conv_mode, bias=False)
 
         for param in self.id_layer.named_parameters():

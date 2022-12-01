@@ -23,7 +23,6 @@ class RxnDfn(CA):
     def __init__(self):
         super().__init__()
         
-
         self.internal_channels = 2
         self.external_channels = 2
 
@@ -43,18 +42,29 @@ class RxnDfn(CA):
         Gray-Scott model 
         updates accordin gto 
 
-        $\frac{\partial u}{\partial t} = r_u \nabla^2 u - uv^2 + f(1-u)$
+        $\frac{\partial u}{\partial t} = diffusion_u \nabla^2 u - uv^2 + f(1-u)$
 
-        $\frac{\partial v}{\partial t} = r_v \nabla^2 v + uv^2 - (f + k)v$
+        $\frac{\partial v}{\partial t} = diffusion_v \nabla^2 v + uv^2 - (f + k)v$
 
         """
 
         # Gray-Scott parameters
+        # nominal U-Skate world
+#        self.f = torch.tensor([0.062])
+#        self.k = torch.tensor([0.06093])
+#        self.diffusion_u = torch.tensor([0.64])
+#        self.diffusion_v = torch.tensor([0.32])
+#        self.dt = torch.tensor([0.2])
         self.f = torch.tensor([0.062])
         self.k = torch.tensor([0.06093])
-        self.r_u = torch.tensor([0.64])
-        self.r_v = torch.tensor([0.32])
+        self.diffusion_u = torch.tensor([0.64])
+        self.diffusion_v = torch.tensor([0.32])
+        # time step
         self.dt = torch.tensor([0.2])
+        # spatial step 
+        self.dx = torch.tensor([1.0]) #1/143.
+        # 1/143. is from mrob
+
 
     def add_neighborhood_kernel(self, kernel=None):
         """
@@ -77,6 +87,7 @@ class RxnDfn(CA):
 
         assert dim_x == dim_y, error_msg
 
+        kernel = torch.cat([kernel, kernel], dim=0)
         self.neighborhood_kernels = kernel 
         self.neighborhood_dim = dim_x 
 
@@ -106,9 +117,9 @@ class RxnDfn(CA):
         Gray-Scott model 
         updates accordin gto 
 
-        $\frac{\partial u}{\partial t} = r_u \nabla^2 u - uv^2 + f(1-u)$
+        $\frac{\partial u}{\partial t} = diffusion_u \nabla^2 u - uv^2 + f(1-u)$
 
-        $\frac{\partial v}{\partial t} = r_v \nabla^2 v + uv^2 - (f + k)v$
+        $\frac{\partial v}{\partial t} = diffusion_v \nabla^2 v + uv^2 - (f + k)v$
 
         args:
             identity - current state
@@ -120,13 +131,15 @@ class RxnDfn(CA):
 
         update = 0 * identity
 
+        nabla_u = self.dx * neighborhoods[:,0,:,:] 
+        nabla_v = self.dx * neighborhoods[:,1,:,:] 
         u = identity[:,0,:,:]
         v = identity[:,1,:,:]
 
         # species u
-        update[:,0,:,:] = self.r_u * neighborhoods[:,0,:,:] - u*v**2 + self.f*(1-u)
+        update[:,0,:,:] = self.diffusion_u * nabla_u - u*v*v + self.f*(1-u)
         # species v
-        update[:,1,:,:] = self.r_v * neighborhoods[:,1,:,:] + u*v**2 - v*(self.f+self.k)
+        update[:,1,:,:] = self.diffusion_v * nabla_v + u*v*v - v*(self.f+self.k)
 
         return update
 
@@ -135,12 +148,29 @@ class RxnDfn(CA):
         # no alive_mask in Gray-Scott reaction-diffusion models
         return universe
 
+    def forward(self, universe):
+
+        if universe.shape[1] >= 4:
+            universe = self.alive_mask(universe)
+
+        identity = self.id_conv(universe)
+        neighborhoods = self.neighborhood_conv(universe)
+
+        update = self.update_universe(identity, neighborhoods)
+        
+        new_universe = universe + self.dt * update #, 0, 1.0)
+
+        self.t_count += self.dt
+
+        return new_universe
+
+
     def get_params(self):
 
         params = np.array([])
 
-        for hh, param in enumerate(self.named_parameters()):
-            params = np.append(params, param[1].detach().numpy().ravel())
+        for param in [self.diffusion_u, self.diffusion_v, self.f, self.k]:
+            params = np.append(params, param.detach().numpy().ravel())
 
         return params
 
@@ -148,19 +178,19 @@ class RxnDfn(CA):
 
         param_start = 0
 
-        for hh, param in self.named_parameters():
+        
+        param_stop = param_start + 1
+        self.diffusion_u = torch.tensor(params[param_start], requires_grad = self.use_grad)
+        param_start += 1
+        self.diffusion_v = torch.tensor(params[param_start], requires_grad = self.use_grad)
+        param_start += 1
+        self.f = torch.tensor(params[param_start], requires_grad = self.use_grad)
+        param_start += 1
+        self.k = torch.tensor(params[param_start], requires_grad = self.use_grad)
 
-            param_stop = param_start + reduce(lambda x,y: x*y, param.shape)
-            param[:] = nn.Parameter( \
-                    torch.tensor( \
-                    params[param_start:param_stop].reshape(param.shape),\
-                    requires_grad = self.use_grad), \
-                    requires_grad = self.use_grad)
-
-            param_start = param_stop
 
     def include_parameters(self):
 
-        for jj, param in zip(["r_u", "r_v", "f", "k"],\
-                [self.r_u, self.r_v, self.f, self.k]):
+        for jj, param in zip(["diffusion_u", "diffusion_v", "f", "k"],\
+                [self.diffusion_u, self.diffusion_v, self.f, self.k]):
             self.register_parameter(f"rd_{jj}", param)

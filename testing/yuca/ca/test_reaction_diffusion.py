@@ -20,6 +20,24 @@ class TestRxnDfn(unittest.TestCase):
 
         self.assertEqual(x.shape, next_x.shape)
 
+    def test_update_universe(self):
+
+        rxn = RxnDfn()
+
+        x = torch.rand(1,2,64,64)
+
+        identity = rxn.id_conv(x)
+        neighborhood = rxn.neighborhood_conv(x)
+        update = rxn.update_universe(identity, neighborhood)
+        next_x = rxn(x)
+
+        sum_of_error = torch.abs(next_x - (x+rxn.dt*update)).sum()
+
+        self.assertAlmostEqual(sum_of_error, 0.0)
+
+        self.assertEqual(x.shape, next_x.shape)
+
+
     def test_multiverse_set_params(self):
 
         rxn = RxnDfn()
