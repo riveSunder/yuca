@@ -50,7 +50,7 @@ class NCA(CA):
 
     def __init__(self, **kwargs):
         self.hidden_channels = query_kwargs("hidden_channels", 128, **kwargs)
-        super(NCA, self).__init__()
+        super(NCA, self).__init__(**kwargs)
 
         # CA mode. Options are 'neural' or 'functional'.
         # these are initialized in parent class CA but won't be used by UNCA
@@ -94,7 +94,6 @@ class NCA(CA):
 
         self.dt = 0.1
 
-        
     def initialize_weight_layer(self):
         
         self.weights_layer = nn.Sequential(\
@@ -159,7 +158,6 @@ class NCA(CA):
 
         param_start = 0
 
-        # weights are not a learnable parameter for functional CA
         for hh, param in self.weights_layer.named_parameters():
 
             param_stop = param_start + reduce(lambda x,y: x*y, param.shape)

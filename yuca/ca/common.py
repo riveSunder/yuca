@@ -92,14 +92,12 @@ class CA(nn.Module):
                 self.id_kernel = torch.reshape(self.id_kernel, \
                         (1, self.id_kernel.shape[0], \
                         self.id_kernel.shape[1]))
-            
 
         else:
             self.id_kernel = torch.tensor([[[\
                     [0, 0.0, 0,], \
                     [0, 1.0, 0], \
                     [0, 0.0, 0]]]])
-
 
         kernel_dims = len(self.id_kernel.shape)
         
@@ -122,8 +120,17 @@ class CA(nn.Module):
 
         padding = (self.id_dim - 1) // 2 
 
+        groups = 1 if self.internal_channels % self.external_channels \
+                else self.external_channels
+
+        if groups != self.internal_channels or groups != self.external_channels:
+            print(f"warning, id_layer has {groups} groups, but "\
+                    f"{self.internal_channels},{self.external_channels} channels, "\
+                    f"id convolution will mix channels!")
+
         self.id_layer = nn.Conv2d(self.external_channels, \
                 self.internal_channels, self.id_dim, padding=padding, \
+                groups = groups,\
                 padding_mode = self.conv_mode, bias=False)
 
         for param in self.id_layer.named_parameters():
@@ -221,7 +228,7 @@ class CA(nn.Module):
         return universe * alive_mask
 
 
-    def forward(self, universe, mode=0):
+    def forward(self, universe):
 
         if universe.shape[1] >= 4:
             universe = self.alive_mask(universe)

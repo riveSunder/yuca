@@ -44,7 +44,7 @@ class CCA(CA):
     """
 
     def __init__(self, **kwargs):
-        super(CCA, self).__init__()
+        super(CCA, self).__init__(**kwargs)
 
         self.kernel_radius = query_kwargs("kernel_radius", 13, **kwargs)
         self.my_device = query_kwargs("device", "cpu", **kwargs)

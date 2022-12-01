@@ -58,6 +58,20 @@ class TestNCA(unittest.TestCase):
 
                 self.assertEqual(new_x.shape, x.shape)
 
+    def test_id_conv(self):
+
+        for channels in [1,2,4,8,15,16]:
+            rxn = NCA(internal_channels=channels, \
+                    hidden_channels=channels,\
+                    external_channels=channels)
+
+            grid = torch.rand(1,channels,32,32)
+
+            id_grid = rxn.id_conv(grid)
+
+            sum_difference = (grid - id_grid).sum()
+
+            self.assertAlmostEqual(0.0, sum_difference)
     def test_multiverse_id_layer(self):
 
         ca = NCA()

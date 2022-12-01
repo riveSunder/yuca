@@ -1,7 +1,8 @@
+import argparse
 import os
 
 
-def test_commit(): #pragma: no cover
+def test_commit(message=None): #pragma: no cover
 
     run_tests_command = "coverage run -m testing.test_all"
     make_report_command = "coverage report > coverage.txt"
@@ -17,11 +18,20 @@ def test_commit(): #pragma: no cover
                 summary = line
 
     git_add_command = "git add coverage.txt"
-    commit_command = f"git commit -m 'test commit summary: {summary}'"
+    commit_command = f"git commit -m 'test commit summary: {summary}' "
+
+    if message is not None:
+        commit_command += f"-m '{message}'"
 
     os.system(git_add_command)
     os.system(commit_command)
 
 if __name__ == "__main__": #pragma: no cover
-    test_commit()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-m", "--message", type=str, default=None,\
+            help="optional, additional message to add to commit")
+
+    args = parser.parse_args()
+
+    test_commit(message=args.message)
 

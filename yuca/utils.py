@@ -179,6 +179,7 @@ def make_gif(frames_path="./assets/gif_frames/", gif_path="./assets", \
 def save_fig_sequence(grid, ca, num_steps=10, \
         frames_path="./assets/gif_frames", \
         gif_path="./assets", mode=0, tag="no_tag", \
+        speedup=1,\
         cmap=plt.get_cmap("magma"), invert_colors=True):
 
     """
@@ -204,7 +205,8 @@ def save_fig_sequence(grid, ca, num_steps=10, \
 
     for step in range(num_steps):
         
-        grid = ca.get_frame(grid, mode = mode)
+        if grid.max() < 0.001:
+            break
 
         if leading <= 5:
             save_path = os.path.join(frames_path, f"frame_{step:05d}.png")
@@ -217,6 +219,14 @@ def save_fig_sequence(grid, ca, num_steps=10, \
         elif grid.shape[1] == 3:
             img = np.uint8(255 * grid[0,0:3,:,:].detach().cpu().numpy())
             img = img.transpose(1,2,0)
+        elif grid.shape[1] == 2:
+
+            img_grid = np.zeros((3,grid.shape[-2], grid.shape[-1]),\
+                    dtype=np.uint8)
+            img_grid[1,:,:] = np.uint8(255 * grid[0,0,:,:].detach().cpu().numpy())
+            img_grid[2,:,:] = np.uint8(255 * grid[0,1,:,:].detach().cpu().numpy())
+
+            img = img_grid.transpose(1,2,0)
         else:
             img = np.uint8(255 * cmap(grid[0,0,:,:].detach().cpu().numpy()))
 
@@ -225,8 +235,9 @@ def save_fig_sequence(grid, ca, num_steps=10, \
 
         sio.imsave(save_path, img, check_contrast=False)
 
-        if grid.max() < 0.001:
-            break
+        for speed_step in range(speedup):
+            grid = ca.get_frame(grid, mode = mode)
+
 
     if step > 0:
         try:

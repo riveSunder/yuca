@@ -1,22 +1,25 @@
-Name                               Stmts   Miss  Cover
-------------------------------------------------------
-testing/__init__.py                    0      0   100%
-testing/test_all.py                    7      0   100%
-testing/yuca/__init__.py               0      0   100%
-testing/yuca/ca/test_cca.py          104     22    79%
-testing/yuca/ca/test_nca.py           83     22    73%
-testing/yuca/test_activations.py      34      0   100%
-testing/yuca/test_configs.py          38      4    89%
-testing/yuca/test_utils.py           164      0   100%
-yuca/__init__.py                       0      0   100%
-yuca/activations.py                  197     78    60%
-yuca/ca/__init__.py                    0      0   100%
-yuca/ca/common.py                    124     26    79%
-yuca/ca/continuous.py                352     40    89%
-yuca/ca/neural.py                     74      1    99%
-yuca/configs.py                       89     21    76%
-yuca/kernels.py                      118     74    37%
-yuca/patterns.py                      59     43    27%
-yuca/utils.py                        121     47    61%
-------------------------------------------------------
-TOTAL                               1564    378    76%
+Name                                         Stmts   Miss  Cover
+----------------------------------------------------------------
+testing/__init__.py                              0      0   100%
+testing/test_all.py                              9      0   100%
+testing/yuca/__init__.py                         0      0   100%
+testing/yuca/ca/test_cca.py                    111     22    80%
+testing/yuca/ca/test_nca.py                     90     22    76%
+testing/yuca/ca/test_reaction_diffusion.py      45      1    98%
+testing/yuca/test_activations.py                34      0   100%
+testing/yuca/test_configs.py                    38      4    89%
+testing/yuca/test_kernels.py                    36      1    97%
+testing/yuca/test_utils.py                     188      0   100%
+yuca/__init__.py                                 0      0   100%
+yuca/activations.py                            197     60    70%
+yuca/ca/__init__.py                              0      0   100%
+yuca/ca/common.py                              127     20    84%
+yuca/ca/continuous.py                          352     40    89%
+yuca/ca/neural.py                               74      0   100%
+yuca/ca/reaction_diffusion.py                   88      5    94%
+yuca/configs.py                                 89     21    76%
+yuca/kernels.py                                 98     11    89%
+yuca/patterns.py                                59     43    27%
+yuca/utils.py                                  127      7    94%
+----------------------------------------------------------------
+TOTAL                                         1762    257    85%
