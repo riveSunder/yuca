@@ -2,8 +2,8 @@ import unittest
 
 import torch
 
-from testing.yuca.ca.test_cca import TestCCA
-from testing.yuca.ca.test_nca import TestNCA
+from testing.yuca.ca.test_continuous import TestCCA
+from testing.yuca.ca.test_neural import TestNCA
 from testing.yuca.ca.test_reaction_diffusion import TestRxnDfn
 from testing.yuca.test_activations import TestGaussian, TestDoGaussian
 from testing.yuca.test_utils import TestQueryKwargs,\
