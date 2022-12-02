@@ -3,8 +3,8 @@ Name                                         Stmts   Miss  Cover
 testing/__init__.py                              0      0   100%
 testing/test_all.py                             10      0   100%
 testing/yuca/__init__.py                         0      0   100%
-testing/yuca/ca/test_cca.py                    111     22    80%
-testing/yuca/ca/test_nca.py                     90     22    76%
+testing/yuca/ca/test_continuous.py             101     22    78%
+testing/yuca/ca/test_neural.py                  80     22    72%
 testing/yuca/ca/test_reaction_diffusion.py      45      1    98%
 testing/yuca/test_activations.py                34      0   100%
 testing/yuca/test_clone.py                      24      1    96%
@@ -24,4 +24,4 @@ yuca/kernels.py                                 98     11    89%
 yuca/patterns.py                                59     43    27%
 yuca/utils.py                                  127      7    94%
 ----------------------------------------------------------------
-TOTAL                                         1872    263    86%
+TOTAL                                         1852    263    86%
