@@ -215,6 +215,15 @@ class CA(nn.Module):
 
         return identity + neighborhoods
 
+    def update_helper(self, universe):
+
+        identity = self.id_conv(universe)
+        neighborhoods = self.neighborhood_conv(universe)
+
+        update = self.update_universe(identity, neighborhoods)
+
+        return update
+
     def alive_mask(self, universe):
         """
         zero out cells not meeting a threshold in the alpha channel
@@ -241,11 +250,8 @@ class CA(nn.Module):
             
             new_universe = torch.clamp(universe.to(torch.float32) + self.dt * update.to(torch.float32), 0, 1.0).to(torch.float16)
         else:
- 
-            identity = self.id_conv(universe)
-            neighborhoods = self.neighborhood_conv(universe)
-
-            update = self.update_universe(identity, neighborhoods)
+        
+            update = self.update_helper(universe)
             
             new_universe = torch.clamp(universe + self.dt * update, 0, 1.0)
 

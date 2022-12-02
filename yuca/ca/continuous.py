@@ -135,9 +135,9 @@ class CCA(CA):
         if "\n" in filepath:
             filepath = filepath.replace("\n","")
 
-        default_directory = os.path.split(\
-                os.path.split(os.path.realpath(__file__))[0])[0]
-        default_directory = os.path.join(default_directory, "ca_configs")
+        file_directory = os.path.abspath(__file__).split("/")
+        root_directory = os.path.join(*file_directory[:-3])
+        default_directory = os.path.join("/", root_directory, "ca_configs")
 
         if os.path.exists(filepath):
 
