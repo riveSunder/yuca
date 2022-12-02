@@ -45,7 +45,7 @@ def clone_from_ca(ca_config, **kwargs):
     iteration = 0
 
     t0 = time.time()
-    while best_error > error_threshold:
+    while best_error > error_threshold and iteration < max_iterations:
 
         iteration += 1
         nca = NCA(internal_channels=internal_channels,\
@@ -79,7 +79,7 @@ def clone_from_ca(ca_config, **kwargs):
             if relative_error < best_error:
                 best_error = relative_error
 
-                best_state_dict = nca.state_dict
+                best_state_dict = nca.state_dict()
 
                 if verbose:
                     msg = f"new best relative error at step {step} "\
@@ -98,10 +98,10 @@ def clone_from_ca(ca_config, **kwargs):
         
 
     msg = f"best nca after {iteration} iterations of max {max_steps} steps"
-    if best_loss < error_threshold:
-        msg += f"     meets error threshold {error_threshold:.3e} with loss {best_loss}"
+    if best_error < error_threshold:
+        msg += f"     meets error threshold {error_threshold:.3e} with loss {best_error}"
     else:
-        msg += f"     did not meet error threshold {error_threshold:.3e} with loss {best_loss}"
+        msg += f"     did not meet error threshold {error_threshold:.3e} with loss {best_error}"
 
     msg += f"saving to {save_path}"
     print(msg)
