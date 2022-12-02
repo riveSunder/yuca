@@ -34,12 +34,12 @@ from yuca.kernels import get_kernel, \
 from yuca.patterns import get_orbium, \
         get_smooth_puffer
 
-from yuca.multiverse import CA
+from yuca.ca.continuous import CCA
 
 
 import matplotlib.pyplot as plt
 
-class Lenia(CA):
+class Lenia(CCA):
     """
     A CA framework called Lenia (Chan 2019, Chan 2020)
     """
@@ -122,7 +122,7 @@ if __name__ == "__main__":
             for vectorization in [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]:
                 print(vectorization)
 
-                ca = CA()
+                ca = CCA()
                 ca.default_init()
                 ca.to(my_device)
                 ca.no_grad()

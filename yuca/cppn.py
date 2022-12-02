@@ -13,7 +13,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from yuca.multiverse import CA
 from yuca.utils import query_kwargs, seed_all, save_fig_sequence
 from yuca.activations import Gaussian
 

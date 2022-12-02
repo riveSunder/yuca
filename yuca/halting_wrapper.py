@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from yuca.multiverse import CA
+from yuca.ca.continuous import CCA
 from yuca.utils import query_kwargs, get_bite_mask
 
 class SimpleHaltingWrapper(nn.Module):
@@ -12,7 +12,7 @@ class SimpleHaltingWrapper(nn.Module):
     def __init__(self, **kwargs):
         super(SimpleHaltingWrapper, self).__init__()
 
-        ca_fn = query_kwargs("ca_fn", CA, **kwargs)
+        ca_fn = query_kwargs("ca_fn", CCA, **kwargs)
 
 
         self.ca = ca_fn(**kwargs)
@@ -94,7 +94,7 @@ class HaltingWrapper(nn.Module):
     def __init__(self, **kwargs):
         super(HaltingWrapper, self).__init__()
 
-        ca_fn = query_kwargs("ca_fn", CA, **kwargs)
+        ca_fn = query_kwargs("ca_fn", CCA, **kwargs)
         self.ca = ca_fn(**kwargs)
 
         self.num_blocks = query_kwargs("num_blocks", 4, **kwargs)

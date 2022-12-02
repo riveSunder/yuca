@@ -13,7 +13,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 import yuca
-from yuca.multiverse import CA
+from yuca.ca.continuous import CCA
 from yuca.utils import query_kwargs, get_bite_mask, save_fig_sequence
 from yuca.cppn import CPPN
 
@@ -145,7 +145,7 @@ class Phanes():
     
     def __init__(self, **kwargs):
 
-        self.ca = CA(**kwargs)
+        self.ca = CCA(**kwargs)
         self.ca_steps = query_kwargs("ca_steps", 2048, **kwargs)
         self.batch_size = query_kwargs("batch_size", 128, **kwargs)
 
