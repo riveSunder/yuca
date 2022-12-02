@@ -5,7 +5,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 import yuca
-from yuca.multiverse import CA
 from yuca.utils import query_kwargs, get_bite_mask, save_fig_sequence
 
 

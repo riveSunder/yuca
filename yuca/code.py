@@ -37,10 +37,10 @@ from yuca.patterns import get_orbium, \
 
 import matplotlib.pyplot as plt
 
-from yuca.multiverse import CA
+from yuca.ca.continuous import CCA
 
 
-class CODE(CA):
+class CODE(CCA):
 
     def __init__(self, **kwargs):
         super(CODE, self).__init__(**kwargs)

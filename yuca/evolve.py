@@ -12,7 +12,7 @@ from yuca.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper
 from yuca.random_wrapper import RandomWrapper
 from yuca.glider_wrapper import GliderWrapper
 
-from yuca.multiverse import CA
+from yuca.ca.continuous import CCA
 from yuca.metaca import MetaCA
 from yuca.code import CODE
 from yuca.lenia import Lenia
@@ -25,8 +25,8 @@ def pattern_search(**kwargs):
 
     if "MetaCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = MetaCA
-    elif "CA" in kwargs["ca_fn"]:
-        kwargs["ca_fn"] = CA
+    elif "CCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = CCA
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
     elif "Lenia" in kwargs["ca_fn"]:
@@ -62,8 +62,8 @@ def universe_search(**kwargs):
 
     if "MetaCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = MetaCA
-    elif "CA" in kwargs["ca_fn"]:
-        kwargs["ca_fn"] = CA
+    elif "CCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = CCA
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
     elif "Lenia" in kwargs["ca_fn"]:
@@ -105,7 +105,7 @@ if __name__ == "__main__":
             default=64, help="number of grid instances (vectorization)")
     parser.add_argument("-c", "--ca_steps", type=int, \
             default=1024, help="number of ca steps to search for")
-    parser.add_argument("-ca", "--ca_fn", type=str, default="CA")
+    parser.add_argument("-ca", "--ca_fn", type=str, default="CCA")
 
     parser.add_argument("-cc", "--ca_config", type=str, default=None,\
             help="filename (or filepath) designating a ca_config to load")

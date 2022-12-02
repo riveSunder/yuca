@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from yuca.multiverse import CA
+from yuca.ca.continuous import CCA
 from yuca.utils import query_kwargs, get_bite_mask
 
 from yuca.halting_wrapper import SimpleHaltingWrapper

@@ -37,10 +37,10 @@ from yuca.patterns import get_orbium, \
 
 import matplotlib.pyplot as plt
 
-from yuca.multiverse import CA
+from yuca.ca.continuous import CCA
 
 
-class RandomStepCA(CA):
+class RandomStepCA(CCA):
 
     def __init__(self, **kwargs):
         super(RandomStepCA, self).__init__(**kwargs)

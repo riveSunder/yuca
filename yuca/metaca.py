@@ -41,9 +41,9 @@ from yuca.patterns import get_orbium, \
 import matplotlib.pyplot as plt
 my_cmap = plt.get_cmap("magma")
 
-from yuca.multiverse import CA
+from yuca.ca.continuous import CCA
 
-class MetaCA(CA):
+class MetaCA(CCA):
 
     def __init__(self, **kwargs):
         super(MetaCA, self).__init__(**kwargs)
