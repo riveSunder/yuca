@@ -2,7 +2,9 @@ import unittest
 
 import torch
 
-from testing.yuca.test_multiverse import TestCA
+from testing.yuca.ca.test_continuous import TestCCA
+from testing.yuca.ca.test_neural import TestNCA
+from testing.yuca.ca.test_reaction_diffusion import TestRxnDfn
 from testing.yuca.test_activations import TestGaussian, TestDoGaussian
 from testing.yuca.test_utils import TestQueryKwargs,\
         TestSeedAll, \
@@ -12,7 +14,16 @@ from testing.yuca.test_utils import TestQueryKwargs,\
         TestPrepInput, \
         TestMakeTarget, \
         TestPlotGridNbhd,\
+        TestSaveFigSequence,\
         TestPlotKernelGrowth
+from testing.yuca.test_configs import TestConfigs
+from testing.yuca.test_kernels import TestGenericKernel,\
+        TestGaussianKernel,\
+        TestGaussianEdgeKernel,\
+        TestDOGaussianKernel,\
+        TestDOGaussianEdgeKernel,\
+        TestLaplacianKernel
+from testing.yuca.test_clone import TestCloneFromCA
 
 if __name__ == "__main__": #pragma: no cover
     

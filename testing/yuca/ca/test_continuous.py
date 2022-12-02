@@ -4,19 +4,68 @@ import numpy as np
 
 import torch
 
-from yuca.multiverse import CA
+from yuca.ca.continuous import CCA
 
 
-class TestCA(unittest.TestCase):
+class TestCCA(unittest.TestCase):
 
     def setUp(self):
         pass
 
+    def test_get_frame(self):
+
+        ca = CCA()
+        ca.default_init()
+
+        x = torch.randn(1, 1, 32, 32)
+        for frame_mode in [0,1,2,3,4]:
+            frame_return = ca.get_frame(x,mode=frame_mode)
+
+            if frame_mode == 0:
+                self.assertEqual(1, len(frame_return))
+            elif True in (frame_mode == np.array([1,2])):
+                self.assertEqual(2, len(frame_return))
+            elif True in (frame_mode == np.array([3])):
+                self.assertEqual(3, len(frame_return))
+            elif True in (frame_mode == np.array([4])):
+                self.assertEqual(4, len(frame_return))
+            
+    def test_id_conv(self):
+
+
+        for channels in [1,2,4,8,15,16]:
+            cca = CCA(internal_channels=channels, \
+                    external_channels=channels)
+            grid = torch.rand(1,channels,32,32)
+
+            id_grid = cca.id_conv(grid)
+
+            sum_difference = (grid - id_grid).sum()
+
+            self.assertAlmostEqual(0.0, sum_difference)
+
+            id_x = cca.id_layer(grid)
+
+            self.assertNotIn(False, grid == id_x)
+
+
+    def test_alive_mask(self):
+
+        ca = CCA(external_channels=4)
+        ca.default_init()
+
+        x = torch.randn(1, 4, 32, 32)
+        masked = ca(x)
+
+        
     def test_multiverse_forward(self):
 
-        for mode in ["functional", "neurofunctional", "neural"]:
-            ca = CA(ca_mode = mode)
-            ca.random_init()
+        for mode in ["functional", "neurofunctional"]:
+            for internal_channels in [1, 8, 16, 4]:
+
+                ca = CCA(ca_mode = mode, internal_channels=internal_channels)
+            #ca = CCA(ca_mode = mode)
+            ca.default_init()
 
             for vectorization in [1,2,4,9]:
 
@@ -36,7 +85,7 @@ class TestCA(unittest.TestCase):
 
                     self.assertEqual(new_x.shape, x.shape)
                     
-            ca = CA(ca_mode = mode)
+            ca = CCA(ca_mode = mode)
             ca.default_init()
 
             for vectorization in [1,2,4,9]:
@@ -57,32 +106,11 @@ class TestCA(unittest.TestCase):
 
                     self.assertEqual(new_x.shape, x.shape)
 
-    def test_multiverse_id_layer(self):
-
-        ca = CA()
-        ca.default_init()
-
-        input_x = torch.randn(1, 1, 32, 32)
-
-        id_x = ca.id_layer(input_x)
-
-        self.assertNotIn(False, input_x == id_x)
-
-    def test_multiverse_id_conv(self):
-
-        ca = CA()
-        ca.default_init()
-
-        input_x = torch.randn(1, 1, 32, 32)
-
-        id_x = ca.id_conv(input_x)
-
-        self.assertNotIn(False, input_x == id_x)
 
     def test_multiverse_set_params(self):
 
         for ca_mode in ["neural", "functional", "neurofunctional"]:
-            ca = CA(ca_mode=ca_mode)
+            ca = CCA(ca_mode=ca_mode)
             ca.default_init()
 
             params = ca.get_params() 
@@ -94,7 +122,7 @@ class TestCA(unittest.TestCase):
 
             self.assertNotIn(False, params.round(4) == params_again.round(4))
 
-            ca.random_init()
+            ca.default_init()
 
             params = ca.get_params() 
             params = np.random.rand(*params.shape)
@@ -107,8 +135,8 @@ class TestCA(unittest.TestCase):
 
     def test_multiverse_to(self):
 
-        ca = CA()
-        ca.random_init()
+        ca = CCA()
+        ca.default_init()
         ca.include_parameters()
 
         for my_device in ["cpu", torch.device("cpu"), "cuda", torch.device("cuda")]:
@@ -132,7 +160,7 @@ class TestCA(unittest.TestCase):
                             torch.device(my_device).type)
                 
 
-        ca = CA()
+        ca = CCA()
         ca.default_init()
 
         for my_device in ["cpu", torch.device("cpu"), "cuda", torch.device("cuda")]:
