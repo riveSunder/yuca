@@ -32,7 +32,7 @@ class TestConfigs(unittest.TestCase):
 
         for config_file in config_list:
             
-            if config_file.endswith("npy"):
+            if config_file.endswith("npy") and not(config_file.startswith("exp")):
                 config_file += "\n"
                 try:
                     config_filepath = os.path.join(config_directory, config_file)
