@@ -187,8 +187,10 @@ class CCA(CA):
         if self.genesis_fn_config is None:
             print("genesis fn config is missing, assuming GaussianMixture")
             #assert False,  "not implemented exception"
-            genesis_config = "GaussianMixture"
-            self.genesis_fn_config = "GaussianMixture"
+            genesis_config = {"name": "GaussianMixture", \
+                    "parameters": np.array([0.15000001, 0.015     ]), \
+                    "mode": 1}
+            self.genesis_fn_config = genesis_config
         else:
             genesis_config = self.genesis_fn_config
             half_params = len(self.get_params()) // 2 
@@ -202,8 +204,10 @@ class CCA(CA):
         if self.persistence_fn_config is None:
             print("persistence fn config is missing, assuming GaussianMixture")
             #assert False,  "not implemented exception"
-            persistence_config = "GaussianMixture"
-            self.persistence_fn_config = "GaussianMixture"
+            persistence_config = {"name": "GaussianMixture", \
+                    "parameters": np.array([0.15000001, 0.015     ]), \
+                    "mode": 1}
+            self.persistence_fn_config = persistence_config
         else:
             persistence_config = self.persistence_fn_config
             half_params = len(self.get_params()) // 2 
