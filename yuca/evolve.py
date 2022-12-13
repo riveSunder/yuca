@@ -97,6 +97,8 @@ def evolve(**kwargs):
     else:
         universe_search(**kwargs)
 
+    print("evolution completed successfully")
+
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser("args for plotting evo logs")
