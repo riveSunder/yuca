@@ -24,6 +24,7 @@ from testing.yuca.test_kernels import TestGenericKernel,\
         TestDOGaussianEdgeKernel,\
         TestLaplacianKernel
 from testing.yuca.test_clone import TestCloneFromCA
+from testing.test_cli import TestCLI
 
 if __name__ == "__main__": #pragma: no cover
     

@@ -26,28 +26,30 @@ def plot_exp(**kwargs):
     else:
         assert False, f"path {input_filepath} not found"
 
-    end_params = my_data["elite_params"][-1] 
+    end_configs = my_data["elite_configs"][-1] 
 
-    for ii, my_params in enumerate(end_params):
+    for ii, my_config in enumerate(end_configs):
 
-        # assuming a double gaussian update function
-        genesis_fn = DoubleGaussian(mu = my_params[0:2], sigma=my_params[2:4])
-        persistence_fn = DoubleGaussian(mu = my_params[4:6], sigma = my_params[6:8])
+        cca = CCA()
+        cca.load_config(my_config)
 
-        x = np.arange(-0.1, 1.1, 0.0001)
+        for genesis_fn, persistence_fn in zip(\
+                cca.genesis_fns, cca.persistence_fns):
 
-        y_gen = genesis_fn(x).detach().numpy()
-        y_per = persistence_fn(x).detach().numpy()
+            x = np.arange(-0.1, 1.1, 0.0001)
 
-        plt.figure()
-        plt.title(f"End params {ii} update rules")
+            y_gen = genesis_fn(x).detach().numpy()
+            y_per = persistence_fn(x).detach().numpy()
 
-        plt.plot(x, y_gen, "-", lw = 3, alpha = 0.5, color = my_cmap(32), \
-                label = "genesis fn")
-        plt.plot(x, y_per, "--", lw = 3, alpha = 0.5, color = my_cmap(192), \
-                label = "persistence fn")
-                
-        plt.legend()
+            plt.figure()
+            plt.title(f"End params {ii} update rules")
+
+            plt.plot(x, y_gen, "-", lw = 3, alpha = 0.5, color = my_cmap(32), \
+                    label = "genesis fn")
+            plt.plot(x, y_per, "--", lw = 3, alpha = 0.5, color = my_cmap(192), \
+                    label = "persistence fn")
+                    
+            plt.legend()
 
 
     mean_fitness = np.array(my_data["mean_fitness"])
@@ -71,15 +73,21 @@ def plot_exp(**kwargs):
 
     plt.legend()
 
-    plt.show()
+    if kwargs["show"]:
+        plt.show()
+
+    print("plot finished")
 
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser("args for plotting evo logs")
 
     parser.add_argument("-i", "--input_filepath", type=str, \
-            default="./logs/exp__1642180973_seed13.npy", \
+            default="./logs/exp_test_tag_1671048884_seed13.npy", \
             help="npy log file training curves etc.")
+    parser.add_argument("-s", "--show", type=int, \
+            default = 1,\
+            help="set to 0 to prevent plt.show()")
 
     args = parser.parse_args()
 
