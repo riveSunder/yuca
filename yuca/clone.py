@@ -99,9 +99,9 @@ def clone_from_ca(ca_config, **kwargs):
 
     msg = f"best nca after {iteration} iterations of max {max_steps} steps"
     if best_error < error_threshold:
-        msg += f"     meets error threshold {error_threshold:.3e} with loss {best_error}"
+        msg += f"     meets error threshold {error_threshold:.3e} with loss {best_error} \n"
     else:
-        msg += f"     did not meet error threshold {error_threshold:.3e} with loss {best_error}"
+        msg += f"     did not meet error threshold {error_threshold:.3e} with loss {best_error} \n"
 
     msg += f"saving to {save_path}"
     print(msg)
@@ -118,9 +118,15 @@ if __name__ == "__main__":
     parser.add_argument("-e", "--error_threshold", type=float,\
         default=1e-3,\
         help="mean relative absolute error threshold")
-    parser.add_argument("-m", "--max_steps", type=float,\
+    parser.add_argument("-m", "--max_steps", type=int,\
         default=100,\
         help="maximum batch steps to train/clone")
+    parser.add_argument("-i", "--max_iterations", type=int,\
+        default=1,\
+        help="maximum batch steps to train/clone")
+    parser.add_argument("-o", "--save_name", type=str,\
+        default="default_nca.pt",\
+        help="NCA filepath to save results")
 
 
 
@@ -130,4 +136,4 @@ if __name__ == "__main__":
     ca_config = args.ca_config
     kwargs = dict(args._get_kwargs())
 
-    clone_from_ca(ca_config)
+    clone_from_ca(**kwargs)
