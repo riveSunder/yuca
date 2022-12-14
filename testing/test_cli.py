@@ -29,6 +29,22 @@ class TestCLI(unittest.TestCase):
         os.system(cleanup_gif_cmd)
         os.system(cleanup_configs_cmd)
 
+    def test_clone(self):
+
+        # default args for clone  
+
+        for max_steps in [1, 2]:
+            for iterations in [1,2]:
+                clone_cmd = f"python -m yuca.clone -e 0.1 -i {iterations} -m {max_steps} -o test.pt"
+
+                clone_output = str(subprocess.check_output(clone_cmd.split(" ")))
+
+
+                self.assertIn("saving to ", clone_output)
+
+        cleanup_cmd = "rm logs/test.pt"
+        os.system(cleanup_cmd)
+
 if __name__ == "__main__":
 
     unittest.main()
