@@ -45,6 +45,12 @@ class TestCLI(unittest.TestCase):
         cleanup_cmd = "rm logs/test.pt"
         os.system(cleanup_cmd)
 
+    def test_plot(self):
+        
+        plot_cmd = "python -m yuca.plot -s 0 -i logs/exp_test_tag_1671048884_seed13.npy"
+
+        plot_output = str(subprocess.check_output(plot_cmd.split(" ")))
+        self.assertIn("plot finished", plot_output)
 if __name__ == "__main__":
 
     unittest.main()
