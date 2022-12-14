@@ -99,9 +99,9 @@ def clone_from_ca(ca_config, **kwargs):
 
     msg = f"best nca after {iteration} iterations of max {max_steps} steps"
     if best_error < error_threshold:
-        msg += f"     meets error threshold {error_threshold:.3e} with loss {best_error} \n"
+        msg += f"     meets error threshold {error_threshold:.3e} with loss {best_error:.3e} \n"
     else:
-        msg += f"     did not meet error threshold {error_threshold:.3e} with loss {best_error} \n"
+        msg += f"     did not meet error threshold {error_threshold:.3e} with loss {best_error:.3e} \n"
 
     msg += f"saving to {save_path}"
     print(msg)

@@ -51,6 +51,7 @@ class TestCLI(unittest.TestCase):
 
         plot_output = str(subprocess.check_output(plot_cmd.split(" ")))
         self.assertIn("plot finished", plot_output)
+        
 if __name__ == "__main__":
 
     unittest.main()
