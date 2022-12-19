@@ -348,23 +348,4 @@ def get_smooth_glider():
     found_glider = np.load("data/s_mn_glider.npy")
     return found_glider 
 
-def get_lizard(size=64):
-
-    lizard = sio.imread("data/lizard.png")
-    lizard = lizard / lizard.max()
-    lizard = skimage.transform.resize(lizard, (size, size))
-
-    return lizard.transpose(2, 0, 1)
-
-def get_image(filepath="data/emoji_u1f419.png", size=64):
-
-    if os.path.exists(filepath):
-        img = sio.imread(filepath)
-        img = img / img.max()
-        img = skimage.transform.resize(img, (size, size))
-    else:
-        print(f"error, {filepath} not found")
-        return None
-
-    return img.transpose(2, 0, 1)
 

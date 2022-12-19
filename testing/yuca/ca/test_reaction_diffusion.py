@@ -78,6 +78,6 @@ class TestRxnDfn(unittest.TestCase):
         self.assertNotIn(False, params.round(4) == params_again.round(4))
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": #pragma: no cover
 
     unittest.main()
