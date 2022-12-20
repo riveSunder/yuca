@@ -8,9 +8,9 @@ import torch
 from yuca.cmaes import CMAES
 from yuca.cppn import CPPN
 
-from yuca.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper
-from yuca.random_wrapper import RandomWrapper
-from yuca.glider_wrapper import GliderWrapper
+from yuca.wrappers.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper
+from yuca.wrappers.random_wrapper import RandomWrapper
+from yuca.wrappers.glider_wrapper import GliderWrapper
 
 from yuca.ca.continuous import CCA
 from yuca.metaca import MetaCA

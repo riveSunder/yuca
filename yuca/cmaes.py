@@ -14,8 +14,8 @@ import torch.nn.functional as F
 from yuca.utils import query_kwargs, seed_all, save_fig_sequence
 
 from yuca.params_agent import ParamsAgent 
-from yuca.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper 
-from yuca.glider_wrapper import GliderWrapper
+from yuca.wrappers.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper 
+from yuca.wrappers.glider_wrapper import GliderWrapper
 
 import matplotlib.pyplot as plt
 

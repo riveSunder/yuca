@@ -8,7 +8,7 @@ import torch.nn.functional as F
 from yuca.ca.continuous import CCA
 from yuca.utils import query_kwargs, get_bite_mask
 
-from yuca.halting_wrapper import SimpleHaltingWrapper
+from yuca.wrappers.halting_wrapper import SimpleHaltingWrapper
 from yuca.utils import seed_all
 
 class RandomWrapper(SimpleHaltingWrapper):
