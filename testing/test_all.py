@@ -2,7 +2,16 @@ import unittest
 
 import torch
 
-from testing.yuca.test_activations import TestGaussian, TestDoGaussian
+from testing.yuca.test_activations import TestGaussian, \
+        TestDoGaussian,\
+        TestGetSmoothStepsFn,\
+        TestSmoothLifeKernel,\
+        TestSmoothIntervals,\
+        TestIdentity,\
+        TestPolynomial,\
+        TestCosOverX2,\
+        TestGaussianMixture
+
 from testing.yuca.test_clone import TestCloneFromCA
 from testing.yuca.test_configs import TestConfigs
 from testing.yuca.ca.test_continuous import TestCCA
