@@ -2,6 +2,10 @@ import unittest
 
 import torch
 
+import yuca
+import yuca.ca
+import yuca.wrappers
+
 from testing.yuca.test_activations import TestGaussian, \
         TestDoGaussian,\
         TestGetSmoothStepsFn,\
