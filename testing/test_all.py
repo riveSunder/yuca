@@ -41,6 +41,8 @@ from testing.yuca.ca.test_continuous import TestCCA
 from testing.yuca.ca.test_neural import TestNCA
 from testing.yuca.ca.test_reaction_diffusion import TestRxnDfn
 from testing.yuca.wrappers.test_coevolution_wrapper import TestCoevolutionWrapper
+from testing.yuca.wrappers.test_halting_wrapper import TestHaltingWrapper, \
+        TestSimpleHaltingWrapper
 
 
 if __name__ == "__main__": #pragma: no cover
