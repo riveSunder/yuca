@@ -256,6 +256,7 @@ class RxnDfn(CA):
         update = self.update_universe(identity, neighborhoods)
         
         new_universe = universe + self.dt * update 
+        new_universe = torch.clamp(new_universe,0,1.)
 
         self.t_count += self.dt
 
