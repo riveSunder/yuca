@@ -26,7 +26,6 @@ import matplotlib.pyplot as plt
 class CMAES():
 
     def __init__(self, **kwargs):
-
         self.tag = query_kwargs("tag", "", **kwargs)
         self.my_seed = query_kwargs("seed", [42], **kwargs)
 
@@ -57,27 +56,19 @@ class CMAES():
 
         self.kwargs = kwargs
 
-        #self.means = temp_agent.get_params() 
-        #self.means = np.abs(self.means + 0.05 * np.random.randn(*self.means.shape))
-        #self.means = np.clip(self.means, 0.01, 0.99)
-        #self.covar = np.abs(np.diag(np.ones(len(self.means)) \
-        #        * self.means * 0.01))
-
-
-        # aim for large deviation in means, yet narrow intervals
-
         # the type of evolution (pattern or universe rule selection)
         # is determined by the presence or absence of the string
         # 'pattern' in the tag.
+
         if "pattern" in self.tag:
             temp_agent = self.agent_fn(**kwargs)
             self.starting_means = temp_agent.get_params()
             covar_weights = np.ones_like(self.starting_means)*1.00
         else:
-            params = self.env.ca.get_params()
+            ca_params = self.env.ca.get_params()
             self.external_channels = self.env.ca.external_channels
             kwargs["external_channels"] = self.external_channels
-            temp_agent = self.agent_fn(params = params,  **kwargs)
+            temp_agent = self.agent_fn(ca_params = ca_params,  **kwargs)
             self.starting_means = temp_agent.get_params()
             covar_weights = np.ones_like(self.starting_means)*0.15
             covar_weights[1:covar_weights.shape[0]] *= 5e-4 
@@ -360,12 +351,10 @@ class CMAES():
 
             temp_agent.to_device(self.my_device)
 
-
             action = temp_agent.get_action()
             _ = self.env.step(action)
 
             elite_configs.append(self.env.ca.make_config())
-
 
         self.env.ca_steps = restore_steps
         return elite_configs
@@ -501,5 +490,59 @@ class CMACES(CMAES):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    def get_fitness(self, agent_index, steps=10, replicates=1, seed=13):
+
+        fitness_replicates = []
+        seed_all(seed)
+        proportion_alive = 0.0
+
+        for replicate in range(replicates):
+
+            fitness = 0.0
+
+            self.env.reset()
+            self.env.to_device(self.my_device)
+
+            for step in range(steps):
+                rule_action, pattern_action = self.population[agent_index].get_action()
+                
+                self.env.ca.set_params(rule_action)
+
+                o, r, d, info = self.env.step(pattern_action)
+
+                fitness += r
+                proportion_alive += info["active_grid"].detach().cpu()
+
+            fitness /= steps
+            fitness_replicates.append(fitness.detach().cpu().numpy())
+
+        proportion_alive /= (steps * replicates)
+
+        # return the worst performing replicate,
+        # reduce the impact of lucky/unlucky predictor initializations
+        return np.mean(fitness_replicates), proportion_alive
+
+    def get_elite_configs(self):
+
+        elite_configs = []
         
+        restore_steps = 1 * self.env.ca_steps
+        self.env.ca_steps = 2
+        for hh in range(self.elite_params.shape[0]):
+
+            
+            temp_agent = self.agent_fn(\
+                    params = self.elite_params[hh].squeeze(),\
+                    external_channels = self.external_channels,\
+                    dim = self.dim)
+
+            temp_agent.to_device(self.my_device)
+
+            rule_action, pattern_action = temp_agent.get_action()
+            _ = self.env.ca.set_params(rule_action)
+
+            elite_configs.append(self.env.ca.make_config())
+
+        self.env.ca_steps = restore_steps
+        return elite_configs
 

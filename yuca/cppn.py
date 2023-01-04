@@ -208,19 +208,27 @@ class CPPN(nn.Module):
             
 class CPPNPlus(CPPN):
     def __init__(self, **kwargs):
-
         super().__init__(**kwargs)
 
-        params_kwargs = kwargs
-        start_index = super().get_params().shape[0]
+        num_pattern_params = super().get_params().shape[0]
 
-        params_kwargs["params"] = kwargs["params"][start_index:]
+        if "ca_params" in kwargs.keys():
+            ca_params = kwargs["ca_params"]
+        else:
+            ca_params = kwargs["params"][num_pattern_params:]
 
-        self.params_agent = ParamsAgent(**params_kwargs)
+        self.params_agent = ParamsAgent(params=ca_params)
+
+    def get_action(self, grid=None):
+
+        rule_action = self.get_rule_action()
+        pattern_action = self.get_pattern_action()
+
+        return rule_action, pattern_action
 
     def get_pattern_action(self, grid=None):
         
-        return self.get_action(grid)
+        return super().get_action(grid)
 
     def get_rule_action(self, obs=None):
         
