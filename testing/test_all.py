@@ -18,6 +18,7 @@ from testing.yuca.test_activations import TestGaussian, \
 
 from testing.yuca.test_clone import TestCloneFromCA
 from testing.yuca.test_configs import TestConfigs
+from testing.yuca.test_cppn import TestCPPN, TestCPPNPlus
 from testing.yuca.test_kernels import TestGenericKernel,\
         TestGaussianKernel,\
         TestGaussianEdgeKernel,\
