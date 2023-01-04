@@ -6,17 +6,52 @@ import subprocess
 import torch
 
 from yuca.cmaes import CMAES
-from yuca.cppn import CPPN
+from yuca.cppn import CPPN, CPPNPlus
 
 from yuca.wrappers.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper
 from yuca.wrappers.random_wrapper import RandomWrapper
 from yuca.wrappers.glider_wrapper import GliderWrapper
 
 from yuca.ca.continuous import CCA
+from yuca.ca.reaction_diffusion import RxnDfn
+from yuca.ca.neural import NCA
+
 from yuca.metaca import MetaCA
 from yuca.code import CODE
 from yuca.lenia import Lenia
 from yuca.random_step_ca import RandomStepCA
+
+
+def coevolve(**kwargs):
+
+    kwargs["agent_fn"] = CPPNPlus
+    kwargs["env_fn"] = GliderWrapper 
+    
+    if "MetaCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = MetaCA
+    elif "CCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = CCA
+    elif "NCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = NCA
+    elif "RxDfn" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = RxnDfn
+    elif "CODE" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = CODE
+    elif "Lenia" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = Lenia
+    elif "RandomStepCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = RandomStepCA
+    else:
+        exception_msg = f"should be unreachable, env_fn {kwargs['ca_fn']} "\
+                f" not recognized"
+        assert False, exception_msg
+
+    print(f"Co-evolve patterns and rules with {kwargs['env_fn']}i reward"\
+            f" and CA type {kwargs['ca_fn']}")
+
+    population = CMACES(**kwargs)
+
+    population.search()
 
 def pattern_search(**kwargs):
     
@@ -27,6 +62,10 @@ def pattern_search(**kwargs):
         kwargs["ca_fn"] = MetaCA
     elif "CCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CCA
+    elif "NCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = NCA
+    elif "RxDfn" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
     elif "Lenia" in kwargs["ca_fn"]:
@@ -40,14 +79,12 @@ def pattern_search(**kwargs):
 
     print(f"Evolve mobile patterns with CPPNs and {kwargs['env_fn']}"\
             f" and CA type {kwargs['ca_fn']}")
-    
 
     population = CMAES(**kwargs)
 
     population.search()
 
 def universe_search(**kwargs):
-
 
     if "SimpleHaltingWrapper" in kwargs["env_fn"]:
         env_fn = SimpleHaltingWrapper
@@ -64,6 +101,10 @@ def universe_search(**kwargs):
         kwargs["ca_fn"] = MetaCA
     elif "CCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CCA
+    elif "NCA" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = NCA
+    elif "RxDfn" in kwargs["ca_fn"]:
+        kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
     elif "Lenia" in kwargs["ca_fn"]:
@@ -93,11 +134,12 @@ def evolve(**kwargs):
 
     if "pattern" in kwargs["tag"]:
         pattern_search(**kwargs)
-
     else:
         universe_search(**kwargs)
 
     print("evolution completed successfully")
+
+
 
 if __name__ == "__main__":
     
