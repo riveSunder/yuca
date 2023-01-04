@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 #from mpi4py import MPI
 #comm = MPI.COMM_WORLD
 
+
 class CMAES():
 
     def __init__(self, **kwargs):
@@ -74,6 +75,8 @@ class CMAES():
             covar_weights = np.ones_like(self.starting_means)*1.00
         else:
             params = self.env.ca.get_params()
+            self.external_channels = self.env.ca.external_channels
+            kwargs["external_channels"] = self.external_channels
             temp_agent = self.agent_fn(params = params,  **kwargs)
             self.starting_means = temp_agent.get_params()
             covar_weights = np.ones_like(self.starting_means)*0.15
@@ -132,6 +135,7 @@ class CMAES():
             
                 self.population.append(self.agent_fn(\
                         params = self.elite_params[hh].squeeze(),\
+                        external_channels = self.external_channels,\
                         dim = self.dim))
 
                 self.population[hh].to_device(self.my_device)
@@ -144,11 +148,11 @@ class CMAES():
 
             self.population.append(self.agent_fn(\
                     params = self.sample_distribution(),\
+                    external_channels = self.external_channels,\
                     dim = self.dim))
 
             self.population[ii].to_device(self.my_device)
-
-
+        
     def get_fitness(self, agent_index, steps=10, replicates=1, seed=13):
 
         fitness_replicates = []
@@ -321,7 +325,7 @@ class CMAES():
 
     def save_gif(self, tag=""):
 
-        starting_grid = torch.rand(1, 1, self.dim, self.dim)
+        starting_grid = torch.rand(1, self.env.ca.external_channels, self.dim, self.dim)
 
         #self.env.ca.set_params(self.population[0].get_params())
         grid = self.env.ca(starting_grid.to(self.env.ca.my_device)).to("cpu")
@@ -351,6 +355,7 @@ class CMAES():
             
             temp_agent = self.agent_fn(\
                     params = self.elite_params[hh].squeeze(),\
+                    external_channels = self.external_channels,\
                     dim = self.dim)
 
             temp_agent.to_device(self.my_device)
@@ -490,4 +495,11 @@ class CMAES():
     def search(self):
 
         self.mantle()
+
+class CMACES(CMAES):
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        
 

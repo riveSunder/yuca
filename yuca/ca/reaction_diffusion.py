@@ -36,6 +36,102 @@ class RxnDfn(CA):
         self.default_init()
         self.reset()
 
+    def load_config(self, config):
+
+        self.config = config
+
+        if "identity_kernel_config" not in config.keys():
+            self.add_identity_kernel()
+        else: 
+            id_kernel = get_kernel(config["identity_kernel_config"])
+            self.add_identity_kernel(kernel = id_kernel)
+
+        self.initialize_id_layer()
+
+        nbhd_kernel = get_kernel(config["neighborhood_kernel_config"])
+        self.neighborhood_kernel_config = config["neighborhood_kernel_config"]
+
+        self.add_neighborhood_kernel(nbhd_kernel)
+        self.initialize_neighborhood_layer()
+
+        self.set_params(config["params"])
+
+        if "dt" in config.keys():
+            self.dt = config["dt"]
+        else: 
+            self.dt = 0.1
+
+        self.initialize_weight_layer()
+        self.include_parameters()
+
+    def restore_config(self, filepath):
+        if "\n" in filepath:
+            filepath = filepath.replace("\n","")
+
+        file_directory = os.path.abspath(__file__).split("/")
+        root_directory = os.path.join(*file_directory[:-3])
+        default_directory = os.path.join("/", root_directory, "ca_configs")
+
+        if os.path.exists(filepath):
+
+            config = np.load(filepath, allow_pickle=True).reshape(1)[0]
+            self.load_config(config)
+            print(f"config restored from {filepath}")
+
+        elif os.path.exists(os.path.join(default_directory, filepath)):
+            
+            filepath = os.path.join(default_directory, filepath)
+            config = np.load(filepath, allow_pickle=True).reshape(1)[0]
+            self.load_config(config)
+            print(f"config restored from {filepath}")
+        
+        else:
+
+            print(f"default directory: {default_directory}")
+            print(f"attempted to read {filepath}, not found")
+            #assert False, f"{filepath} not found"
+        
+    def make_config(self):
+
+        config = {}
+
+        # config for identity kernel
+        if self.id_kernel_config is None:
+            
+            id_kernel_config = {}
+            id_kernel_config["name"] = "InnerMoore"
+
+        else:
+            id_kernel_config = self.id_kernel_config
+
+        # config for neighborhood kernel(s)
+        if self.neighborhood_kernel_config is None:
+            print("kernel config is missing, assuming GaussianMixture")
+            #assert False,  "not implemented exception"
+            neighborhood_kernel_config = "GaussianMixture"
+            neighborhood_kernel_config = {}
+            neighborhood_kernel_config["name"] = "GaussianMixture"
+            neighborhood_kernel_config["kernel_kwargs"] = {}
+            neighborhood_kernel_config["radius"] = self.kernel_radius
+
+
+        else:
+            neighborhood_kernel_config = self.neighborhood_kernel_config
+
+        # nca params
+        config["params"] = self.get_params()
+            
+        config["id_kernel_config"] = id_kernel_config
+        config["neighborhood_kernel_config"] = neighborhood_kernel_config
+
+        return copy.deepcopy(config)
+
+    def save_config(self, filepath, config=None):
+
+        if config is None:
+            config = self.make_config()
+
+        np.save(filepath, config)
     def default_init(self):
 
         self.add_neighborhood_kernel()
@@ -195,3 +291,18 @@ class RxnDfn(CA):
         for jj, param in zip(["diffusion_u", "diffusion_v", "f", "k"],\
                 [self.diffusion_u, self.diffusion_v, self.f, self.k]):
             self.register_parameter(f"rd_{jj}", param)
+
+    def no_grad(self):
+
+        self.use_grad = False
+
+        for hh, param in enumerate(self.parameters()):
+            param.requires_grad = False
+
+    def to_device(self, my_device):
+        """
+        additional functionality beyong `to` function from nn.Module
+        to ensure all parameters get moved for CCA
+        """
+        
+        self.to(my_device)

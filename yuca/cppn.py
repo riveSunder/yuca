@@ -17,20 +17,12 @@ from yuca.utils import query_kwargs, seed_all, save_fig_sequence
 from yuca.activations import Gaussian
 from yuca.params_agent import ParamsAgent
 
-import matplotlib
-import matplotlib.pyplot as plt
-
-
-matplotlib.rcParams["pdf.fonttype"] = 42
-matplotlib.rcParams["ps.fonttype"] = 42
-
     
 class CPPN(nn.Module):
 
     def __init__(self, **kwargs):
 
         super(CPPN, self).__init__()
-
         
         self.internal_channels = query_kwargs("internal_channels", \
                 1, **kwargs) 
@@ -141,9 +133,14 @@ class CPPN(nn.Module):
         grid = torch.cat([grid,  sinr_8r], dim=1)
         grid = torch.cat([grid,  sinr_16r], dim=1)
 
-        self.grid = grid.to(torch.get_default_dtype())
+
+
+        for ii in range(self.external_channels-1):
+            grid = torch.cat([grid,  grid], dim=1)
+            rr = torch.cat([rr, rr], dim=1)
 
         self.rr = rr
+        self.grid = grid.to(torch.get_default_dtype())
 
         return grid.to(torch.get_default_dtype())
 
@@ -211,9 +208,15 @@ class CPPN(nn.Module):
             
 class CPPNPlus(CPPN):
     def __init__(self, **kwargs):
-        super().__init__()
 
-        self.params_agent = ParamsAgent(**kwargs)
+        super().__init__(**kwargs)
+
+        params_kwargs = kwargs
+        start_index = super().get_params().shape[0]
+
+        params_kwargs["params"] = kwargs["params"][start_index:]
+
+        self.params_agent = ParamsAgent(**params_kwargs)
 
     def get_pattern_action(self, grid=None):
         

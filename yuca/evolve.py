@@ -5,7 +5,7 @@ import subprocess
 
 import torch
 
-from yuca.cmaes import CMAES
+from yuca.cmaes import CMAES, CMACES
 from yuca.cppn import CPPN, CPPNPlus
 
 from yuca.wrappers.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper
@@ -33,7 +33,7 @@ def coevolve(**kwargs):
         kwargs["ca_fn"] = CCA
     elif "NCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = NCA
-    elif "RxDfn" in kwargs["ca_fn"]:
+    elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
@@ -64,7 +64,7 @@ def pattern_search(**kwargs):
         kwargs["ca_fn"] = CCA
     elif "NCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = NCA
-    elif "RxDfn" in kwargs["ca_fn"]:
+    elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
@@ -103,7 +103,7 @@ def universe_search(**kwargs):
         kwargs["ca_fn"] = CCA
     elif "NCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = NCA
-    elif "RxDfn" in kwargs["ca_fn"]:
+    elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
@@ -134,6 +134,8 @@ def evolve(**kwargs):
 
     if "pattern" in kwargs["tag"]:
         pattern_search(**kwargs)
+    elif "coevo" in kwargs["tag"]:
+        coevolve(**kwargs)
     else:
         universe_search(**kwargs)
 
