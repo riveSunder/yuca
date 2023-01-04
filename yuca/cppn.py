@@ -214,10 +214,9 @@ class CPPNPlus(CPPN):
 
         if "ca_params" in kwargs.keys():
             ca_params = kwargs["ca_params"]
+            self.params_agent = ParamsAgent(params=ca_params)
         else:
-            ca_params = kwargs["params"][num_pattern_params:]
-
-        self.params_agent = ParamsAgent(params=ca_params)
+            self.params_agent = ParamsAgent()
 
     def get_action(self, grid=None):
 

@@ -29,9 +29,13 @@ class TestRxnDfn(unittest.TestCase):
         identity = rxn.id_conv(x)
         neighborhood = rxn.neighborhood_conv(x)
         update = rxn.update_universe(identity, neighborhood)
+        x_update = x+rxn.dt*update
+        x_update_clamp = torch.clamp(x_update, 0, 1.0)
+
         next_x = rxn(x)
 
-        sum_of_error = torch.abs(next_x - (x+rxn.dt*update)).sum()
+
+        sum_of_error = torch.abs(next_x - (x_update_clamp)).sum().numpy()
 
         self.assertAlmostEqual(sum_of_error, 0.0)
 

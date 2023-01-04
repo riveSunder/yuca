@@ -9,9 +9,9 @@ yuca/ca/neural.py                        129     52    60%
 yuca/ca/reaction_diffusion.py            151     61    60%
 yuca/clone.py                             83     13    84%
 yuca/configs.py                           89     21    76%
-yuca/cppn.py                             149     31    79%
+yuca/cppn.py                             149     29    81%
 yuca/kernels.py                           98     11    89%
-yuca/params_agent.py                      29     17    41%
+yuca/params_agent.py                      29      9    69%
 yuca/patterns.py                          46      6    87%
 yuca/utils.py                            127      7    94%
 yuca/wrappers/__init__.py                  3      0   100%
@@ -20,4 +20,4 @@ yuca/wrappers/glider_wrapper.py           88     10    89%
 yuca/wrappers/halting_wrapper.py         177     29    84%
 yuca/wrappers/random_wrapper.py           16      4    75%
 ----------------------------------------------------------
-TOTAL                                   1919    344    82%
+TOTAL                                   1919    334    83%
