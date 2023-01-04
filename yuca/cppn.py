@@ -15,6 +15,7 @@ import torch.nn.functional as F
 
 from yuca.utils import query_kwargs, seed_all, save_fig_sequence
 from yuca.activations import Gaussian
+from yuca.params_agent import ParamsAgent
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -23,6 +24,7 @@ import matplotlib.pyplot as plt
 matplotlib.rcParams["pdf.fonttype"] = 42
 matplotlib.rcParams["ps.fonttype"] = 42
 
+    
 class CPPN(nn.Module):
 
     def __init__(self, **kwargs):
@@ -206,3 +208,46 @@ class CPPN(nn.Module):
 
         for hh, param in enumerate(self.model.parameters()):
             param.requires_grad = False
+            
+class CPPNPlus(CPPN):
+    def __init__(self, **kwargs):
+        super().__init__()
+
+        self.params_agent = ParamsAgent(**kwargs)
+
+    def get_pattern_action(self, grid=None):
+        
+        return self.get_action(grid)
+
+    def get_rule_action(self, obs=None):
+        
+        return self.params_agent.get_action()
+
+    def get_params(self):
+    
+        params = super().get_params()
+
+        params = np.append(params, self.params_agent.get_params())
+
+        return params
+        
+    def set_params(self, params):
+
+        param_start = 0
+
+        for name, param in self.model.named_parameters():
+            if not len(param.shape):
+                param = param.reshape(1)
+
+
+            param_stop = param_start + reduce(lambda x,y: x*y, param.shape) 
+
+            param[:] = nn.Parameter(\
+                    torch.tensor(\
+                    params[param_start:param_stop].reshape(param.shape)),\
+                    requires_grad = False)
+
+            param_start = param_stop
+
+        self.params_agent.set_params(params[param_start:])
+
