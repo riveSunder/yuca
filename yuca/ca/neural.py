@@ -243,7 +243,7 @@ class NCA(CA):
 
 
         for hh, param in enumerate(self.weights_layer.named_parameters()):
-            params = np.append(params, param[1].detach().numpy().ravel())
+            params = np.append(params, param[1].detach().cpu().numpy().ravel())
 
         return params
 

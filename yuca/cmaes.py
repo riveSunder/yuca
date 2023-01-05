@@ -64,6 +64,7 @@ class CMAES():
             temp_agent = self.agent_fn(**kwargs)
             self.starting_means = temp_agent.get_params()
             covar_weights = np.ones_like(self.starting_means)*1.00
+            self.external_channels = self.env.ca.external_channels
         else:
             ca_params = self.env.ca.get_params()
             self.external_channels = self.env.ca.external_channels
@@ -143,6 +144,7 @@ class CMAES():
                     dim = self.dim))
 
             self.population[ii].to_device(self.my_device)
+
         
     def get_fitness(self, agent_index, steps=10, replicates=1, seed=13):
 
