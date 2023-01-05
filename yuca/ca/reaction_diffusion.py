@@ -273,6 +273,7 @@ class RxnDfn(CA):
         return params
 
     def set_params(self, params):
+        self.no_grad()
 
         param_start = 0
 

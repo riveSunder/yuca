@@ -563,6 +563,7 @@ class CCA(CA):
         to ensure all parameters get moved
         """
         
+        self.no_grad()
         self.to(my_device)
         self.my_device = my_device
         self.id_layer.to(my_device)

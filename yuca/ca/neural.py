@@ -227,8 +227,8 @@ class NCA(CA):
         to ensure all parameters get moved for CCA
         """
         # TODO: implement for nca (should be simpler) 
-        pass
         
+        self.no_grad()
         self.to(my_device)
         self.my_device = my_device
         self.id_layer.to(my_device)
@@ -248,6 +248,8 @@ class NCA(CA):
         return params
 
     def set_params(self, params):
+
+        self.no_grad()
         # TODO: implement nca version (simpler)
 
         param_start = 0
