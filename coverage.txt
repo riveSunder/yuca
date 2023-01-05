@@ -15,8 +15,8 @@ yuca/params_agent.py                  29      9    69%
 yuca/patterns.py                      46      6    87%
 yuca/utils.py                        127      7    94%
 yuca/wrappers/__init__.py              3      0   100%
-yuca/wrappers/glider_wrapper.py       88     69    22%
-yuca/wrappers/halting_wrapper.py     177     29    84%
+yuca/wrappers/glider_wrapper.py       88     10    89%
+yuca/wrappers/halting_wrapper.py     177     28    84%
 yuca/wrappers/random_wrapper.py       16      4    75%
 ------------------------------------------------------
-TOTAL                               1881    310    84%
+TOTAL                               1881    250    87%

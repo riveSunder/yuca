@@ -37,6 +37,7 @@ from testing.yuca.test_utils import TestQueryKwargs,\
         TestPlotKernelGrowth
 from testing.yuca.test_patterns import TestPatterns
 from testing.test_cli import TestCLI
+from testing.yuca.wrappers.test_glider_wrapper import TestGliderWrapper
 
 from testing.yuca.ca.test_continuous import TestCCA
 from testing.yuca.ca.test_neural import TestNCA
