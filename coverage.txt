@@ -1,23 +1,22 @@
-Name                                   Stmts   Miss  Cover
-----------------------------------------------------------
-yuca/__init__.py                           0      0   100%
-yuca/activations.py                      198     36    82%
-yuca/ca/__init__.py                        4      0   100%
-yuca/ca/common.py                        130     20    85%
-yuca/ca/continuous.py                    359     26    93%
-yuca/ca/neural.py                        131     12    91%
-yuca/ca/reaction_diffusion.py            151     16    89%
-yuca/clone.py                             83     13    84%
-yuca/configs.py                           89     21    76%
-yuca/cppn.py                             152     31    80%
-yuca/kernels.py                           98     11    89%
-yuca/params_agent.py                      29      9    69%
-yuca/patterns.py                          46      6    87%
-yuca/utils.py                            127      7    94%
-yuca/wrappers/__init__.py                  3      0   100%
-yuca/wrappers/coevolution_wrapper.py      44      0   100%
-yuca/wrappers/glider_wrapper.py           88     10    89%
-yuca/wrappers/halting_wrapper.py         177     29    84%
-yuca/wrappers/random_wrapper.py           16      4    75%
-----------------------------------------------------------
-TOTAL                                   1925    251    87%
+Name                               Stmts   Miss  Cover
+------------------------------------------------------
+yuca/__init__.py                       0      0   100%
+yuca/activations.py                  198     36    82%
+yuca/ca/__init__.py                    4      0   100%
+yuca/ca/common.py                    130     20    85%
+yuca/ca/continuous.py                359     26    93%
+yuca/ca/neural.py                    131     12    91%
+yuca/ca/reaction_diffusion.py        151     16    89%
+yuca/clone.py                         83     13    84%
+yuca/configs.py                       89     21    76%
+yuca/cppn.py                         152     31    80%
+yuca/kernels.py                       98     11    89%
+yuca/params_agent.py                  29      9    69%
+yuca/patterns.py                      46      6    87%
+yuca/utils.py                        127      7    94%
+yuca/wrappers/__init__.py              3      0   100%
+yuca/wrappers/glider_wrapper.py       88     69    22%
+yuca/wrappers/halting_wrapper.py     177     29    84%
+yuca/wrappers/random_wrapper.py       16      4    75%
+------------------------------------------------------
+TOTAL                               1881    310    84%
