@@ -12,7 +12,7 @@ setup(\
                         "jupyter==1.0.0",\
                         "notebook>=6.4.12",\
                         "numpy==1.22.0",\
-                        "torch==1.13.0",\
+                        "torch==1.13.1",\
                         "cycler==0.11.0",\
                         "decorator==4.4.2",\
                         "future==0.18.2",\
