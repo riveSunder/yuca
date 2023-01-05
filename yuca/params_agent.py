@@ -16,14 +16,19 @@ class ParamsAgent():
         #default_params = np.array([0.15, 0.035, 0.325, 0.015, \
         #        0.2, .015, 0.295, 0.015]) 
 
-        default_params = np.array([0.15, 0.015, 0.15, 0.020]) #, \
-        #        0.155, 0.008, 0.155, 0.008]) 
+        if "num_params" in kwargs.keys():
+            self.num_params = kwargs["num_params"]
+            
+            self.params = np.random.rand(self.num_params)
+        else:
 
-        self.params = query_kwargs("params", default_params, 
-                **kwargs)
-        self.num_params = self.params.shape[0]
+            default_params = np.array([0.15, 0.015, 0.15, 0.020]) #, \
+            self.params = query_kwargs("params", default_params, 
+                    **kwargs)
+            self.num_params = self.params.shape[0]
 
-        self.filter_params = True #query_kwargs("filter_params", True, **kwargs)
+
+        self.filter_params = query_kwargs("filter_params", False, **kwargs)
 
     def get_action(self, obs=None):
 

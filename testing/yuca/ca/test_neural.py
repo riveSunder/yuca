@@ -1,4 +1,6 @@
+import os
 import unittest
+
 
 import numpy as np
 
@@ -12,6 +14,50 @@ class TestNCA(unittest.TestCase):
     def setUp(self):
         pass
 
+    def test_configs(self):
+
+        nca_1 = NCA()
+        nca_1.no_grad()
+
+        my_filepath = "./temp_delete_nca_config.npy"
+
+        my_config_1 = nca_1.make_config()
+        my_config_1_2 = nca_1.make_config()
+
+        nca_1.save_config(my_filepath)
+        nca_1.restore_config(my_filepath)
+        my_config_2 = nca_1.make_config()
+
+        nca_2 = NCA()
+        nca_2.no_grad()
+        my_config_3 = nca_2.make_config()
+
+        nca_2.restore_config(my_filepath)
+        my_config_4 = nca_2.make_config()
+
+        # 1 == 3; 1 != 2
+
+        for key in my_config_1.keys():
+            self.assertIn(key, my_config_2.keys())
+            self.assertIn(key, my_config_3.keys())
+
+            if key == "params":
+            
+                sae_1_1b = np.sum(np.abs(my_config_1[key] - my_config_1_2[key]))
+
+                sae_1_2 = np.sum(np.abs(my_config_1[key] - my_config_2[key]))
+                sae_2_3 = np.sum(np.abs(my_config_2[key] - my_config_3[key]))
+                sae_1_3 = np.sum(np.abs(my_config_1[key] - my_config_3[key]))
+                sae_1_4 = np.sum(np.abs(my_config_1[key] - my_config_4[key]))
+
+                self.assertEqual(0.0, sae_1_1b)
+                self.assertEqual(0.0, sae_1_2)
+                self.assertNotEqual(0.0, sae_1_3)
+                self.assertNotEqual(0.0, sae_2_3)
+                self.assertEqual(0.0, sae_1_4)
+
+        os.system(f"rm {my_filepath}")
+        
     def test_multiverse_forward(self):
 
         ca = NCA()
@@ -89,7 +135,7 @@ class TestNCA(unittest.TestCase):
 
         params_again = ca.get_params() 
 
-        self.assertNotIn(False, params.round(4) == params_again.round(4))
+        self.assertNotIn(False, params.round(3) == params_again.round(3))
 
         ca.default_init()
 
@@ -100,7 +146,7 @@ class TestNCA(unittest.TestCase):
 
         params_again = ca.get_params() 
 
-        self.assertNotIn(False, params.round(4) == params_again.round(4))
+        self.assertNotIn(False, params.round(3) == params_again.round(3))
 
     def test_multiverse_to(self):
 

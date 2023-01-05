@@ -5,6 +5,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from yuca.ca.continuous import CCA
+from yuca.ca.reaction_diffusion import RxnDfn
+from yuca.ca.neural import NCA
+
 from yuca.utils import query_kwargs, get_bite_mask
 
 class SimpleHaltingWrapper(nn.Module):
@@ -14,9 +17,7 @@ class SimpleHaltingWrapper(nn.Module):
 
         ca_fn = query_kwargs("ca_fn", CCA, **kwargs)
 
-
         self.ca = ca_fn(**kwargs)
-        self.num_blocks = query_kwargs("num_blocks", 4, **kwargs)
 
         self.ca_steps = query_kwargs("ca_steps", 1024, **kwargs)
         self.batch_size = query_kwargs("batch_size", 8, **kwargs)
@@ -29,7 +30,18 @@ class SimpleHaltingWrapper(nn.Module):
         #Prediction mode: 0 - vanishing, 1 - static, 2 - both
         self.prediction_mode = query_kwargs("prediction_mode", 0, **kwargs)
 
+        self.action_space = self.ActionSpace(\
+                shape=self.ca.get_params().shape)
 
+    class ActionSpace():
+
+        def __init__(self, shape=(2,)):
+
+            self.shape = shape
+
+        def sample(self):
+
+            return np.random.rand(*self.shape) 
 
     def reset(self):
         pass 
@@ -118,6 +130,18 @@ class HaltingWrapper(nn.Module):
         if self.ca_config is not None:
             self.ca.restore_config(self.ca_config)
 
+        self.action_space = self.ActionSpace(\
+                shape=self.ca.get_params().shape)
+
+    class ActionSpace():
+
+        def __init__(self, shape=(2,)):
+
+            self.shape = shape
+
+        def sample(self):
+
+            return np.random.rand(*self.shape) 
 
     def forward(self, x):
         

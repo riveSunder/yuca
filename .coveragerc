@@ -1,0 +1,12 @@
+[run]
+include = 
+    yuca/*
+    yuca/ca/*
+    yuca/wrappers/*
+omit =
+    testing/*
+[report]
+include = 
+    yuca/*
+    yuca/ca/*
+    yuca/wrappers/*

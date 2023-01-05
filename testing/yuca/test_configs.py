@@ -6,6 +6,7 @@ import numpy as np
 
 import torch
 
+import yuca.wrappers
 from yuca.ca.continuous import CCA
 from yuca.configs import get_smooth_life_config,\
     get_orbium_config,\
