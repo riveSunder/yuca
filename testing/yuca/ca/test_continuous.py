@@ -1,3 +1,4 @@
+import os
 import unittest
 
 import numpy as np
@@ -30,6 +31,50 @@ class TestCCA(unittest.TestCase):
             elif True in (frame_mode == np.array([4])):
                 self.assertEqual(4, len(frame_return))
             
+    def test_configs(self):
+
+        cca_1 = CCA()
+        cca_1.no_grad()
+
+        my_filepath = "./temp_delete_cca_config.npy"
+
+        my_config_1 = cca_1.make_config()
+        my_config_1_2 = cca_1.make_config()
+
+        cca_1.save_config(my_filepath)
+        cca_1.restore_config(my_filepath)
+        my_config_2 = cca_1.make_config()
+
+        cca_2 = CCA()
+        cca_2.no_grad()
+        my_config_3 = cca_2.make_config()
+
+        cca_2.restore_config(my_filepath)
+        my_config_4 = cca_2.make_config()
+
+        # 1 == 3; 1 != 2
+
+        for key in my_config_1.keys():
+            self.assertIn(key, my_config_2.keys())
+            self.assertIn(key, my_config_3.keys())
+
+            if key == "params":
+            
+                sae_1_1b = np.sum(np.abs(my_config_1[key] - my_config_1_2[key]))
+
+                sae_1_2 = np.sum(np.abs(my_config_1[key] - my_config_2[key]))
+                sae_2_3 = np.sum(np.abs(my_config_2[key] - my_config_3[key]))
+                sae_1_3 = np.sum(np.abs(my_config_1[key] - my_config_3[key]))
+                sae_1_4 = np.sum(np.abs(my_config_1[key] - my_config_4[key]))
+
+                self.assertEqual(0.0, sae_1_1b)
+                self.assertEqual(0.0, sae_1_2)
+                self.assertNotEqual(0.0, sae_1_3)
+                self.assertNotEqual(0.0, sae_2_3)
+                self.assertEqual(0.0, sae_1_4)
+
+        os.system(f"rm {my_filepath}")
+
     def test_id_conv(self):
 
 

@@ -15,20 +15,14 @@ import torch.nn.functional as F
 
 from yuca.utils import query_kwargs, seed_all, save_fig_sequence
 from yuca.activations import Gaussian
+from yuca.params_agent import ParamsAgent
 
-import matplotlib
-import matplotlib.pyplot as plt
-
-
-matplotlib.rcParams["pdf.fonttype"] = 42
-matplotlib.rcParams["ps.fonttype"] = 42
-
+    
 class CPPN(nn.Module):
 
     def __init__(self, **kwargs):
 
         super(CPPN, self).__init__()
-
         
         self.internal_channels = query_kwargs("internal_channels", \
                 1, **kwargs) 
@@ -139,9 +133,14 @@ class CPPN(nn.Module):
         grid = torch.cat([grid,  sinr_8r], dim=1)
         grid = torch.cat([grid,  sinr_16r], dim=1)
 
-        self.grid = grid.to(torch.get_default_dtype())
+
+
+        for ii in range(self.external_channels-1):
+            grid = torch.cat([grid,  grid], dim=1)
+            rr = torch.cat([rr, rr], dim=1)
 
         self.rr = rr
+        self.grid = grid.to(torch.get_default_dtype())
 
         return grid.to(torch.get_default_dtype())
 
@@ -206,3 +205,62 @@ class CPPN(nn.Module):
 
         for hh, param in enumerate(self.model.parameters()):
             param.requires_grad = False
+            
+class CPPNPlus(CPPN):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        num_pattern_params = super().get_params().shape[0]
+
+        if "ca_params" in kwargs.keys():
+            ca_params = kwargs["ca_params"]
+            self.params_agent = ParamsAgent(params=ca_params)
+        elif "params" in kwargs.keys():
+            ca_params = kwargs["params"][num_pattern_params:]
+            self.params_agent = ParamsAgent(params=ca_params)
+        else:
+            self.params_agent = ParamsAgent()
+
+    def get_action(self, grid=None):
+
+        rule_action = self.get_rule_action()
+        pattern_action = self.get_pattern_action()
+
+        return rule_action, pattern_action
+
+    def get_pattern_action(self, grid=None):
+        
+        return super().get_action(grid)
+
+    def get_rule_action(self, obs=None):
+        
+        return self.params_agent.get_action()
+
+    def get_params(self):
+    
+        params = super().get_params()
+
+        params = np.append(params, self.params_agent.get_params())
+
+        return params
+        
+    def set_params(self, params):
+
+        param_start = 0
+
+        for name, param in self.model.named_parameters():
+            if not len(param.shape):
+                param = param.reshape(1)
+
+
+            param_stop = param_start + reduce(lambda x,y: x*y, param.shape) 
+
+            param[:] = nn.Parameter(\
+                    torch.tensor(\
+                    params[param_start:param_stop].reshape(param.shape)),\
+                    requires_grad = False)
+
+            param_start = param_stop
+
+        self.params_agent.set_params(params[param_start:])
+

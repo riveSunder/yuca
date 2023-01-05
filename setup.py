@@ -8,10 +8,11 @@ setup(\
         description = "Your Universal Cellular Automata", \
         install_requires=[\
                         "bokeh==2.4.1",\
+                        "coverage==7.0.3",\
                         "jupyter==1.0.0",\
                         "notebook>=6.4.12",\
-                        "numpy>=1.21.6",\
-                        "torch==1.5.1",\
+                        "numpy==1.22.0",\
+                        "torch==1.13.1",\
                         "cycler==0.11.0",\
                         "decorator==4.4.2",\
                         "future==0.18.2",\
@@ -19,7 +20,7 @@ setup(\
                         "kiwisolver==1.3.1",\
                         "matplotlib==3.3.4",\
                         "networkx==2.5.1",\
-                        "Pillow==9.2.0",\
+                        "Pillow==9.3.0",\
                         "pyparsing==3.0.7",\
                         "python-dateutil==2.8.2",\
                         "PyWavelets==1.1.1",\

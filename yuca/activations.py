@@ -16,7 +16,6 @@ def get_smooth_steps_fn(intervals, alpha=0.0125):
     each element contains the start and end of an interval. 
     """
     
-
     def smooth_steps_fn(x):
         
         result = np.zeros_like(x)
@@ -31,7 +30,6 @@ class SmoothLifeKernel(nn.Module):
 
     def __init__(self, **kwargs):
         super(SmoothLifeKernel, self).__init__()
-
 
         self.r_a = query_kwargs("r_a", 1.0, **kwargs)
         self.r_i = query_kwargs("r_i", 1.0 / 3.0, **kwargs)
@@ -61,6 +59,7 @@ class SmoothIntervals(nn.Module):
 
     def forward(self, x):
 
+        x = torch.tensor(x)
         result = torch.zeros_like(x)
 
         for bounds in self.intervals:
@@ -199,7 +198,6 @@ class GaussianMixture(nn.Module):
         # this is a kludge. 
         # TODO: store ca_configs with numpy arrays only, no tensors. 
         parameters = torch.tensor(parameters).to(torch.get_default_dtype())
-
 
         self.amplitudes = torch.tensor([])
 

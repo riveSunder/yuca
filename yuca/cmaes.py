@@ -14,18 +14,18 @@ import torch.nn.functional as F
 from yuca.utils import query_kwargs, seed_all, save_fig_sequence
 
 from yuca.params_agent import ParamsAgent 
-from yuca.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper 
-from yuca.glider_wrapper import GliderWrapper
+from yuca.wrappers.halting_wrapper import SimpleHaltingWrapper, HaltingWrapper 
+from yuca.wrappers.glider_wrapper import GliderWrapper
 
 import matplotlib.pyplot as plt
 
 #from mpi4py import MPI
 #comm = MPI.COMM_WORLD
 
+
 class CMAES():
 
     def __init__(self, **kwargs):
-
         self.tag = query_kwargs("tag", "", **kwargs)
         self.my_seed = query_kwargs("seed", [42], **kwargs)
 
@@ -56,25 +56,20 @@ class CMAES():
 
         self.kwargs = kwargs
 
-        #self.means = temp_agent.get_params() 
-        #self.means = np.abs(self.means + 0.05 * np.random.randn(*self.means.shape))
-        #self.means = np.clip(self.means, 0.01, 0.99)
-        #self.covar = np.abs(np.diag(np.ones(len(self.means)) \
-        #        * self.means * 0.01))
-
-
-        # aim for large deviation in means, yet narrow intervals
-
         # the type of evolution (pattern or universe rule selection)
         # is determined by the presence or absence of the string
         # 'pattern' in the tag.
+
         if "pattern" in self.tag:
             temp_agent = self.agent_fn(**kwargs)
             self.starting_means = temp_agent.get_params()
             covar_weights = np.ones_like(self.starting_means)*1.00
+            self.external_channels = self.env.ca.external_channels
         else:
-            params = self.env.ca.get_params()
-            temp_agent = self.agent_fn(params = params,  **kwargs)
+            ca_params = self.env.ca.get_params()
+            self.external_channels = self.env.ca.external_channels
+            kwargs["external_channels"] = self.external_channels
+            temp_agent = self.agent_fn(ca_params = ca_params,  **kwargs)
             self.starting_means = temp_agent.get_params()
             covar_weights = np.ones_like(self.starting_means)*0.15
             covar_weights[1:covar_weights.shape[0]] *= 5e-4 
@@ -132,6 +127,7 @@ class CMAES():
             
                 self.population.append(self.agent_fn(\
                         params = self.elite_params[hh].squeeze(),\
+                        external_channels = self.external_channels,\
                         dim = self.dim))
 
                 self.population[hh].to_device(self.my_device)
@@ -144,11 +140,12 @@ class CMAES():
 
             self.population.append(self.agent_fn(\
                     params = self.sample_distribution(),\
+                    external_channels = self.external_channels,\
                     dim = self.dim))
 
             self.population[ii].to_device(self.my_device)
 
-
+        
     def get_fitness(self, agent_index, steps=10, replicates=1, seed=13):
 
         fitness_replicates = []
@@ -321,7 +318,7 @@ class CMAES():
 
     def save_gif(self, tag=""):
 
-        starting_grid = torch.rand(1, 1, self.dim, self.dim)
+        starting_grid = torch.rand(1, self.env.ca.external_channels, self.dim, self.dim)
 
         #self.env.ca.set_params(self.population[0].get_params())
         grid = self.env.ca(starting_grid.to(self.env.ca.my_device)).to("cpu")
@@ -351,16 +348,15 @@ class CMAES():
             
             temp_agent = self.agent_fn(\
                     params = self.elite_params[hh].squeeze(),\
+                    external_channels = self.external_channels,\
                     dim = self.dim)
 
             temp_agent.to_device(self.my_device)
-
 
             action = temp_agent.get_action()
             _ = self.env.step(action)
 
             elite_configs.append(self.env.ca.make_config())
-
 
         self.env.ca_steps = restore_steps
         return elite_configs
@@ -490,4 +486,81 @@ class CMAES():
     def search(self):
 
         self.mantle()
+
+class CMACES(CMAES):
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def get_fitness(self, agent_index, steps=10, replicates=1, seed=13):
+
+        fitness_replicates = []
+        seed_all(seed)
+        proportion_alive = 0.0
+
+        for replicate in range(replicates):
+
+            fitness = 0.0
+
+            self.env.reset()
+            self.env.to_device(self.my_device)
+
+            for step in range(steps):
+                rule_action, pattern_action = self.population[agent_index].get_action()
+                
+                self.env.ca.set_params(rule_action)
+
+                o, r, d, info = self.env.step(pattern_action)
+
+                fitness += r
+                proportion_alive += info["active_grid"].detach().cpu()
+
+            fitness /= steps
+            fitness_replicates.append(fitness.detach().cpu().numpy())
+
+        proportion_alive /= (steps * replicates)
+
+        # return the worst performing replicate,
+        # reduce the impact of lucky/unlucky predictor initializations
+        return np.mean(fitness_replicates), proportion_alive
+
+    def get_elite_configs(self):
+
+        elite_configs = []
+        
+        restore_steps = 1 * self.env.ca_steps
+        self.env.ca_steps = 2
+        for hh in range(self.elite_params.shape[0]):
+
+            
+            temp_agent = self.agent_fn(\
+                    params = self.elite_params[hh].squeeze(),\
+                    external_channels = self.external_channels,\
+                    dim = self.dim)
+
+            temp_agent.to_device(self.my_device)
+
+            rule_action, pattern_action = temp_agent.get_action()
+            _ = self.env.ca.set_params(rule_action)
+
+            elite_configs.append(self.env.ca.make_config())
+
+        self.env.ca_steps = restore_steps
+        return elite_configs
+
+    def save_gif(self, tag=""):
+
+        for elite_idx in range(self.elite_keep):
+            if self.elite_params is not None:
+                self.population[0].set_params(self.elite_params[elite_idx])
+
+            rule_action, pattern_action = self.population[0].get_action()
+            self.env.ca.set_params(rule_action)
+
+            effective_steps = min([self.ca_steps, 512])
+
+            save_fig_sequence(pattern_action, self.env.ca, num_steps=effective_steps,\
+                frames_path=f"./assets/{self.exp_id}",\
+                tag=tag)#f"{self.exp_id}_{self.my_seed}_elite{elite_idx}")
+
 

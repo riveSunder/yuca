@@ -91,6 +91,9 @@ class CCA(CA):
 
         self.reset()
 
+        if not self.use_grad:
+            self.no_grad()
+
     def reset(self):
         
         self.t_count = 0.0
@@ -176,7 +179,11 @@ class CCA(CA):
             print("kernel config is missing, assuming GaussianMixture")
             #assert False,  "not implemented exception"
             neighborhood_kernel_config = "GaussianMixture"
-            self.neighborhood_kernel_config = "GaussianMixture"
+            neighborhood_kernel_config = {}
+            neighborhood_kernel_config["name"] = "GaussianMixture"
+            neighborhood_kernel_config["kernel_kwargs"] = {}
+            neighborhood_kernel_config["radius"] = self.kernel_radius
+
 
         else:
             neighborhood_kernel_config = self.neighborhood_kernel_config
@@ -556,6 +563,7 @@ class CCA(CA):
         to ensure all parameters get moved
         """
         
+        self.no_grad()
         self.to(my_device)
         self.my_device = my_device
         self.id_layer.to(my_device)

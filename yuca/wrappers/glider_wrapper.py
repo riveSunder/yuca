@@ -5,7 +5,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 import yuca
+
 from yuca.ca.continuous import CCA
+from yuca.ca.reaction_diffusion import RxnDfn
+from yuca.ca.neural import NCA
+
 from yuca.utils import query_kwargs, get_bite_mask, save_fig_sequence
 
 
@@ -39,12 +43,23 @@ class GliderWrapper():
         else:
             self.ca.no_grad()
 
-
         self.init_displacement_grid()
+
+        self.action_space = self.ActionSpace(\
+                shape=(self.batch_size, self.ca.external_channels, self.dim, self.dim))
+
+    class ActionSpace():
+
+        def __init__(self, shape=(1,1,64,64)):
+
+            self.shape = shape
+
+        def sample(self):
+
+            return torch.rand(*self.shape, dtype=torch.get_default_dtype())
 
     def step(self, action):
         
-
         return self.meta_step(action)
 
     def meta_step(self, action):
@@ -98,7 +113,6 @@ class GliderWrapper():
 
             dgrid = action - old_grid
             old_grid = 1.0  * action
-
 
             if mean_grid == 0.0 or dgrid.max() <= 0.00001:
                 break
