@@ -54,14 +54,12 @@ class RxnDfn(CA):
         self.add_neighborhood_kernel(nbhd_kernel)
         self.initialize_neighborhood_layer()
 
-        self.set_params(config["params"])
-
         if "dt" in config.keys():
             self.dt = config["dt"]
         else: 
             self.dt = 0.1
 
-        self.initialize_weight_layer()
+        self.set_params(config["params"])
         self.include_parameters()
 
     def restore_config(self, filepath):
@@ -292,7 +290,7 @@ class RxnDfn(CA):
 
         for jj, param in zip(["diffusion_u", "diffusion_v", "f", "k"],\
                 [self.diffusion_u, self.diffusion_v, self.f, self.k]):
-            self.register_parameter(f"rd_{jj}", param)
+            self.register_parameter(f"rd_{jj}", torch.nn.Parameter(param))
 
     def no_grad(self):
 

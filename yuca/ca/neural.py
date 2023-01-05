@@ -109,7 +109,6 @@ class NCA(CA):
         self.add_neighborhood_kernel(nbhd_kernel)
         self.initialize_neighborhood_layer()
 
-        self.set_params(config["params"])
 
         if "dt" in config.keys():
             self.dt = config["dt"]
@@ -117,6 +116,7 @@ class NCA(CA):
             self.dt = 0.1
 
         self.initialize_weight_layer()
+        self.set_params(config["params"])
         self.include_parameters()
 
     def restore_config(self, filepath):
