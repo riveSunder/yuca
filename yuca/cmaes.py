@@ -548,3 +548,19 @@ class CMACES(CMAES):
         self.env.ca_steps = restore_steps
         return elite_configs
 
+    def save_gif(self, tag=""):
+
+        for elite_idx in range(self.elite_keep):
+            if self.elite_params is not None:
+                self.population[0].set_params(self.elite_params[elite_idx])
+
+            rule_action, pattern_action = self.population[0].get_action()
+            self.env.ca.set_params(rule_action)
+
+            effective_steps = min([self.ca_steps, 512])
+
+            save_fig_sequence(pattern_action, self.env.ca, num_steps=effective_steps,\
+                frames_path=f"./assets/{self.exp_id}",\
+                tag=tag)#f"{self.exp_id}_{self.my_seed}_elite{elite_idx}")
+
+
