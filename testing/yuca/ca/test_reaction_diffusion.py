@@ -1,3 +1,4 @@
+import os
 import unittest
 
 import numpy as np
@@ -19,6 +20,52 @@ class TestRxnDfn(unittest.TestCase):
         next_x = rxn(x)
 
         self.assertEqual(x.shape, next_x.shape)
+
+
+    def test_configs(self):
+
+        rxndfn_1 = RxnDfn()
+        rxndfn_1.no_grad()
+
+        my_filepath = "./temp_delete_rxndfn_config.npy"
+
+        my_config_1 = rxndfn_1.make_config()
+        my_config_1_2 = rxndfn_1.make_config()
+
+        rxndfn_1.save_config(my_filepath)
+        rxndfn_1.restore_config(my_filepath)
+        my_config_2 = rxndfn_1.make_config()
+
+        rxndfn_2 = RxnDfn()
+        rxndfn_2.no_grad()
+        rxndfn_2.set_params(np.random.rand(*rxndfn_2.get_params().shape))
+        my_config_3 = rxndfn_2.make_config()
+
+        rxndfn_2.restore_config(my_filepath)
+        my_config_4 = rxndfn_2.make_config()
+
+        # 1 == 3; 1 != 2
+
+        for key in my_config_1.keys():
+            self.assertIn(key, my_config_2.keys())
+            self.assertIn(key, my_config_3.keys())
+
+            if key == "params":
+            
+                sae_1_1b = np.sum(np.abs(my_config_1[key] - my_config_1_2[key]))
+
+                sae_1_2 = np.sum(np.abs(my_config_1[key] - my_config_2[key]))
+                sae_2_3 = np.sum(np.abs(my_config_2[key] - my_config_3[key]))
+                sae_1_3 = np.sum(np.abs(my_config_1[key] - my_config_3[key]))
+                sae_1_4 = np.sum(np.abs(my_config_1[key] - my_config_4[key]))
+
+                self.assertEqual(0.0, sae_1_1b)
+                self.assertEqual(0.0, sae_1_2)
+                self.assertNotEqual(0.0, sae_1_3)
+                self.assertNotEqual(0.0, sae_2_3)
+                self.assertEqual(0.0, sae_1_4)
+
+        os.system(f"rm {my_filepath}")
 
     def test_update_universe(self):
 
