@@ -465,8 +465,6 @@ class CMAES():
                     print(early_msg)
                     break
 
-
-
             if "pattern" not in self.exp_id:
                 self.save_gif(tag = f"{self.exp_id}_seed{my_seed}_z_end"
                             f"immode{self.prediction_mode}_z_end")
@@ -552,9 +550,9 @@ class CMACES(CMAES):
 
         for elite_idx in range(self.elite_keep):
             if self.elite_params is not None:
-                self.population[0].set_params(self.elite_params[elite_idx])
+                self.population[elite_idx].set_params(self.elite_params[elite_idx])
 
-            rule_action, pattern_action = self.population[0].get_action()
+            rule_action, pattern_action = self.population[elite_idx].get_action()
             self.env.ca.set_params(rule_action)
 
             effective_steps = min([self.ca_steps, 512])
