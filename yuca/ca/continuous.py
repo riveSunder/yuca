@@ -73,7 +73,6 @@ class CCA(CA):
         self.neighborhood_kernel_config = None
         self.genesis_fn_config = None
         self.persistence_fn_config = None
-        self.kernel_params = None
 
         self.default_init()
 

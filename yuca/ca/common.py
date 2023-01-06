@@ -44,6 +44,7 @@ class CA(nn.Module):
         super(CA, self).__init__()
 
         self.kernel_radius = query_kwargs("kernel_radius", 13, **kwargs)
+        self.kernel_peaks = query_kwargs("kernel_peaks", 3, **kwargs)
         self.my_device = query_kwargs("device", "cpu", **kwargs)
         
         self.conv_mode = query_kwargs("conv_mode", "circular", **kwargs)
@@ -70,6 +71,7 @@ class CA(nn.Module):
         self.neighborhood_kernel_config = None
         self.genesis_fn_config = None
         self.persistence_fn_config = None
+        self.kernel_params = None
 
         self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
             
