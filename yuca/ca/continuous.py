@@ -26,6 +26,7 @@ from yuca.configs import get_orbium_config, \
 
 from yuca.kernels import get_kernel, \
         get_gaussian_kernel, \
+        get_gaussian_mixture_kernel, \
         get_dogaussian_kernel, \
         get_gaussian_edge_kernel, \
         get_cosx2_kernel, \
@@ -72,6 +73,7 @@ class CCA(CA):
         self.neighborhood_kernel_config = None
         self.genesis_fn_config = None
         self.persistence_fn_config = None
+        self.kernel_params = None
 
         self.default_init()
 
@@ -119,6 +121,8 @@ class CCA(CA):
         self.add_neighborhood_kernel(nbhd_kernel)
         self.initialize_neighborhood_layer()
 
+        print(config["genesis_config"])
+        print(config["persistence_config"])
         self.add_genesis_fn(config["genesis_config"])
         self.add_persistence_fn(config["persistence_config"])
 
@@ -181,7 +185,10 @@ class CCA(CA):
             neighborhood_kernel_config = "GaussianMixture"
             neighborhood_kernel_config = {}
             neighborhood_kernel_config["name"] = "GaussianMixture"
-            neighborhood_kernel_config["kernel_kwargs"] = {}
+            if self.kernel_params is not None:
+                neighborhood_kernel_config["kernel_kwargs"] = {"parameters": self.kernel_params}
+            else:
+                neighborhood_kernel_config["kernel_kwargs"] = {}
             neighborhood_kernel_config["radius"] = self.kernel_radius
 
 
@@ -200,8 +207,7 @@ class CCA(CA):
             self.genesis_fn_config = genesis_config
         else:
             genesis_config = self.genesis_fn_config
-            half_params = len(self.get_params()) // 2 
-            genesis_config["parameters"] = self.get_params()[:half_params]
+            genesis_config["parameters"] = self.get_genesis_params()
 
         #if "parameters" in genesis_config.keys():
 
@@ -217,8 +223,7 @@ class CCA(CA):
             self.persistence_fn_config = persistence_config
         else:
             persistence_config = self.persistence_fn_config
-            half_params = len(self.get_params()) // 2 
-            persistence_config["parameters"] = self.get_params()[half_params:]
+            persistence_config["parameters"] = self.get_persistence_params()
 
         #if "parameters" in persistence_config.keys():
 
@@ -249,17 +254,11 @@ class CCA(CA):
 
         for mm in range(self.internal_channels):
 
-                
-            my_radius = self.kernel_radius
-
-            mu = np.random.rand() 
-            sigma = np.random.rand() 
-
-            mu = np.clip(mu, 0.05, 0.95)
-            sigma = np.clip(sigma, 0.0005, 0.1)
+            if self.kernel_params is None:
+                self.kernel_params = np.random.rand(self.kernel_peaks*3) 
             
-            nbhd_kernel = get_gaussian_kernel(radius=my_radius, \
-                    mu=mu, sigma=sigma)
+            nbhd_kernel = get_gaussian_mixture_kernel(radius=self.kernel_radius, \
+                    parameters=self.kernel_params)
 
             if nbhd_kernels is None:
                 nbhd_kernels = nbhd_kernel
@@ -276,8 +275,10 @@ class CCA(CA):
                 
                 if (pp < 8):
                     # close to the edge of chaos, from Lenia papers
-                    gen_mu = 0.15 * (1 + np.random.randn() * 0.00001)
-                    gen_sigma = 0.015 * (1 + np.random.randn() * 0.0001)
+                    gen_mu = 0.15 * (1 + np.random.randn() * 0.1)
+                    gen_sigma = 0.015 * (1 + np.random.randn() * 0.01)
+                    gen_mu = np.clip(gen_mu, 0, 1.)
+                    gen_sigma = np.clip(gen_sigma, 0, 1.)
 
                     if np.random.randint(2):
                         genesis_config = {"name": "Gaussian",\
@@ -290,8 +291,12 @@ class CCA(CA):
                                 "sigma": gen_sigma, \
                                 "mode": 1}
 
-                    per_mu = 0.15 * (1 + np.random.randn() * 0.001) 
-                    per_sigma = 0.015 * (1 + np.random.randn() * 0.001) 
+#                    per_mu = 0.15 * (1 + np.random.randn() * 0.001) 
+#                    per_sigma = 0.015 * (1 + np.random.randn() * 0.001) 
+                    per_mu = 0.15 * (1 + np.random.randn() * 0.1)
+                    per_sigma = 0.015 * (1 + np.random.randn() * 0.01)
+                    per_mu = np.clip(gen_mu, 0, 1.)
+                    per_sigma = np.clip(gen_sigma, 0, 1.)
 
 
                     if np.random.randint(2):
@@ -456,6 +461,7 @@ class CCA(CA):
             for ll, param in enumerate(persistence_fn.parameters()):
                 self.register_parameter(f"per_fn_{kk}_{ll}", param)
 
+
     def persistence(self, neighborhoods):
         
         error_msg = f"expected number of neighborhoods and update function " \
@@ -609,7 +615,7 @@ class CCA(CA):
 
         params = np.append(params, self.get_genesis_params())
         params = np.append(params, self.get_persistence_params())
-
+        params = np.append(params, self.kernel_params)
 
         return params
 
@@ -647,6 +653,16 @@ class CCA(CA):
                         requires_grad = self.use_grad)
 
                 param_start = param_stop
+
+        param_stop = param_start + self.kernel_params.shape[0]
+        self.kernel_params = params[param_start:param_stop]
+
+        nbhd_kernel = get_gaussian_mixture_kernel(radius=self.kernel_radius, \
+                parameters=self.kernel_params)
+
+        self.add_neighborhood_kernel(nbhd_kernel)
+        self.initialize_neighborhood_layer()
+        self.to_device(self.my_device)
 
     def no_grad(self):
 

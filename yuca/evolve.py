@@ -155,11 +155,16 @@ if __name__ == "__main__":
 
     parser.add_argument("-cc", "--ca_config", type=str, default=None,\
             help="filename (or filepath) designating a ca_config to load")
+    parser.add_argument("-ch", "--internal_channels", type=int, default=1,\
+            help="number of internal channels in ca system")
 
     parser.add_argument("-d", "--device", type=str, \
             default="cpu", help="device to use (cpu or cuda)")
 
-    parser.add_argument("-dt", "--dtype", type=str, \
+    parser.add_argument("-dt", "--dt", type=float, \
+            default=0.3, help="step size used by model")
+
+    parser.add_argument("-dtype", "--dtype", type=str, \
             default="float32", \
             help="set default dtype in torch")
 
@@ -176,6 +181,8 @@ if __name__ == "__main__":
 
     parser.add_argument("-k", "--kernel_radius", type=int, \
             default=13, help="kernel radius. kernel shape will be 2r+1 by 2r+1)")
+    parser.add_argument("-kp", "--kernel_peaks", type=int, \
+            default=3, help="number of gaussian peaks for the neighborhood kernel(s)")
     parser.add_argument("-l", "--replicates", type=int, default=1,\
             help="number of replicates to use in get_fitness")
     parser.add_argument("-m", "--dim", type=int, \
