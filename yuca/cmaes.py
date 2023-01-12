@@ -375,7 +375,7 @@ class CMAES():
         progress["kwargs"] = self.kwargs
         progress["distribution"] = []
 
-        print("begin search for interesting universes, " \
+        print(f"begin evolution with , " \
                 f"selection mode {self.selection_mode} " \
                 f"prediction motivator mode {self.prediction_mode}")
 

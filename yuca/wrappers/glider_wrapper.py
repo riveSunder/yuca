@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 import torch 
 import torch.nn as nn
@@ -81,8 +82,10 @@ class GliderWrapper():
         #(self.y_grid * action).sum() / (eps + action.sum())
 
         old_grid = 1.0  * action
-        score_every = max([self.ca_steps // 8 , 1])
+        score_every = 1 #max([self.ca_steps // 8 , 1])
         self.ca.reset()
+        kernel_span = self.y_grid.max()
+        
         for step in range(self.ca_steps):
        
             action = self.ca(action)
@@ -94,22 +97,29 @@ class GliderWrapper():
                 
 
 #                global y_displacement_0
-                y_displacement_1 = (self.y_grid * action).sum() / (eps + action.sum())
+                y_displacement_1 = (self.y_grid * action[0:1]).sum() / (eps + action.sum())
+
 
                 # penalize growth/decay, i.e. incentivize morphological homeostasis
                 #
-                growth = 1.0 - (mean_grid / (mean_grid_0 + eps))
-                mean_grid_0 = mean_grid
-                mean_grid = action.mean()
+                growth = 0.0 * torch.abs(1.0 - (mean_grid / (mean_grid_0 + eps)))
+                mean_grid_0 = 1.0 * mean_grid
 
                 if y_displacement_0 != 0.0: #None:
-                    y_displacement = torch.abs(y_displacement_1 - y_displacement_0)
-                    reward += torch.abs(y_displacement.cpu()) - torch.abs(growth.cpu()) * 150
+
+                    y_displacement = y_displacement_1 - y_displacement_0
+
+                    if y_displacement_0 > (kernel_span - 2) and y_displacement_1 < 2:
+                        # account for wraparound errors
+                        y_displacement += kernel_span
+
+                    reward += y_displacement.cpu() - growth.cpu() #* 150
                 else: 
                     y_displacement = torch.tensor(0.0)
-                    reward += torch.abs(y_displacement.cpu()) - torch.abs(growth.cpu()) * 150
+                    reward += y_displacement.cpu() - growth.cpu() #* 150
 
                 y_displacement_0 = y_displacement_1.clone()
+
 
             dgrid = action - old_grid
             old_grid = 1.0  * action
@@ -117,14 +127,14 @@ class GliderWrapper():
             if mean_grid == 0.0 or dgrid.max() <= 0.00001:
                 break
 
-        if step == 0:
-            # empty patterns are extremely penalized 
-            reward -= 10000
-        if mean_grid == 0.0 or dgrid.max() <= 0.00001:
-            # patterns that die out are substantially penalized 
-            reward -= 100
+#        if step == 0:
+#            # empty patterns are extremely penalized 
+#            reward -= 10000
+#        if mean_grid == 0.0 or dgrid.max() <= 0.00001:
+#            # patterns that die out are substantially penalized 
+#            reward -= 100
         
-        reward -= (self.ca_steps - step)
+#        reward -= (self.ca_steps - step)
         info["y_displacment"] = y_displacement
         info["growth"] = growth
         info["active_grid"] = mean_grid
@@ -137,6 +147,9 @@ class GliderWrapper():
 
         self.x_grid = torch.tensor(xx).reshape(1, 1, self.dim, self.dim)
         self.y_grid = torch.tensor(yy).reshape(1, 1, self.dim, self.dim)
+
+        self.x_grid = self.x_grid / self.ca.kernel_radius
+        self.y_grid = self.y_grid / self.ca.kernel_radius
 
     def reset(self):
         pass
