@@ -316,9 +316,11 @@ class CMAES():
         # shuffle pop, this will be important for tourney selection later
         #shuffle(self.population)
 
-    def save_gif(self, tag=""):
+    def save_gif(self, tag="", starting_grid=None):
 
-        starting_grid = torch.rand(1, self.env.ca.external_channels, self.dim, self.dim)
+        if starting_grid is None:
+            starting_grid = torch.rand(1, self.env.ca.external_channels, \
+                    self.dim, self.dim)
 
         #self.env.ca.set_params(self.population[0].get_params())
         grid = self.env.ca(starting_grid.to(self.env.ca.my_device)).to("cpu")
@@ -389,16 +391,23 @@ class CMAES():
             
             if "pattern" not in self.exp_id:
                 self.env.ca.set_params(self.population[0].get_params())
-                self.save_gif(tag = f"{self.exp_id}_seed{my_seed}_"
-                        f"immode{self.prediction_mode}_a_start")
+                tag = f"{self.exp_id}_seed{my_seed}_"\
+                        f"immode{self.prediction_mode}" 
+                tag = [tag, f"gen{0}"]
+                self.save_gif(tag=tag) 
             else:
                 grid = self.population[0].get_action()
                 effective_steps = min([self.ca_steps, 512])
-                save_fig_sequence(grid, self.env.ca, num_steps=effective_steps,\
-                        frames_path=f"./assets/{self.exp_id}",\
-                        tag=f"{self.exp_id}_start_{my_seed}")
+                tag = f"{self.exp_id}_seed{my_seed}_"\
+                        f"immode{self.prediction_mode}" 
+                tag = [tag, f"gen{0}"]
+                self.save_gif(tag=tag, starting_grid=grid)
+#                save_fig_sequence(grid, self.env.ca, num_steps=effective_steps,\
+#                        frames_path=f"./assets/{self.exp_id}",\
+#                        tag=f"{self.exp_id}_start_{my_seed}")
 
             for generation in range(self.generations):
+                self.generation = generation
                 fitness = []
                 proportion_alive = []
                 
@@ -449,8 +458,8 @@ class CMAES():
                 proportion_msg = f"avg. proportion of active end grids: {avg_alive}"
 
                 progress_msg = f"gen. {generation}, fitness mean +/- std. dev. " \
-                        f"= {fit_mean:.3f} +/- {fit_std_dev:.3f} " \
-                        f"max = {fit_max:.3f}, min = {fit_min:.3f}"
+                        f"= {fit_mean:.3e} +/- {fit_std_dev:.3e} " \
+                        f"max = {fit_max:.3e}, min = {fit_min:.3e}"
 
 
                 print(timing_msg)
@@ -466,16 +475,19 @@ class CMAES():
                     break
 
             if "pattern" not in self.exp_id:
-                self.save_gif(tag = f"{self.exp_id}_seed{my_seed}_z_end"
-                            f"immode{self.prediction_mode}_z_end")
+                tag = f"{self.exp_id}_seed{my_seed}_"\
+                        f"immode{self.prediction_mode}" 
+                tag = [tag, f"gen{generation}"]
+                self.save_gif(tag=tag) 
             else:
                 for elite_idx in range(self.elite_keep):
                     self.population[0].set_params(progress["elite_params"][-1][elite_idx])
                     grid = self.population[0].get_action()
                     effective_steps = min([self.ca_steps, 512])
-                    save_fig_sequence(grid, self.env.ca, num_steps=effective_steps,\
-                        frames_path=f"./assets/{self.exp_id}",\
-                        tag=f"{self.exp_id}_end_{my_seed}_elite{elite_idx}")
+                    tag = f"{self.exp_id}_seed{my_seed}_"\
+                            f"immode{self.prediction_mode}" 
+                    tag = [tag, f"gen{generation}_elite{elite_idx}"]
+                    self.save_gif(tag=tag, starting_grid=grid)
 
     def arm(self):
         # This will be implemented for parallelization with mpi4py
@@ -546,7 +558,7 @@ class CMACES(CMAES):
         self.env.ca_steps = restore_steps
         return elite_configs
 
-    def save_gif(self, tag=""):
+    def save_gif(self, tag="", grid=None):
 
         for elite_idx in range(self.elite_keep):
             if self.elite_params is not None:
@@ -556,6 +568,8 @@ class CMACES(CMAES):
             self.env.ca.set_params(rule_action)
 
             effective_steps = min([self.ca_steps, 512])
+
+            tag = [tag, f"gen{self.generation}"]
 
             save_fig_sequence(pattern_action, self.env.ca, num_steps=effective_steps,\
                 frames_path=f"./assets/{self.exp_id}",\
