@@ -77,9 +77,7 @@ class GliderWrapper():
         max_grid = 0.31 #action.max()
 
         # avoid the "tree falling over" hack 
-#        global y_displacement_0
         y_displacement_0 = torch.tensor(0.0) #None 
-        #(self.y_grid * action).sum() / (eps + action.sum())
 
         old_grid = 1.0  * action
         score_every = 1 #max([self.ca_steps // 8 , 1])
@@ -96,13 +94,11 @@ class GliderWrapper():
             if step % (score_every) == 0:# or step == (self.ca_steps - 1):
                 
 
-#                global y_displacement_0
                 y_displacement_1 = (self.y_grid * action[0:1]).sum() / (eps + action.sum())
 
 
                 # penalize growth/decay, i.e. incentivize morphological homeostasis
-                #
-                growth = 0.0 * torch.abs(1.0 - (mean_grid / (mean_grid_0 + eps)))
+                growth =  torch.abs(1.0 - (mean_grid / (mean_grid_0 + eps)))
                 mean_grid_0 = 1.0 * mean_grid
 
                 if y_displacement_0 != 0.0: #None:
@@ -127,14 +123,9 @@ class GliderWrapper():
             if mean_grid == 0.0 or dgrid.max() <= 0.00001:
                 break
 
-#        if step == 0:
-#            # empty patterns are extremely penalized 
-#            reward -= 10000
-#        if mean_grid == 0.0 or dgrid.max() <= 0.00001:
-#            # patterns that die out are substantially penalized 
-#            reward -= 100
-        
-#        reward -= (self.ca_steps - step)
+        # take stepwise average 
+        reward /= (step + 1e-9)
+        reward -= (self.ca_steps - step - 1)
         info["y_displacment"] = y_displacement
         info["growth"] = growth
         info["active_grid"] = mean_grid
