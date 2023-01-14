@@ -355,7 +355,7 @@ class TestSaveFigSequence(unittest.TestCase):
 
             self.assertTrue(gif_present)
 
-            rm_cmd = f"rm {os.path.join(testing_path, tag, '*gif')}"
+            rm_cmd = f"rm {os.path.join(testing_path, tag)} -r"
             os.system(rm_cmd)
 
 
