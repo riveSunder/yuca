@@ -318,6 +318,7 @@ class CMAES():
 
     def save_gif(self, tag="", starting_grid=None):
 
+
         if starting_grid is None:
             starting_grid = torch.rand(1, self.env.ca.external_channels, \
                     self.dim, self.dim)
@@ -390,21 +391,20 @@ class CMAES():
             self.initialize_population()
             
             if "pattern" not in self.exp_id:
-                self.env.ca.set_params(self.population[0].get_params())
-                tag = f"{self.exp_id}_seed{my_seed}_"\
-                        f"immode{self.prediction_mode}" 
-                tag = [tag, f"gen{0}"]
-                self.save_gif(tag=tag) 
+                for idx in range(self.elite_keep):
+                    self.env.ca.set_params(self.population[idx].get_params())
+                    tag = f"{self.exp_id}_seed{my_seed}_"\
+                            f"immode{self.prediction_mode}" 
+                    tag = [tag, f"gen{0}"]
+                    self.save_gif(tag=tag) 
             else:
-                grid = self.population[0].get_action()
-                effective_steps = min([self.ca_steps, 512])
-                tag = f"{self.exp_id}_seed{my_seed}_"\
-                        f"immode{self.prediction_mode}" 
-                tag = [tag, f"gen{0}"]
-                self.save_gif(tag=tag, starting_grid=grid)
-#                save_fig_sequence(grid, self.env.ca, num_steps=effective_steps,\
-#                        frames_path=f"./assets/{self.exp_id}",\
-#                        tag=f"{self.exp_id}_start_{my_seed}")
+                for idx in range(self.elite_keep):
+                    grid = self.population[idx].get_action()
+                    effective_steps = min([self.ca_steps, 512])
+                    tag = f"{self.exp_id}_seed{my_seed}_"\
+                            f"immode{self.prediction_mode}" 
+                    tag = [tag, f"gen{0}"]
+                    self.save_gif(tag=tag, starting_grid=grid)
 
             for generation in range(self.generations):
                 self.generation = generation
@@ -475,14 +475,16 @@ class CMAES():
                     break
 
             if "pattern" not in self.exp_id:
-                tag = f"{self.exp_id}_seed{my_seed}_"\
-                        f"immode{self.prediction_mode}" 
-                tag = [tag, f"gen{generation}"]
-                self.save_gif(tag=tag) 
+                for elite_idx in range(self.elite_keep):
+                    self.env.ca.set_params(self.population[elite_idx].get_params())
+                    tag = f"{self.exp_id}_seed{my_seed}_"\
+                            f"immode{self.prediction_mode}" 
+                    tag = [tag, f"gen{generation}"]
+                    self.save_gif(tag=tag) 
             else:
                 for elite_idx in range(self.elite_keep):
-                    self.population[0].set_params(progress["elite_params"][-1][elite_idx])
-                    grid = self.population[0].get_action()
+                    self.population[elite_idx].set_params(progress["elite_params"][-1][elite_idx])
+                    grid = self.population[elite_idx].get_action()
                     effective_steps = min([self.ca_steps, 512])
                     tag = f"{self.exp_id}_seed{my_seed}_"\
                             f"immode{self.prediction_mode}" 

@@ -155,7 +155,6 @@ class CosOverX2(nn.Module):
 class Gaussian(nn.Module):
 
     def __init__(self, **kwargs):
-
         super(Gaussian, self).__init__()
 
         mu = query_kwargs("mu", 0.0, **kwargs)
@@ -196,6 +195,7 @@ class GaussianMixture(nn.Module):
         parameters = query_kwargs("parameters", [0.5, 0.15], **kwargs)
 
         # this is a kludge. 
+        
         # TODO: store ca_configs with numpy arrays only, no tensors. 
         parameters = torch.tensor(parameters).to(torch.get_default_dtype())
 

@@ -98,7 +98,7 @@ def get_gaussian_mixture_kernel(radius=13, parameters=[0.5, 0.15], r_scale=1.0):
 
     grid = np.sqrt(xx**2 + yy**2) / radius * r_scale
 
-    gaussian = Gaussian(paraeters=parameters)
+    gaussian = GaussianMixture(parameters=parameters)
     kernel = gaussian(grid.reshape(1, 1, radius * 2 + 1, radius * 2 + 1))
     kernel = kernel - kernel.min()
     kernel = kernel / (eps + kernel.sum())

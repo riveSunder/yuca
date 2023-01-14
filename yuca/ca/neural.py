@@ -162,7 +162,10 @@ class NCA(CA):
             neighborhood_kernel_config = "GaussianMixture"
             neighborhood_kernel_config = {}
             neighborhood_kernel_config["name"] = "GaussianMixture"
-            neighborhood_kernel_config["kernel_kwargs"] = {}
+            params = self.get_params()
+            kernel_kwargs = {"params": params[-self.kernel_peaks*2:]}
+            neighborhood_kernel_config["kernel_kwargs"] = kernel_kwargs
+
             neighborhood_kernel_config["radius"] = self.kernel_radius
 
 
@@ -191,7 +194,7 @@ class NCA(CA):
                     self.external_channels + self.internal_channels,\
                     self.hidden_channels, 1, \
                     padding=0, \
-                    padding_mode = self.conv_mode, bias=True),\
+                    padding_mode = self.conv_mode, bias=False),\
                 nn.ReLU(), \
                 nn.Conv2d(\
                     self.hidden_channels, self.external_channels, 1, \
