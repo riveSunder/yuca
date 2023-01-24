@@ -161,9 +161,9 @@ class Gaussian(nn.Module):
         sigma = query_kwargs("sigma", 0.1, **kwargs)
 
         if type(mu) is not torch.Tensor:
-            mu = torch.tensor(mu)
+            mu = torch.tensor([mu])
         if type(sigma) is not torch.Tensor:
-            sigma = torch.tensor(sigma)
+            sigma = torch.tensor([sigma])
 
         self.mu = nn.Parameter(mu)
         self.sigma = nn.Parameter(sigma)
