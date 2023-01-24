@@ -4,19 +4,19 @@ yuca/__init__.py                       0      0   100%
 yuca/activations.py                  198     36    82%
 yuca/ca/__init__.py                    4      0   100%
 yuca/ca/common.py                    132     20    85%
-yuca/ca/continuous.py                369     27    93%
-yuca/ca/neural.py                    135     12    91%
+yuca/ca/continuous.py                369     30    92%
+yuca/ca/neural.py                    137     12    91%
 yuca/ca/reaction_diffusion.py        151     16    89%
 yuca/clone.py                         83     13    84%
 yuca/configs.py                       89     21    76%
 yuca/cppn.py                         152     31    80%
 yuca/kernels.py                      107     11    90%
-yuca/params_agent.py                  29      9    69%
+yuca/params_agent.py                  32     11    66%
 yuca/patterns.py                      46      6    87%
-yuca/utils.py                        127      7    94%
+yuca/utils.py                        131      8    94%
 yuca/wrappers/__init__.py              3      0   100%
-yuca/wrappers/glider_wrapper.py       88     12    86%
-yuca/wrappers/halting_wrapper.py     177     28    84%
+yuca/wrappers/glider_wrapper.py       90     12    87%
+yuca/wrappers/halting_wrapper.py     182     28    85%
 yuca/wrappers/random_wrapper.py       16      4    75%
 ------------------------------------------------------
-TOTAL                               1906    253    87%
+TOTAL                               1922    259    87%
