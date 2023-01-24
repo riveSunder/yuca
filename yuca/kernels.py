@@ -90,6 +90,21 @@ def get_gaussian_kernel(radius=13, mu=0.5, sigma=0.15, r_scale=1.0):
 
     return kernel
 
+def get_gaussian_mixture_kernel(radius=13, parameters=[0.5, 0.15], r_scale=1.0):
+    eps = 1e-9
+
+    xx, yy = np.meshgrid(np.arange(-radius, radius + 1), \
+            np.arange(-radius, radius + 1))
+
+    grid = np.sqrt(xx**2 + yy**2) / radius * r_scale
+
+    gaussian = GaussianMixture(parameters=parameters)
+    kernel = gaussian(grid.reshape(1, 1, radius * 2 + 1, radius * 2 + 1))
+    kernel = kernel - kernel.min()
+    kernel = kernel / (eps + kernel.sum())
+
+    return kernel
+
 def get_dogaussian_kernel(radius=13, mu=0.5, sigma=0.15):
 
     eps = 1e-9

@@ -46,7 +46,7 @@ class TestConfigs(unittest.TestCase):
                     print(message)
                     self.assertFalse(True)
 
-            os.system(f"rm {temp_config_path}")
+                os.system(f"rm {temp_config_path}")
             
 
         self.assertTrue(True)

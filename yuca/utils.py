@@ -167,6 +167,11 @@ def make_gif(frames_path="./assets/gif_frames/", gif_path="./assets", \
     
     gif_id = int((time.time() % 1)*1000)
 
+    if os.path.exists(gif_path):
+        pass
+    else:
+        os.mkdir(gif_path)
+
     gif_path = os.path.join(gif_path, f"gif_{tag}_{gif_id:04d}.gif") 
 
     first_frame.save(gif_path, format="GIF", append_images=frames, \
@@ -202,6 +207,12 @@ def save_fig_sequence(grid, ca, num_steps=10, \
     if not os.path.exists(frames_path):
         my_cmd = f"mkdir -p {frames_path}"
         os.system(my_cmd)
+
+    if type(tag) is str:
+        gif_path = os.path.join(gif_path, tag)
+    else:
+        gif_path = os.path.join(gif_path, tag[0])
+        tag = tag[1]
 
     for step in range(num_steps):
         
@@ -240,11 +251,7 @@ def save_fig_sequence(grid, ca, num_steps=10, \
 
 
     if step > 0:
-        try:
-            make_gif(frames_path=frames_path, gif_path=gif_path, tag=tag) 
-        except:
-            #sometimes this part fails on VACC
-            pass
+        make_gif(frames_path=frames_path, gif_path=gif_path, tag=tag) 
     else: 
         print("vanishing grid, no gif made")
 
