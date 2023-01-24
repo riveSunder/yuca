@@ -13,7 +13,7 @@ class TestGliderWrapper(unittest.TestCase):
         action = self.glider.action_space.sample()
         obs, reward, done, info = self.glider.step(action)
 
-        self.assertEqual(dict, type(info))   
+        self.assertEqual(dict, type(info))
 
 
 if __name__ == "__main__": #pragma: no cover
