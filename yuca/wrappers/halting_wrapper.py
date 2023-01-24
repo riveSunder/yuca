@@ -60,6 +60,13 @@ class SimpleHaltingWrapper(nn.Module):
 
         grid = torch.rand(self.batch_size, self.ca.external_channels, \
                 self.dim, self.dim).to(self.ca.my_device)
+
+        # assuming square grid 
+        half = self.dim // 4
+        grid[:,:, :half, :] *= 0
+        grid[:,:, :, :half] *= 0
+        grid[:,:, -half:, :] *= 0
+        grid[:,:, :, -half:] *= 0
             
         for kk in range(self.ca_steps): 
 
@@ -77,13 +84,12 @@ class SimpleHaltingWrapper(nn.Module):
 
         active_grid = target.mean()
         
-        
         done = False
         info = {"active_grid": active_grid}
         info["params"] = action
         info["ca_steps"] = self.ca_steps
 
-        halting_mse = - ((self.alive_target - active_grid)**2).mean()
+        halting_mse = - ((self.alive_target - active_grid)**2).sqrt().mean()
         reward = halting_mse
 
         return 0, reward, done, info

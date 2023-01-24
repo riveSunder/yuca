@@ -23,6 +23,7 @@ from yuca.utils import save_fig_sequence, \
          
 from yuca.kernels import get_kernel, \
         get_gaussian_kernel, \
+        get_gaussian_mixture_kernel, \
         get_dogaussian_kernel, \
         get_gaussian_edge_kernel, \
         get_cosx2_kernel, \
@@ -68,16 +69,11 @@ class NCA(CA):
 
         for mm in range(self.internal_channels):
 
-            my_radius = self.kernel_radius
-
-            mu = np.random.rand() 
-            sigma = np.random.rand() 
-
-            mu = np.clip(mu, 0.05, 0.95)
-            sigma = np.clip(sigma, 0.0005, 0.1)
+            if self.kernel_params is None:
+                self.kernel_params = np.random.rand(self.kernel_peaks*3) 
             
-            nbhd_kernel = get_gaussian_kernel(radius=my_radius, \
-                    mu=mu, sigma=sigma)
+            nbhd_kernel = get_gaussian_mixture_kernel(radius=self.kernel_radius, \
+                    parameters=self.kernel_params)
 
             if nbhd_kernels is None:
                 nbhd_kernels = nbhd_kernel
@@ -166,7 +162,10 @@ class NCA(CA):
             neighborhood_kernel_config = "GaussianMixture"
             neighborhood_kernel_config = {}
             neighborhood_kernel_config["name"] = "GaussianMixture"
-            neighborhood_kernel_config["kernel_kwargs"] = {}
+            params = self.get_params()
+            kernel_kwargs = {"params": params[-self.kernel_peaks*2:]}
+            neighborhood_kernel_config["kernel_kwargs"] = kernel_kwargs
+
             neighborhood_kernel_config["radius"] = self.kernel_radius
 
 
@@ -195,7 +194,7 @@ class NCA(CA):
                     self.external_channels + self.internal_channels,\
                     self.hidden_channels, 1, \
                     padding=0, \
-                    padding_mode = self.conv_mode, bias=True),\
+                    padding_mode = self.conv_mode, bias=False),\
                 nn.ReLU(), \
                 nn.Conv2d(\
                     self.hidden_channels, self.external_channels, 1, \
@@ -245,6 +244,8 @@ class NCA(CA):
         for hh, param in enumerate(self.weights_layer.named_parameters()):
             params = np.append(params, param[1].detach().cpu().numpy().ravel())
 
+        params = np.append(params, self.kernel_params)
+
         return params
 
     def set_params(self, params):
@@ -264,6 +265,16 @@ class NCA(CA):
                     requires_grad = self.use_grad)
 
             param_start = param_stop
+
+        param_stop = param_start + self.kernel_params.shape[0]
+        self.kernel_params = params[param_start:param_stop]
+
+        nbhd_kernel = get_gaussian_mixture_kernel(radius=self.kernel_radius, \
+                parameters=self.kernel_params)
+
+        self.add_neighborhood_kernel(nbhd_kernel)
+        self.initialize_neighborhood_layer()
+        self.to_device(self.my_device)
 
     def no_grad(self):
 

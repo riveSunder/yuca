@@ -335,20 +335,28 @@ class TestSaveFigSequence(unittest.TestCase):
 
             gif_path = os.path.join(testing_path, "gif_temp*gif")
 
+            tag = "temp"
             save_fig_sequence(grid, ca, num_steps=10, \
-                    tag="temp", gif_path=testing_path)
+                    tag=tag, gif_path=testing_path)
 
 
-            dir_list = os.listdir(testing_path)
+            dir_list = os.listdir(os.path.join(testing_path, tag))
 
             gif_present = False
             for item in dir_list:
+                if os.path.isdir(item):
+                    dir_list2 = os.listdir(item)
+                    for item2 in dir_list2:
+                        if item2.startswith("gif_temp"):
+                            gif_present = True
+                    
                 if item.startswith("gif_temp"):
                     gif_present = True
 
             self.assertTrue(gif_present)
 
-            os.system(f"rm {testing_path}/*gif")
+            rm_cmd = f"rm {os.path.join(testing_path, tag)} -r"
+            os.system(rm_cmd)
 
 
 if __name__ == "__main__": #pragma: no cover
