@@ -179,7 +179,7 @@ class CA(nn.Module):
 
         assert dim_x == dim_y, error_msg
 
-        self.neighborhood_kernels = kernel 
+        self.neighborhood_kernels = kernel.to(torch.get_default_dtype()) 
         self.neighborhood_dim = dim_x 
 
     def initialize_neighborhood_layer(self):

@@ -92,7 +92,7 @@ class Polynomial(nn.Module):
         if type(coefficients) is not torch.Tensor:
             coefficients = torch.tensor(coefficients)
 
-        self.coefficients = nn.Parameter(coefficients)
+        self.coefficients = nn.Parameter(coefficients.to(torch.get_default_dtype()))
 
         self.register_parameter("coef", self.coefficients)
 
@@ -130,8 +130,8 @@ class CosOverX2(nn.Module):
         if type(omega) is not torch.Tensor:
             omega = torch.tensor(omega)
 
-        self.mu = nn.Parameter(mu)
-        self.omega = nn.Parameter(omega)
+        self.mu = nn.Parameter(mu.to(torch.get_default_dtype()))
+        self.omega = nn.Parameter(omega.to(torch.get_default_dtype()))
 
         self.register_parameter("mu", self.mu)
         self.register_parameter("omega", self.omega)
@@ -165,8 +165,8 @@ class Gaussian(nn.Module):
         if type(sigma) is not torch.Tensor:
             sigma = torch.tensor([sigma])
 
-        self.mu = nn.Parameter(mu)
-        self.sigma = nn.Parameter(sigma)
+        self.mu = nn.Parameter(mu.to(torch.get_default_dtype()))
+        self.sigma = nn.Parameter(sigma.to(torch.get_default_dtype()))
 
         self.register_parameter("mu", self.mu)
         self.register_parameter("sigma", self.sigma)
@@ -285,8 +285,8 @@ class DoubleGaussian(nn.Module):
         if sigma.shape[0] == 1:
             sigma = torch.cat([sigma, sigma])
 
-        self.mu = nn.Parameter(mu)
-        self.sigma = nn.Parameter(sigma)
+        self.mu = nn.Parameter(mu.to(torch.get_default_dtype()))
+        self.sigma = nn.Parameter(sigma.to(torch.get_default_dtype()))
 
         self.register_parameter("mu", self.mu)
         self.register_parameter("sigma", self.sigma)
@@ -324,12 +324,12 @@ class DoGaussian(nn.Module):
         self.dx = query_kwargs("dx", 1e-2, **kwargs)
 
         if type(mu) is not torch.Tensor:
-            mu = torch.tensor(mu)
+            mu = torch.tensor([mu]) 
         if type(sigma) is not torch.Tensor:
-            sigma = torch.tensor(sigma)
+            sigma = torch.tensor([sigma])
 
-        self.mu = nn.Parameter(mu)
-        self.sigma = nn.Parameter(sigma)
+        self.mu = nn.Parameter(mu.to(torch.get_default_dtype()))
+        self.sigma = nn.Parameter(sigma.to(torch.get_default_dtype()))
 
         self.register_parameter("mu", self.mu)
         self.register_parameter("sigma", self.sigma)
