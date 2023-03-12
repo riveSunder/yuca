@@ -124,8 +124,8 @@ class GliderWrapper():
                 break
 
         # take stepwise average 
-        reward /= (step + 1e-9)
-        reward -= (self.ca_steps - step - 1)
+#        reward /= (step + 1e-9)
+#        reward -= (self.ca_steps - step - 1)
         info["y_displacment"] = y_displacement
         info["growth"] = growth
         info["active_grid"] = mean_grid
