@@ -99,6 +99,16 @@ class CCA(CA):
         
         self.t_count = 0.0
 
+    def change_kernel_radius(self, radius):
+        """
+
+        """
+
+        self.neighborhood_kernel_config["radius"] = radius
+        nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
+        self.add_neighborhood_kernel(nbhd_kernel)
+        self.initialize_neighborhood_layer()
+
     def load_config(self, config):
 
         self.genesis_fns = []
