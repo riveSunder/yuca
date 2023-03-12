@@ -131,8 +131,6 @@ class CCA(CA):
         self.add_neighborhood_kernel(nbhd_kernel)
         self.initialize_neighborhood_layer()
 
-        print(config["genesis_config"])
-        print(config["persistence_config"])
         self.add_genesis_fn(config["genesis_config"])
         self.add_persistence_fn(config["persistence_config"])
 
