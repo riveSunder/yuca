@@ -107,6 +107,7 @@ class CCA(CA):
         self.neighborhood_kernel_config["radius"] = radius
         nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
         self.add_neighborhood_kernel(nbhd_kernel)
+        self.kernel_radius = self.neighborhood_kernel_config["radius"]
         self.initialize_neighborhood_layer()
 
     def load_config(self, config):
