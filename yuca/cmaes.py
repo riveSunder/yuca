@@ -390,6 +390,7 @@ class CMAES():
             self.reset()
             self.initialize_population()
             
+            self.generation=0
             if "pattern" not in self.exp_id:
                 for idx in range(self.elite_keep):
                     self.env.ca.set_params(self.population[idx].get_params())
@@ -467,7 +468,7 @@ class CMAES():
                 print(proportion_msg)
 
 
-                if fit_std_dev < 0.0001 and generation > 6:
+                if fit_std_dev < 0.02 and generation > 6:
                     self.rank_population(fitness, seed = my_seed)
                     early_msg = f"fitness std. dev. fallen to {fit_std_dev} "\
                             f"ending evolution early."
@@ -571,7 +572,7 @@ class CMACES(CMAES):
 
             effective_steps = min([self.ca_steps, 512])
 
-            tag = [tag, f"gen{self.generation}"]
+            #tag = [tag, f"gen{self.generation}"]
 
             save_fig_sequence(pattern_action, self.env.ca, num_steps=effective_steps,\
                 frames_path=f"./assets/{self.exp_id}",\

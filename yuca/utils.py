@@ -161,7 +161,7 @@ def make_gif(frames_path="./assets/gif_frames/", gif_path="./assets", \
     try: 
         assert len(frames) > 1, "no frames to make gif"
     except:
-        import pdb; pdb.set_trace()
+        pass #import pdb; pdb.set_trace()
 
     first_frame = frames[0]
     
