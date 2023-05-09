@@ -5,7 +5,7 @@
   <br><br><strong>Left:</strong> Evolved slow glider from s11 Glaberish CA rule set. <strong>Right:</strong> evolved glider in <em>Vagopteron</em> Lenia rule set. 
 </p>
 
-## A continuous cellular automata research library
+## A continuous cellular automata research library -> [https://github.com/rivesunder/yuca](https://github.com/rivesunder/yuca)
 
 ### Intention to explore the role of discretization in the emergence of self-organization in certain approximations of continuous cellular automata and dynamic systems
 
