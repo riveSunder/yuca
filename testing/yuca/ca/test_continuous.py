@@ -231,18 +231,27 @@ class TestCCA(unittest.TestCase):
 
         cca = CCA()
 
-        cca.restore_config("geminium.npy")
-        kparams = 1.0 * cca.kernel_params
+        for config_filepath in ["orbium.npy", "geminium.npy", "s643.npy"]:
+            cca.restore_config(config_filepath)
+            kparams = 1.0 * cca.kernel_params
+            ca_config = cca.make_config()
 
-        ca_config = cca.make_config()
+            kconfig = ca_config["neighborhood_kernel_config"]
+            kernel_kwargs = kconfig["kernel_kwargs"]
 
-        kconfig = ca_config["neighborhood_kernel_config"]
-        kconfig_params = kconfig["kernel_kwargs"]["parameters"]
+            kconfig_params = None
 
-        # should contain the same info
-        self.assertEqual(kconfig_params.shape, kparams.shape)
+            for key in kernel_kwargs.keys():
+                if kconfig_params is None:
+                    kconfig_params = np.array(kernel_kwargs[key])
+                else:
+                    kconfig_params = np.append(kconfig_params, \
+                            np.array(kernel_kwargs[key]))
 
-        self.assertEqual(0.0, np.sum(np.abs(kconfig_params - kparams).numpy()))
+            # should contain the same info
+            self.assertEqual(kconfig_params.shape, kparams.shape)
+
+            self.assertEqual(0.0, np.sum(np.abs(np.array(kconfig_params - kparams))))
 
     def test_kernel_params(self):
 
