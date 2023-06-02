@@ -172,7 +172,7 @@ class NCA(CA):
             neighborhood_kernel_config = {}
             neighborhood_kernel_config["name"] = "GaussianMixture"
             params = self.get_params()
-            kernel_kwargs = {"params": params[-self.kernel_peaks*2:]}
+            kernel_kwargs = {"parameters": params[-self.kernel_peaks*2:]}
             neighborhood_kernel_config["kernel_kwargs"] = kernel_kwargs
 
             neighborhood_kernel_config["radius"] = self.kernel_radius

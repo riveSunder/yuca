@@ -197,6 +197,22 @@ class TestNCA(unittest.TestCase):
                     self.assertEqual(param[1].device.type, \
                             torch.device(my_device).type)
 
+    def test_kernel_params_config(self):
+
+        nca = NCA()
+
+        kparams = 1.0 * nca.kernel_params
+
+        ca_config = nca.make_config()
+
+        kconfig = ca_config["neighborhood_kernel_config"]
+        kconfig_params = kconfig["kernel_kwargs"]["parameters"]
+
+        # should contain the same info
+        self.assertEqual(kconfig_params.shape, kparams.shape)
+
+        self.assertEqual(0.0, np.sum(np.abs(kconfig_params - kparams).numpy()))
+
 
 if __name__ == "__main__": #pragma: no cover
 
