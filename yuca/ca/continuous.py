@@ -139,7 +139,8 @@ class CCA(CA):
 
         self.neighborhood_kernel_config = config["neighborhood_kernel_config"]
         nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
-        self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
+        if "kernel_kwargs" in self.neighborhood_kernel_config.keys():
+            self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
 
         self.add_neighborhood_kernel(nbhd_kernel)
         self.initialize_neighborhood_layer()
