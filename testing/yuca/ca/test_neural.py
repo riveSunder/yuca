@@ -211,7 +211,7 @@ class TestNCA(unittest.TestCase):
         # should contain the same info
         self.assertEqual(kconfig_params.shape, kparams.shape)
 
-        self.assertEqual(0.0, np.sum(np.abs(kconfig_params - kparams).numpy()))
+        self.assertEqual(0.0, np.sum(np.abs(np.array(kconfig_params - kparams))))
 
 
 if __name__ == "__main__": #pragma: no cover

@@ -60,6 +60,17 @@ class NCA(CA):
         self.default_init()
         self.reset()
 
+    def update_kernel_params(self, kernel_kwargs):
+
+        self.kernel_params = None
+
+        for key in kernel_kwargs.keys():
+            if self.kernel_params is None:
+                self.kernel_params = np.array(kernel_kwargs[key])
+            else:
+                self.kernel_params = np.append(self.kernel_params, \
+                        np.array(kernel_kwargs[key]))
+
     def default_init(self):
 
         self.add_identity_kernel()
@@ -109,8 +120,9 @@ class NCA(CA):
 
         self.initialize_id_layer()
 
-        nbhd_kernel = get_kernel(config["neighborhood_kernel_config"])
         self.neighborhood_kernel_config = config["neighborhood_kernel_config"]
+        self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
+        nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
 
         self.add_neighborhood_kernel(nbhd_kernel)
         self.initialize_neighborhood_layer()
@@ -172,7 +184,7 @@ class NCA(CA):
             neighborhood_kernel_config = {}
             neighborhood_kernel_config["name"] = "GaussianMixture"
             params = self.get_params()
-            kernel_kwargs = {"parameters": params[-self.kernel_peaks*2:]}
+            kernel_kwargs = {"parameters": params[-self.kernel_peaks*3:]}
             neighborhood_kernel_config["kernel_kwargs"] = kernel_kwargs
 
             neighborhood_kernel_config["radius"] = self.kernel_radius
