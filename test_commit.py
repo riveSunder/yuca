@@ -1,7 +1,6 @@
 import argparse
 import os
 
-
 def test_commit(message=None): #pragma: no cover
 
     run_tests_command = "coverage run -m testing.test_all"
@@ -16,6 +15,12 @@ def test_commit(message=None): #pragma: no cover
         for line in f.readlines():
             if "TOTAL" in line:
                 summary = line
+
+    with open("coverage.txt", "a") as f:
+        if message is None:
+            f.write("no additional message")
+        else: 
+            f.write(f"message: {message}")
 
     git_add_command = "git add coverage.txt"
     commit_command = f"git commit -m 'test commit summary: {summary}' "

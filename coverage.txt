@@ -4,7 +4,7 @@ yuca/__init__.py                       0      0   100%
 yuca/activations.py                  198     36    82%
 yuca/ca/__init__.py                    4      0   100%
 yuca/ca/common.py                    132     20    85%
-yuca/ca/continuous.py                374     34    91%
+yuca/ca/continuous.py                373     35    91%
 yuca/ca/neural.py                    142     16    89%
 yuca/ca/reaction_diffusion.py        151     16    89%
 yuca/clone.py                         83     13    84%
@@ -19,4 +19,5 @@ yuca/wrappers/glider_wrapper.py       88     12    86%
 yuca/wrappers/halting_wrapper.py     182     28    85%
 yuca/wrappers/random_wrapper.py       16      4    75%
 ------------------------------------------------------
-TOTAL                               1930    267    86%
+TOTAL                               1929    268    86%
+message: with updated dependences, future 0.18.2->0.18.3 and torch 1.13.1->2.0.1

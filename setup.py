@@ -12,10 +12,10 @@ setup(\
                         "jupyter==1.0.0",\
                         "notebook>=6.4.12",\
                         "numpy==1.22.0",\
-                        "torch==1.13.1",\
+                        "torch==2.0.1",\
                         "cycler==0.11.0",\
                         "decorator==4.4.2",\
-                        "future==0.18.2",\
+                        "future==0.18.3",\
                         "imageio==2.14.1",\
                         "kiwisolver==1.3.1",\
                         "matplotlib==3.3.4",\
