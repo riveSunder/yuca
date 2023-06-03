@@ -206,7 +206,14 @@ class TestNCA(unittest.TestCase):
         ca_config = nca.make_config()
 
         kconfig = ca_config["neighborhood_kernel_config"]
-        kconfig_params = kconfig["kernel_kwargs"]["parameters"]
+        kconfig_params = None
+
+        for key in kernel_kwargs.keys():
+            if kconfig_params is None:
+                kconfig_params = np.array(kernel_kwargs[key])
+            else:
+                kconfig_params = np.append(kconfig_params, \
+                        np.array(kernel_kwargs[key]))
 
         # should contain the same info
         self.assertEqual(kconfig_params.shape, kparams.shape)

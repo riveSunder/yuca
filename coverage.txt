@@ -20,4 +20,4 @@ yuca/wrappers/halting_wrapper.py     182     28    85%
 yuca/wrappers/random_wrapper.py       16      4    75%
 ------------------------------------------------------
 TOTAL                               1944    269    86%
-no additional message
+message: update test_neural to use the same kernel_params test as test_continuous (per review comment)
