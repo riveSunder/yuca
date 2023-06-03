@@ -206,6 +206,7 @@ class TestNCA(unittest.TestCase):
         ca_config = nca.make_config()
 
         kconfig = ca_config["neighborhood_kernel_config"]
+        kernel_kwargs = kconfig["kernel_kwargs"]
         kconfig_params = None
 
         for key in kernel_kwargs.keys():
