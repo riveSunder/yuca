@@ -227,6 +227,46 @@ class TestCCA(unittest.TestCase):
                     self.assertEqual(param[1].device.type, \
                             torch.device(my_device).type)
 
+    def test_kernel_params_config(self):
+
+        cca = CCA()
+
+        for config_filepath in ["orbium.npy", "geminium.npy", "s643.npy"]:
+            cca.restore_config(config_filepath)
+            kparams = 1.0 * cca.kernel_params
+            ca_config = cca.make_config()
+
+            kconfig = ca_config["neighborhood_kernel_config"]
+            kernel_kwargs = kconfig["kernel_kwargs"]
+
+            kconfig_params = None
+
+            for key in kernel_kwargs.keys():
+                if kconfig_params is None:
+                    kconfig_params = np.array(kernel_kwargs[key])
+                else:
+                    kconfig_params = np.append(kconfig_params, \
+                            np.array(kernel_kwargs[key]))
+
+            # should contain the same info
+            self.assertEqual(kconfig_params.shape, kparams.shape)
+
+            self.assertEqual(0.0, np.sum(np.abs(np.array(kconfig_params - kparams))))
+
+    def test_kernel_params(self):
+
+        cca = CCA()
+
+        cca.restore_config("orbium.npy")
+        old_kparams = 1.0 * cca.kernel_params
+
+        cca.restore_config("geminium.npy")
+        new_kparams = 1.0 * cca.kernel_params
+
+        # orbium has a neighborhood kernel with a single Gaussian
+        # Hydrogeminium natans has one with multiple (3) rings 
+        self.assertNotEqual(old_kparams.shape, new_kparams.shape)
+
 
 if __name__ == "__main__": #pragma: no cover
 
