@@ -112,9 +112,6 @@ class CCA(CA):
         
         
     def change_kernel_radius(self, radius):
-        """
-
-        """
 
         self.neighborhood_kernel_config["radius"] = radius
         nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
@@ -212,6 +209,7 @@ class CCA(CA):
             else:
                 neighborhood_kernel_config["kernel_kwargs"] = {}
             neighborhood_kernel_config["radius"] = self.kernel_radius
+            self.neighborhood_kernel_config = neighborhood_kernel_config
 
 
 

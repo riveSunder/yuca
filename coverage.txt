@@ -3,9 +3,9 @@ Name                               Stmts   Miss  Cover
 yuca/__init__.py                       0      0   100%
 yuca/activations.py                  198     36    82%
 yuca/ca/__init__.py                    4      0   100%
-yuca/ca/common.py                    132     20    85%
-yuca/ca/continuous.py                381     35    91%
-yuca/ca/neural.py                    149     17    89%
+yuca/ca/common.py                    139     20    86%
+yuca/ca/continuous.py                382     30    92%
+yuca/ca/neural.py                    145     13    91%
 yuca/ca/reaction_diffusion.py        151     16    89%
 yuca/clone.py                         83     13    84%
 yuca/configs.py                       89     21    76%
@@ -19,5 +19,5 @@ yuca/wrappers/glider_wrapper.py       88     12    86%
 yuca/wrappers/halting_wrapper.py     182     28    85%
 yuca/wrappers/random_wrapper.py       16      4    75%
 ------------------------------------------------------
-TOTAL                               1944    269    86%
-message: simplify dependencies in setup.py and add pip install jupyter notebook instruction to README.md
+TOTAL                               1948    260    87%
+no additional message
