@@ -30,6 +30,7 @@ git clone -d 1 2022-07-28  https://github.com/riveSunder/yuca.git
 
 cd yuca
 pip install -e .
+pip install  jupyter notebook
 ```
 
 Run testing:
