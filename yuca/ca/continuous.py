@@ -209,6 +209,7 @@ class CCA(CA):
             else:
                 neighborhood_kernel_config["kernel_kwargs"] = {}
             neighborhood_kernel_config["radius"] = self.kernel_radius
+            self.neighborhood_kernel_config = neighborhood_kernel_config
 
 
 
