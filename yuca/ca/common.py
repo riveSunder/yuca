@@ -226,10 +226,21 @@ class CA(nn.Module):
 
         return update
 
+    def change_kernel_radius(self, radius):
+        """
+        common method for changing the kernel size (radius)
+        and therefore changing the spatial resolution of the system. 
+        """
+
+        self.neighborhood_kernel_config["radius"] = radius
+        nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
+        self.add_neighborhood_kernel(nbhd_kernel)
+        self.kernel_radius = self.neighborhood_kernel_config["radius"]
+        self.initialize_neighborhood_layer()
+
     def alive_mask(self, universe):
         """
         zero out cells not meeting a threshold in the alpha channel
-        
         """
 
         alive_mask = torch.zeros_like(universe[:, 3:4, :, :])
