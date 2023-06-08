@@ -127,7 +127,7 @@ class NCA(CA):
         self.set_params(config["params"])
         self.include_parameters()
 
-    def restore_config(self, filepath):
+    def restore_config(self, filepath, verbose=True):
         if "\n" in filepath:
             filepath = filepath.replace("\n","")
 
