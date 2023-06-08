@@ -127,7 +127,7 @@ class NCA(CA):
         self.set_params(config["params"])
         self.include_parameters()
 
-    def restore_config(self, filepath):
+    def restore_config(self, filepath, verbose=True):
         if "\n" in filepath:
             filepath = filepath.replace("\n","")
 
@@ -139,14 +139,16 @@ class NCA(CA):
 
             config = np.load(filepath, allow_pickle=True).reshape(1)[0]
             self.load_config(config)
-            print(f"config restored from {filepath}")
+            if verbose:
+                print(f"config restored from {filepath}")
 
         elif os.path.exists(os.path.join(default_directory, filepath)):
             
             filepath = os.path.join(default_directory, filepath)
             config = np.load(filepath, allow_pickle=True).reshape(1)[0]
             self.load_config(config)
-            print(f"config restored from {filepath}")
+            if verbose:
+                print(f"config restored from {filepath}")
         
         else:
 
