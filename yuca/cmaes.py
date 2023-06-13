@@ -19,13 +19,14 @@ from yuca.wrappers.glider_wrapper import GliderWrapper
 
 import matplotlib.pyplot as plt
 
-#from mpi4py import MPI
-#comm = MPI.COMM_WORLD
-
+from mpi4py import MPI
+comm = MPI.COMM_WORLD
 
 class CMAES():
 
     def __init__(self, **kwargs):
+
+        self.workers = query_kwargs("workers", 0, **kwargs)
         self.tag = query_kwargs("tag", "", **kwargs)
         self.my_seed = query_kwargs("seed", [42], **kwargs)
 
@@ -82,6 +83,7 @@ class CMAES():
         self.exp_id = f"exp_{self.tag}_{int(time.time())}"
 
         self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
+        print(self.input_filepath)
 
         self.elite_params = None
 
@@ -119,6 +121,7 @@ class CMAES():
         self.means = 1.0 * self.starting_means
         self.covar = 1.0 * self.starting_covar
         self.population = []
+        self.initialize_population()
 
     def initialize_population(self):
         
@@ -322,6 +325,11 @@ class CMAES():
         if starting_grid is None:
             starting_grid = torch.rand(1, self.env.ca.external_channels, \
                     self.dim, self.dim)
+            half = self.dim // 4
+            starting_grid[:,:, :half, :] *= 0
+            starting_grid[:,:, :, :half] *= 0
+            starting_grid[:,:, -half:, :] *= 0
+            starting_grid[:,:, :, -half:] *= 0
 
         #self.env.ca.set_params(self.population[0].get_params())
         grid = self.env.ca(starting_grid.to(self.env.ca.my_device)).to("cpu")
@@ -364,6 +372,48 @@ class CMAES():
         self.env.ca_steps = restore_steps
         return elite_configs
 
+    def mpi_fork(self):
+        """
+        relaunches the current script with workers
+        Returns "parent" for original parent, "child" for MPI children
+        (from https://github.com/garymcintire/mpi_util/)
+        via https://github.com/google/brain-tokyo-workshop/tree/master/WANNRelease
+        """
+        global num_worker, rank
+
+        if self.workers <= 1:
+            print("if n<=1")
+            num_worker = 0
+            rank = 0
+            return "child"
+
+        if os.getenv("IN_MPI") is None:
+            env = os.environ.copy()
+            env.update(\
+                    MKL_NUM_THREADS="1", \
+                    OMP_NUM_THREAdS="1",\
+                    IN_MPI="1",\
+                    )
+            print( ["mpirun", "-np", str(self.workers), sys.executable] + sys.argv)
+            subprocess.check_call(["mpirun", "-np", str(self.workers), sys.executable] \
+            +['-u']+ sys.argv, env=env)
+
+            return "parent"
+        else:
+            num_worker = comm.Get_size()
+            rank = comm.Get_rank()
+            return "child"
+
+    def search(self):
+
+        if self.mpi_fork() == "parent":
+            os._exit(0)
+
+        if rank == 0:
+            self.mantle()
+        else:
+            self.arm()
+
     def mantle(self):
 
         t0 = time.time()
@@ -390,7 +440,8 @@ class CMAES():
             self.reset()
             self.initialize_population()
             
-            self.generation=0
+            self.generation = 0
+
             if "pattern" not in self.exp_id:
                 for idx in range(self.elite_keep):
                     self.env.ca.set_params(self.population[idx].get_params())
@@ -414,14 +465,53 @@ class CMAES():
                 
                 t1 = time.time()
 
-                for jj in range(self.population_size):
-                    result = self.get_fitness(jj, steps = 1, \
-                            replicates = self.replicates, \
-                            seed = generation * my_seed)
+                if self.workers == 0:
+                    for jj in range(self.population_size):
+                        result = self.get_fitness(jj, steps = 1, \
+                                replicates = self.replicates, \
+                                seed = generation * my_seed)
 
 
-                    fitness.append(result[0])
-                    proportion_alive.append(result[1])
+                        fitness.append(result[0])
+                        proportion_alive.append(result[1])
+
+                else:
+                    subpopulation_size = int(self.population_size / (self.workers-1))
+                    population_remainder = self.population_size % (num_worker-1)
+                    population_left = self.population_size
+
+                    batch_end = 0
+                    extras = 0
+
+                    # send parameters to arms
+                    for cc in range(1, self.workers):
+                        run_batch_size = min(subpopulation_size, population_left)
+
+                        if population_remainder:
+                            run_batch_size += 1
+                            population_remainder -= 1
+                            extras += 1
+
+                        batch_start = batch_end 
+                        batch_end = batch_start + run_batch_size 
+
+                        parameters_list = [my_agent.get_params() \
+                                for my_agent in self.population]
+
+                        agent_indices = [elem for elem in range(batch_start, batch_end)]
+
+                        comm.send((parameters_list, agent_indices, \
+                                generation * my_seed), dest=cc)
+
+                    # receive current generation's fitnesses from arm processes
+                    population_left = self.population_size
+                    for dd in range(1, num_worker):
+                        #fit, total_steps, agent_done_at = comm.recv(source=dd)
+                        fit, prop_alive = comm.recv(source=dd)
+
+                        fitness.extend(fit)
+                        proportion_alive.extend(prop_alive)
+
 
                 
                 if generation == self.generations - 1:
@@ -492,13 +582,39 @@ class CMAES():
                     tag = [tag, f"gen{generation}_elite{elite_idx}"]
                     self.save_gif(tag=tag, starting_grid=grid)
 
+        for ee in range(1, self.workers):
+            print(f"send shutown signal to worker {ee}")
+            comm.send((0, 0, 0), dest=ee)
+
+
     def arm(self):
         # This will be implemented for parallelization with mpi4py
-        pass
+        while True:
+            parameters_list, agent_indices, my_seed = comm.recv(source=0)
+            if parameters_list == 0:
+                print(f"worker {rank} shutting down")
+                break
 
-    def search(self):
+            self.population_size = len(parameters_list)
+            self.reset()
 
-        self.mantle()
+            for ff in range(self.population_size):
+                self.population[ff].set_params(parameters_list[ff])
+
+            fitness = []
+            prop_alive = []
+
+            for agent_idx in agent_indices:
+
+                result = self.get_fitness(agent_idx, steps=1,\
+                        replicates=self.replicates, seed = my_seed)
+
+                fitness.append(result[0])
+                prop_alive.append(result[1])
+
+            comm.send((fitness, prop_alive), dest=0)
+
+
 
 class CMACES(CMAES):
     
