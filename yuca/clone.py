@@ -7,7 +7,7 @@ import torch
 import torch.nn.functional as F
 import torch.nn as nn
 
-from yuca.utils import query_kwargs
+from yuca.utils import query_kwargs, seed_all
 from yuca.ca.neural import NCA
 from yuca.ca.continuous import CCA
 
@@ -40,6 +40,7 @@ def clone_from_ca(**kwargs):
     if type(ca_configs) == str:
         ca_configs = [ca_configs]
 
+    seed_all(42)
     for ca_config in ca_configs:
         hidden_channels = query_kwargs("hidden_channels", 32, **kwargs)
 
@@ -59,21 +60,31 @@ def clone_from_ca(**kwargs):
             nca = NCA(internal_channels=internal_channels,\
                     external_channels=external_channels,\
                     hidden_channels=hidden_channels)
+            nca.add_neighborhood_kernel(ca.neighborhood_kernels)
+            nca.yes_grad()
 
-            optimizer = torch.optim.Adam(nca.parameters(), lr=learning_rate)
+            optimizer = torch.optim.Adam(nca.weights_layer.parameters(), lr=learning_rate)
+
             smooth_loss = None
             # loss_alpha used for exponential averaging
             loss_alpha = 0.99
+            old_params = nca.get_params()
             for step in range(max_steps):
                 
                 optimizer.zero_grad()
 
                 x = torch.rand(batch_size, external_channels, 256, 256)
-                x *= (1.0 * torch.rand(batch_size, external_channels, 256, 256) > 0.75)
+                xn = torch.rand(batch_size, external_channels, 256, 256)
+                #x *= (1.0 * torch.rand(batch_size, external_channels, 256, 256) > 0.75)
 
                 target = ca.update_helper(x)
                 predicted = nca.update_helper(x)
-                loss = F.mse_loss(predicted, target)
+                #with torch.no_grad():
+                #    target = ca.update_universe(xi, xn)
+                #target.requires_grad = True
+
+                #predicted = nca.update_universe(xi, xn)
+                loss = torch.abs(torch.sqrt((predicted - target)**2)).mean() #F.mse_loss(predicted, target)
 
                 loss.backward()
                 optimizer.step()
@@ -81,7 +92,7 @@ def clone_from_ca(**kwargs):
                 if smooth_loss is None:
                     smooth_loss = loss.detach()
                 else:
-                    smooth_loss = smooth_loss * loss_alpha + (1-loss_alpha) * loss.detach()
+                    smooth_loss = loss.detach() #smooth_loss * loss_alpha + (1-loss_alpha) * loss.detach()
 
                 relative_error = (torch.abs(predicted - target)/(target.abs()+1e-9)).mean()
 
@@ -102,11 +113,15 @@ def clone_from_ca(**kwargs):
 
 
                 if step % display_every == 0:
+                    new_params = nca.get_params()
+
+                    p_diff = (old_params - new_params).mean()
                     t1 = time.time()
                     time_elapsed = t1 - t0
                     msg = f"iteration {iteration} with {hidden_channels} ch_h "\
                             f"step {step} loss; {smooth_loss:.4e}"\
-                            f" time elapsed: {time_elapsed:.2f}"
+                            f" time elapsed: {time_elapsed:.2f}"\
+                            f" param diff mean: {p_diff:.2e}"
                     print(msg)
 
             hidden_channels = min([max_hidden_channels, int(hidden_channels*1.25)])
@@ -146,6 +161,9 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--max_iterations", type=int,\
         default=1,\
         help="maximum batch steps to train/clone")
+    parser.add_argument("-l", "--learning_rate", type=float,\
+        default=1e-3,\
+        help="learning rate")
     parser.add_argument("-o", "--save_name", type=str,\
         default="default_nca.pt",\
         help="NCA filepath to save results")

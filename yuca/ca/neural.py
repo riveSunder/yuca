@@ -47,7 +47,7 @@ class NCA(CA):
     """
 
     def __init__(self, **kwargs):
-        self.hidden_channels = query_kwargs("hidden_channels", 128, **kwargs)
+        self.hidden_channels = query_kwargs("hidden_channels", 64, **kwargs)
         super(NCA, self).__init__(**kwargs)
 
         # CA mode. Options are 'neural' or 'functional'.
@@ -81,7 +81,8 @@ class NCA(CA):
         for mm in range(self.internal_channels):
 
             if self.kernel_params is None:
-                self.kernel_params = np.random.rand(self.kernel_peaks*3) 
+                self.kernel_params = [1/self.kernel_peaks, 0.5, 0.15] * self.kernel_peaks #np.random.rand(self.kernel_peaks*3) 
+                self.kernel_params = np.array(self.kernel_params)
             
             nbhd_kernel = get_gaussian_mixture_kernel(radius=self.kernel_radius, \
                     parameters=self.kernel_params)
@@ -210,13 +211,17 @@ class NCA(CA):
                     self.hidden_channels, 1, \
                     padding=0, \
                     padding_mode = self.conv_mode, bias=False),\
-                nn.ReLU(), \
+                nn.ReLU(),
                 nn.Conv2d(\
                     self.hidden_channels, self.external_channels, 1, \
                     padding=0, \
-                    padding_mode = self.conv_mode, bias=False)\
+                    padding_mode = self.conv_mode, bias=False)
                 )
     
+
+        for param in self.weights_layer.named_parameters():
+            param[1].requires_grad = False
+            param[1][:] = param[1][:]**2 # self.neighborhood_kernels
 
     def id_conv(self, universe):
         # shared with CCA
@@ -232,6 +237,7 @@ class NCA(CA):
 
         # TODO: NCA version
         model_input = torch.cat([identity, neighborhoods], dim=1)
+        #torch.cat([neighborhoods, neighborhoods], dim=1)
         update = self.weights_layer(model_input)
         return update 
 
@@ -254,7 +260,6 @@ class NCA(CA):
         # TODO: implement nca version (simpler)
     
         params = np.array([])
-
 
         for hh, param in enumerate(self.weights_layer.named_parameters()):
             params = np.append(params, param[1].detach().cpu().numpy().ravel())
@@ -297,6 +302,13 @@ class NCA(CA):
 
         for hh, param in enumerate(self.weights_layer.parameters()):
             param.requires_grad = False
+
+    def yes_grad(self):
+
+        self.use_grad = True
+
+        for hh, param in enumerate(self.weights_layer.parameters()):
+            param.requires_grad = True
 
     def include_parameters(self):
         pass
