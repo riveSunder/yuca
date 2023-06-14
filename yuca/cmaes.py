@@ -148,6 +148,7 @@ class CMAES():
 
             self.population[ii].to_device(self.my_device)
 
+
         
     def get_fitness(self, agent_index, steps=10, replicates=1, seed=13):
 
@@ -428,13 +429,14 @@ class CMAES():
         progress["kwargs"] = self.kwargs
         progress["distribution"] = []
 
-        print(f"begin evolution with , " \
+        print(f"begin evolution with:\n" \
                 f"selection mode {self.selection_mode} " \
                 f"prediction motivator mode {self.prediction_mode}")
 
         self.env.ca.no_grad()
         self.env.ca.to_device(self.my_device)
         for my_seed in self.my_seed:
+            print(f"random seed {my_seed}")
 
             seed_all(my_seed)
             self.reset()
@@ -443,14 +445,14 @@ class CMAES():
             self.generation = 0
 
             if "pattern" not in self.exp_id:
-                for idx in range(self.elite_keep):
+                for idx in range(min(self.elite_keep, 4)):
                     self.env.ca.set_params(self.population[idx].get_params())
                     tag = f"{self.exp_id}_seed{my_seed}_"\
                             f"immode{self.prediction_mode}" 
                     tag = [tag, f"gen{0}"]
                     self.save_gif(tag=tag) 
             else:
-                for idx in range(self.elite_keep):
+                for idx in range(min(self.elite_keep,4)):
                     grid = self.population[idx].get_action()
                     effective_steps = min([self.ca_steps, 512])
                     tag = f"{self.exp_id}_seed{my_seed}_"\

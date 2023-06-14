@@ -201,6 +201,8 @@ if __name__ == "__main__":
     parser.add_argument("-v", "--conv_mode", type=str, \
             default="circular", \
             help="padding mode to use, 'circular', 'reflect', or 'zeros'")
+    parser.add_argument("-w", "--workers", type=int, default=0,\
+            help="number of thread to use as workers, 0 - no workers (mantle only)")
 
 
     args = parser.parse_args()
