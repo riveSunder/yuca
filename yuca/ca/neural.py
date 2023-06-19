@@ -50,13 +50,7 @@ class NCA(CA):
         self.hidden_channels = query_kwargs("hidden_channels", 64, **kwargs)
         super(NCA, self).__init__(**kwargs)
 
-        # CA mode. Options are 'neural' or 'functional'.
-        # these are initialized in parent class CA but won't be used by UNCA
-#        self.ca_mode = query_kwargs("ca_mode", "functional", **kwargs)
-#        self.genesis_fns = []
-#        self.persistence_fns = []
-
-
+        self.dropout_rate = query_kwargs("dropout_rate", 0.1, **kwargs)
         self.default_init()
         self.reset()
 
@@ -211,11 +205,19 @@ class NCA(CA):
                     self.hidden_channels, 1, \
                     padding=0, \
                     padding_mode = self.conv_mode, bias=False),\
-                nn.ReLU(),
+                Gaussian(),\
+                nn.Dropout(p=self.dropout_rate),\
+                nn.Conv2d(\
+                    self.hidden_channels,\
+                    self.hidden_channels, 1, \
+                    padding=0, \
+                    padding_mode = self.conv_mode, bias=False),\
+                Gaussian(),\
                 nn.Conv2d(\
                     self.hidden_channels, self.external_channels, 1, \
                     padding=0, \
-                    padding_mode = self.conv_mode, bias=False)
+                    padding_mode = self.conv_mode, bias=False),\
+                nn.Tanh()
                 )
     
 
@@ -239,7 +241,7 @@ class NCA(CA):
         model_input = torch.cat([identity, neighborhoods], dim=1)
         #torch.cat([neighborhoods, neighborhoods], dim=1)
         update = self.weights_layer(model_input)
-        return update 
+        return update
 
     def to_device(self, my_device):
         """
