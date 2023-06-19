@@ -3,14 +3,14 @@ Name                               Stmts   Miss  Cover
 yuca/__init__.py                       0      0   100%
 yuca/activations.py                  198     36    82%
 yuca/ca/__init__.py                    4      0   100%
-yuca/ca/common.py                    139     20    86%
-yuca/ca/continuous.py                384     30    92%
-yuca/ca/neural.py                    155     14    91%
+yuca/ca/common.py                    139     22    84%
+yuca/ca/continuous.py                384     29    92%
+yuca/ca/neural.py                    156     14    91%
 yuca/ca/reaction_diffusion.py        151     16    89%
-yuca/clone.py                        104     17    84%
+yuca/clone.py                        118     19    84%
 yuca/configs.py                       89     21    76%
 yuca/cppn.py                         152     31    80%
-yuca/kernels.py                      107     11    90%
+yuca/kernels.py                      107     19    82%
 yuca/params_agent.py                  32     11    66%
 yuca/patterns.py                      46      6    87%
 yuca/utils.py                        131      8    94%
@@ -19,5 +19,5 @@ yuca/wrappers/glider_wrapper.py       88     12    86%
 yuca/wrappers/halting_wrapper.py     182     28    85%
 yuca/wrappers/random_wrapper.py       16      4    75%
 ------------------------------------------------------
-TOTAL                               1981    265    87%
+TOTAL                               1996    276    86%
 no additional message
