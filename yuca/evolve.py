@@ -5,6 +5,7 @@ import subprocess
 
 import torch
 
+from yuca.utils import query_kwargs
 from yuca.cmaes import CMAES, CMACES
 from yuca.cppn import CPPN, CPPNPlus
 
@@ -33,7 +34,7 @@ def coevolve(**kwargs):
         kwargs["ca_fn"] = CCA
     elif "NCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = NCA
-        kwargs["hidden_channels"] = 256
+        kwargs["hidden_channels"] = query_kwargs("hidden_channels", 16, **kwargs)
     elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
@@ -65,7 +66,7 @@ def pattern_search(**kwargs):
         kwargs["ca_fn"] = CCA
     elif "NCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = NCA
-        kwargs["hidden_channels"] = 256
+        kwargs["hidden_channels"] = query_kwargs("hidden_channels", 256, **kwargs)
     elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
@@ -105,7 +106,7 @@ def universe_search(**kwargs):
         kwargs["ca_fn"] = CCA
     elif "NCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = NCA
-        kwargs["hidden_channels"] = 256
+        kwargs["hidden_channels"] = query_kwargs("hidden_channels", 16, **kwargs)
     elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
@@ -177,6 +178,8 @@ if __name__ == "__main__":
     parser.add_argument("-f", "--env_fn", type=str, default="HaltingWrapper")
     parser.add_argument("-g", "--generations", type=int, default=32, \
             help="number of generations to train for")
+    parser.add_argument("-hc", "--hidden_channels", type=int, default=16, \
+            help="hidden_channels (for NCA)")
 
     parser.add_argument("-i", "--input_filepath", type=str, \
             default=None, \

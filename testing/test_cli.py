@@ -14,7 +14,7 @@ class TestCLI(unittest.TestCase):
             evolve_pattern_cmd = f"python -m yuca.evolve -b 1 "\
                     f"-c 1 -d cpu -g 1 -k 13 "\
                     f"-l 3 -m 38 -p 8 -s 42 "\
-                    f"-t my_test_tag -ca {ca_type}"
+                    f"-t my_test_tag -ca {ca_type} -hc 16"
                     
             if ca_type == "CCA":
                 evolve_pattern_cmd += f" -cc orbium.npy"
