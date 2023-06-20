@@ -107,8 +107,10 @@ class NCA(CA):
         self.initialize_id_layer()
 
         self.neighborhood_kernel_config = config["neighborhood_kernel_config"]
-        self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
+        self.kernel_radius = self.neighborhood_kernel_config["radius"]
         nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
+        if "kernel_kwargs" in self.neighborhood_kernel_config.keys():
+            self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
 
         self.add_neighborhood_kernel(nbhd_kernel)
         self.initialize_neighborhood_layer()
@@ -119,6 +121,7 @@ class NCA(CA):
             self.dt = 0.1
 
         self.initialize_weight_layer()
+
         self.set_params(config["params"])
         self.include_parameters()
 

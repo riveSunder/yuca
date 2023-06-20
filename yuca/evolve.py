@@ -33,6 +33,7 @@ def coevolve(**kwargs):
         kwargs["ca_fn"] = CCA
     elif "NCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = NCA
+        kwargs["hidden_channels"] = 256
     elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
@@ -64,6 +65,7 @@ def pattern_search(**kwargs):
         kwargs["ca_fn"] = CCA
     elif "NCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = NCA
+        kwargs["hidden_channels"] = 256
     elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
@@ -103,6 +105,7 @@ def universe_search(**kwargs):
         kwargs["ca_fn"] = CCA
     elif "NCA" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = NCA
+        kwargs["hidden_channels"] = 256
     elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
     elif "CODE" in kwargs["ca_fn"]:
