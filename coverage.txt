@@ -4,8 +4,8 @@ yuca/__init__.py                       0      0   100%
 yuca/activations.py                  198     36    82%
 yuca/ca/__init__.py                    4      0   100%
 yuca/ca/common.py                    139     20    86%
-yuca/ca/continuous.py                384     29    92%
-yuca/ca/neural.py                    158     14    91%
+yuca/ca/continuous.py                391     35    91%
+yuca/ca/neural.py                    165     20    88%
 yuca/ca/reaction_diffusion.py        151     16    89%
 yuca/clone.py                        118     19    84%
 yuca/configs.py                       89     21    76%
@@ -19,5 +19,5 @@ yuca/wrappers/glider_wrapper.py       88     12    86%
 yuca/wrappers/halting_wrapper.py     182     28    85%
 yuca/wrappers/random_wrapper.py       16      4    75%
 ------------------------------------------------------
-TOTAL                               1998    266    87%
+TOTAL                               2012    278    86%
 no additional message
