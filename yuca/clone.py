@@ -22,6 +22,7 @@ def clone_from_ca(**kwargs):
     log_directory = os.path.join("/", root_directory, "logs")
 
 
+    my_device = torch.device(query_kwargs("device", "cpu", **kwargs))
     max_hidden_channels = query_kwargs("max_hidden_channels", 2048, **kwargs)
     error_threshold = query_kwargs("error_threshold", 1e-2, **kwargs)
     max_iterations = query_kwargs("max_iterations", 10, **kwargs)
@@ -69,60 +70,72 @@ def clone_from_ca(**kwargs):
             # loss_alpha used for exponential averaging
             loss_alpha = 0.99
             old_params = nca.get_params()
-            for step in range(max_steps):
-                
-                optimizer.zero_grad()
+            with torch.device(my_device):
+                ca.to_device(my_device)
+                nca.to_device(my_device)
+                nca.yes_grad()
+                grid = torch.rand(batch_size, external_channels, 64, 64)
+                grid *= (1.0 * torch.rand(batch_size, external_channels, 64, 64) > 0.5)
 
-                x = torch.rand(batch_size, external_channels, 256, 256)
-                xn = torch.rand(batch_size, external_channels, 256, 256)
-                #x *= (1.0 * torch.rand(batch_size, external_channels, 256, 256) > 0.75)
+                for step in range(max_steps):
+                    
+                    optimizer.zero_grad()
+                    with torch.no_grad():
+                        grid = ca(grid)
+                        replace_index = torch.randint(0, batch_size, (1,)).item()
+                        grid[replace_index,:,:,:] = torch.rand(1,external_channels, 64, 64)
 
-                target = ca.update_helper(x)
-                predicted = nca.update_helper(x)
-                #with torch.no_grad():
-                #    target = ca.update_universe(xi, xn)
-                #target.requires_grad = True
+                    target = ca.update_helper(grid)
+                    predicted = nca.update_helper(grid)
+                    #with torch.no_grad():
+                    #    target = ca.update_universe(xi, xn)
+                    target.requires_grad = True
 
-                #predicted = nca.update_universe(xi, xn)
-                loss = torch.abs(torch.sqrt((predicted - target)**2)).mean() #F.mse_loss(predicted, target)
+                    #predicted = nca.update_universe(xi, xn)
+                    #loss = (predicted - target).abs().mean()
 
-                loss.backward()
-                optimizer.step()
+                    loss = ((target-predicted).abs() / (1e-9 + target.abs())).mean()
+                    #(F.mse_loss(predicted, target) + F.mae_loss(predicted, target))
 
-                if smooth_loss is None:
-                    smooth_loss = loss.detach()
-                else:
-                    smooth_loss = loss.detach() #smooth_loss * loss_alpha + (1-loss_alpha) * loss.detach()
+                    loss.backward()
+                    clipping_value = 1e-1 
+                    torch.nn.utils.clip_grad_norm(nca.weights_layer.parameters(), clipping_value)
+                    optimizer.step()
 
-                relative_error = (torch.abs(predicted - target)/(target.abs()+1e-9)).mean()
+                    if smooth_loss is None:
+                        smooth_loss = loss.detach()
+                    else:
+                        smooth_loss = loss.detach() #smooth_loss * loss_alpha + (1-loss_alpha) * loss.detach()
 
-                if relative_error < iteration_best_error:
-                    iteration_best_error = relative_error
+                    relative_error = (torch.abs(predicted - target)/(target.abs()+1e-9)).mean()
 
-                    if relative_error < best_error:
-                        best_error = relative_error
-                        best_state_dict = nca.state_dict()
+                    if relative_error < iteration_best_error:
+                        iteration_best_error = relative_error
 
-                    if verbose:
-                        msg = f"iteration {iteration} new best relative error at step {step} "\
-                                f"= {iteration_best_error:.3e}, best overall = {best_error:.3e}\n"
+                        if relative_error < best_error:
+                            best_error = relative_error
+                            best_state_dict = nca.state_dict()
+
+                        if verbose:
+                            msg = f"iteration {iteration} new best relative error at step {step} "\
+                                    f"= {iteration_best_error:.3e}, best overall = {best_error:.3e}\n"
+                            print(msg)
+
+                        if iteration_best_error < error_threshold:
+                            break
+
+
+                    if step % display_every == 0:
+                        new_params = nca.get_params()
+
+                        p_diff = (old_params - new_params).mean()
+                        t1 = time.time()
+                        time_elapsed = t1 - t0
+                        msg = f"iteration {iteration} with {hidden_channels} ch_h "\
+                                f"step {step} loss; {smooth_loss:.4e}"\
+                                f" time elapsed: {time_elapsed:.2f}"\
+                                f" param diff mean: {p_diff:.2e}"
                         print(msg)
-
-                    if iteration_best_error < error_threshold:
-                        break
-
-
-                if step % display_every == 0:
-                    new_params = nca.get_params()
-
-                    p_diff = (old_params - new_params).mean()
-                    t1 = time.time()
-                    time_elapsed = t1 - t0
-                    msg = f"iteration {iteration} with {hidden_channels} ch_h "\
-                            f"step {step} loss; {smooth_loss:.4e}"\
-                            f" time elapsed: {time_elapsed:.2f}"\
-                            f" param diff mean: {p_diff:.2e}"
-                    print(msg)
 
             hidden_channels = min([max_hidden_channels, int(hidden_channels*1.25)])
             iteration += 1
@@ -150,26 +163,32 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-cc", "--ca_config", type=str, nargs="+",\
-        default=["orbium.npy"],\
-        help="CA config filepath (or filename) to clone NCA from. Default: orbium.npy")
+            default=["orbium.npy"],\
+            help="CA config filepath (or filename) to clone NCA from. Default: orbium.npy")
+    parser.add_argument("-d", "--device", type=str,\
+            default="cuda:0",\
+            help="device")
     parser.add_argument("-e", "--error_threshold", type=float,\
-        default=1e-3,\
-        help="mean relative absolute error threshold")
+            default=1e-3,\
+            help="mean relative absolute error threshold")
     parser.add_argument("-m", "--max_steps", type=int,\
-        default=100,\
-        help="maximum batch steps to train/clone")
+            default=100,\
+            help="maximum batch steps to train/clone")
+    parser.add_argument("-hid", "--hidden_channels", type=int,\
+            default=32,\
+            help="starting number of hidden channels")
     parser.add_argument("-i", "--max_iterations", type=int,\
-        default=1,\
-        help="maximum batch steps to train/clone")
+            default=1,\
+            help="maximum batch steps to train/clone")
     parser.add_argument("-l", "--learning_rate", type=float,\
-        default=1e-3,\
-        help="learning rate")
+            default=1e-3,\
+            help="learning rate")
     parser.add_argument("-o", "--save_name", type=str,\
-        default="default_nca.pt",\
-        help="NCA filepath to save results")
+            default="default_nca.pt",\
+            help="NCA filepath to save results")
     parser.add_argument("-v", "--verbose", type=int,\
-        default=0,\
-        help="0- not verbose 1- verbose")
+            default=0,\
+            help="0- not verbose 1- verbose")
 
 
     args = parser.parse_args()

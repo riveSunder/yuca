@@ -153,7 +153,6 @@ class CPPN(nn.Module):
         if grid == None: # and it should
             grid = self.grid #get_cppn_input()
 
-
         pattern = self.forward(grid.transpose(1,3))
         pattern = pattern.transpose(3,1)
 
