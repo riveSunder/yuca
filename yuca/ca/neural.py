@@ -94,6 +94,16 @@ class NCA(CA):
         self.dt = 0.1
 
 
+    def set_kernel_config(self, kernel_config):
+
+        self.neighborhood_kernel_config = kernel_config
+        self.kernel_radius = self.neighborhood_kernel_config["radius"]
+        nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
+        if "kernel_kwargs" in self.neighborhood_kernel_config.keys():
+            self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
+
+        self.add_neighborhood_kernel(nbhd_kernel)
+
     def load_config(self, config):
 
         self.config = config
