@@ -1,0 +1,17 @@
+ca_config,nca_clone_tanh_o_bicaudatus_ignis_good.npy
+commit_hash,88fddff18e7428869c02c48b42496a7df6e3282b
+notes, Cloned from the continuous ca o_bicaudatus_ignis.npy
+ NCA description: NCA(
+  (id_layer): Conv2d(1, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False, padding_mode=circular)
+  (neighborhood_layer): Conv2d(1, 1, kernel_size=(27, 27), stride=(1, 1), padding=(13, 13), bias=False, padding_mode=circular)
+  (weights_layer): Sequential(
+    (0): Conv2d(2, 256, kernel_size=(1, 1), stride=(1, 1), bias=False, padding_mode=circular)
+    (1): Gaussian()
+    (2): Dropout(p=0.1, inplace=False)
+    (3): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), bias=False, padding_mode=circular)
+    (4): Gaussian()
+    (5): Conv2d(256, 1, kernel_size=(1, 1), stride=(1, 1), bias=False, padding_mode=circular)
+    (6): Tanh()
+  )
+)
+entry_point,not specified
