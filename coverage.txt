@@ -20,4 +20,4 @@ yuca/wrappers/halting_wrapper.py     182     28    85%
 yuca/wrappers/random_wrapper.py       16      4    75%
 ------------------------------------------------------
 TOTAL                               2012    278    86%
-message: this change adds the patterns for nca quasi-clones of lenia rules and the corresponding configs
+no additional message
