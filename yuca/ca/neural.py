@@ -65,7 +65,7 @@ class NCA(CA):
 
         if type(self.act) == str and self.act in activation_dict.keys():
             self.act = activation_dict[self.act]
-        else type(self.act) == str:
+        else:
             # this warning is more specific than all scenarios that might be captured here
             print(f"Warning, {self.act} not in allowed activation function dictionary"}
             print(f"Defaulting to Gaussian activation function")
