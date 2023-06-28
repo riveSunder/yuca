@@ -67,7 +67,7 @@ class NCA(CA):
             self.act = activation_dict[self.act]
         else:
             # this warning is more specific than all scenarios that might be captured here
-            print(f"Warning, {self.act} not in allowed activation function dictionary"}
+            print(f"Warning, {self.act} not in allowed activation function dictionary")
             print(f"Defaulting to Gaussian activation function")
             self.act = Gaussian
 
