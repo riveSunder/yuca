@@ -162,6 +162,7 @@ class CMAES():
 
             self.env.reset()
             self.env.to_device(self.my_device)
+            self.env.eval()
 
             for step in range(steps):
                 action = self.population[agent_index].get_action()
