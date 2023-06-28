@@ -17,6 +17,10 @@ class RandomWrapper(SimpleHaltingWrapper):
         
         super(RandomWrapper, self).__init__(**kwargs)
 
+    def eval(self):
+
+        self.ca.eval()
+
     def step(self, action):
 
         

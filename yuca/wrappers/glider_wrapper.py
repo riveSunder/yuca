@@ -59,6 +59,10 @@ class GliderWrapper():
 
             return torch.rand(*self.shape, dtype=torch.get_default_dtype())
 
+    def eval(self):
+
+        self.ca.eval()
+
     def step(self, action):
         
         return self.meta_step(action)

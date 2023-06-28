@@ -53,6 +53,10 @@ class SimpleHaltingWrapper(nn.Module):
     def train(self):
         pass
 
+    def eval(self):
+
+        self.ca.eval()
+
     def step(self, action):
     
         self.ca.set_params(action)
