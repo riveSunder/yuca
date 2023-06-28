@@ -37,6 +37,16 @@ import matplotlib.pyplot as plt
 
 from yuca.ca.common import CA
 
+activation_dict = {\
+        "Tanh": nn.Tanh,\
+        "ReLU": nn.ReLU,\
+        "SiLU": nn.SiLU,\
+        "ELU": nn.ELU,\
+        "Sigmoid": nn.Sigmoid,\
+        "Gaussian": Gaussian,\
+        "Identity": Identity\
+        }
+
 class NCA(CA):
     """
     NCA - Neural Cellular Automata
@@ -51,6 +61,11 @@ class NCA(CA):
         super(NCA, self).__init__(**kwargs)
 
         self.dropout_rate = query_kwargs("dropout_rate", 0.1, **kwargs)
+        self.act = query_kwargs("activation", Gaussian, **kwargs)
+
+        if type(self.act) == str and self.act in activation_dict.keys():
+            self.act = activation_dict[self.act]
+
         self.default_init()
         self.reset()
 
@@ -218,14 +233,14 @@ class NCA(CA):
                     self.hidden_channels, 1, \
                     padding=0, \
                     padding_mode = self.conv_mode, bias=False),\
-                Gaussian(),\
+                self.act(),\
                 nn.Dropout(p=self.dropout_rate),\
                 nn.Conv2d(\
                     self.hidden_channels,\
                     self.hidden_channels, 1, \
                     padding=0, \
                     padding_mode = self.conv_mode, bias=False),\
-                Gaussian(),\
+                self.act(),\
                 nn.Conv2d(\
                     self.hidden_channels, self.external_channels, 1, \
                     padding=0, \
