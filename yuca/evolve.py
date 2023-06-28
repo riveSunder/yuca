@@ -151,6 +151,8 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser("args for plotting evo logs")
 
+    parser.add_argument("-a", "--activation", type=str, \
+            default="Gaussian", help="activation function: ReLU, SiLU, ELU, Sigmoid, Tanh, Gaussian, Identity")
     parser.add_argument("-b", "--batch_size", type=int, \
             default=64, help="number of grid instances (vectorization)")
     parser.add_argument("-c", "--ca_steps", type=int, \
