@@ -8,6 +8,7 @@ import torch
 
 import yuca.wrappers
 from yuca.ca.continuous import CCA
+from yuca.ca.neural import NCA
 from yuca.configs import get_smooth_life_config,\
     get_orbium_config,\
     get_geminium_config
@@ -38,7 +39,10 @@ class TestConfigs(unittest.TestCase):
                 config_file += "\n"
                 try:
                     config_filepath = os.path.join(config_directory, config_file)
-                    ca = CCA(ca_config=config_filepath)
+                    if "neur" in config_file:
+                        ca = NCA(ca_config=config_filepath)
+                    else:
+                        ca = CCA(ca_config=config_filepath)
 
                     temp_config = ca.make_config()
                     ca.save_config(temp_config_path)
