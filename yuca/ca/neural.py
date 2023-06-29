@@ -71,7 +71,14 @@ class NCA(CA):
             print(f"Defaulting to Gaussian activation function")
             self.act = Gaussian
 
-        self.default_init()
+        if "ca_config" in kwargs.keys():
+            if kwargs["ca_config"] is not None:
+                self.restore_config(kwargs["ca_config"])
+            else:
+                self.default_init()
+        else:
+            self.default_init()
+
         self.reset()
 
     def update_kernel_params(self, kernel_kwargs):
