@@ -1,0 +1,3 @@
+ca_config,neurorbium_a.npy
+commit_hash,not_specifiednotes, None
+entry_point,evolve.py --hidden_channels 128 -a Tanh -b 1 -c 256 -ca NCA -cc ca_configs/nca_clone_nca_gaussian_128h_orbium_bad.npy -d cuda -d cuda -f GliderWrapper -g 32 -k 13 -kp 1 -l 1 -m 128 -p 128 -s 5 7 9 -t nca_tanh128h_orbium_clone_pattern
