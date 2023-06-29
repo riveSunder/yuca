@@ -267,6 +267,9 @@ class CCA(CA):
         config["genesis_config"] = genesis_config
         config["persistence_config"] = persistence_config
 
+        if "dt" not in config.keys():
+            config["dt"] = self.dt 
+
         return copy.deepcopy(config)
 
     def save_config(self, filepath, config=None):

@@ -150,6 +150,8 @@ class NCA(CA):
         else: 
             self.dt = 0.1
 
+        print(self.dt)
+
         self.initialize_weight_layer()
 
         self.set_params(config["params"])
@@ -220,6 +222,9 @@ class NCA(CA):
             
         config["id_kernel_config"] = id_kernel_config
         config["neighborhood_kernel_config"] = neighborhood_kernel_config
+
+        if "dt" not in config.keys():
+            config["dt"] = self.dt 
 
         return copy.deepcopy(config)
 
