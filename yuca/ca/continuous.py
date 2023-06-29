@@ -131,6 +131,9 @@ class CCA(CA):
 
     def load_config(self, config):
 
+        if "instant_kwargs" in config.keys():
+            self.__init__(**config["instant_kwargs"])
+
         self.genesis_fns = []
         self.persistence_fns = []
 
@@ -270,6 +273,16 @@ class CCA(CA):
 
         if "dt" not in config.keys():
             config["dt"] = self.dt 
+
+        # include activation and number hidden channels, and all kwargs for instantiating ca
+        config["instant_kwargs"] = self.instant_kwargs
+
+        config["instant_kwargs"]["kernel_radius"] = self.kernel_radius
+        config["instant_kwargs"]["kernel_peaks"] = self.kernel_peaks
+        config["instant_kwargs"]["conv_mode"] = self.conv_mode
+
+        config["instant_kwargs"]["external_channels"] = self.external_channels
+        config["instant_kwargs"]["internal_channels"] = self.internal_channels
 
         return copy.deepcopy(config)
 

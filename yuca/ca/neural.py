@@ -61,7 +61,7 @@ class NCA(CA):
         super(NCA, self).__init__(**kwargs)
 
         self.dropout_rate = query_kwargs("dropout_rate", 0.1, **kwargs)
-        self.act = query_kwargs("activation", Gaussian, **kwargs)
+        self.act = query_kwargs("activation", "Gaussian", **kwargs)
 
         if type(self.act) == str and self.act in activation_dict.keys():
             self.act = activation_dict[self.act]
@@ -95,7 +95,7 @@ class NCA(CA):
         for mm in range(self.internal_channels):
 
             if self.kernel_params is None:
-                self.kernel_params = [1/self.kernel_peaks, 0.5, 0.15] * self.kernel_peaks #np.random.rand(self.kernel_peaks*3) 
+                self.kernel_params = [1/self.kernel_peaks, 0.5, 0.15] * self.kernel_peaks 
                 self.kernel_params = np.array(self.kernel_params)
             
             nbhd_kernel = get_gaussian_mixture_kernel(radius=self.kernel_radius, \
@@ -125,6 +125,10 @@ class NCA(CA):
         self.add_neighborhood_kernel(nbhd_kernel)
 
     def load_config(self, config):
+
+        if "instant_kwargs" in config.keys():
+            self.__init__(**config["instant_kwargs"])
+
 
         self.config = config
 
@@ -231,6 +235,19 @@ class NCA(CA):
 
         if "dt" not in config.keys():
             config["dt"] = self.dt 
+
+        # include activation and number hidden channels
+        config["instant_kwargs"] = self.instant_kwargs
+        config["instant_kwargs"]["activation"] = str(self.act).split("'")[1].split(".")[-1]
+        config["instant_kwargs"]["dropout_rate"] = self.dropout_rate
+
+        config["instant_kwargs"]["kernel_radius"] = self.kernel_radius
+        config["instant_kwargs"]["kernel_peaks"] = self.kernel_peaks
+        config["instant_kwargs"]["conv_mode"] = self.conv_mode
+
+        config["instant_kwargs"]["hidden_channels"] = self.hidden_channels
+        config["instant_kwargs"]["external_channels"] = self.external_channels
+        config["instant_kwargs"]["internal_channels"] = self.internal_channels
 
         return copy.deepcopy(config)
 

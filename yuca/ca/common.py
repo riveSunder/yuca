@@ -43,6 +43,8 @@ class CA(nn.Module):
     def __init__(self, **kwargs):
         super(CA, self).__init__()
 
+        self.instant_kwargs = kwargs
+
         self.kernel_radius = query_kwargs("kernel_radius", 13, **kwargs)
         self.kernel_peaks = query_kwargs("kernel_peaks", 3, **kwargs)
         self.my_device = query_kwargs("device", "cpu", **kwargs)
