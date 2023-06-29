@@ -140,7 +140,12 @@ class NCA(CA):
         self.kernel_radius = self.neighborhood_kernel_config["radius"]
         nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
         if "kernel_kwargs" in self.neighborhood_kernel_config.keys():
-            self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
+            pass
+        else:
+            self.neighborhood_kernel_config["kernel_kwargs"] = {}
+
+        self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
+            
 
         # update self.kernel_radius
         self.change_kernel_radius(self.neighborhood_kernel_config["radius"])
@@ -305,7 +310,8 @@ class NCA(CA):
         for hh, param in enumerate(self.weights_layer.named_parameters()):
             params = np.append(params, param[1].detach().cpu().numpy().ravel())
 
-        params = np.append(params, self.kernel_params)
+        if self.kernel_params is not None:
+            params = np.append(params, self.kernel_params)
 
         return params
 
@@ -327,15 +333,16 @@ class NCA(CA):
 
             param_start = param_stop
 
-        param_stop = param_start + self.kernel_params.shape[0]
-        self.kernel_params = params[param_start:param_stop]
+        if self.kernel_params is not None:
+            param_stop = param_start + self.kernel_params.shape[0]
+            self.kernel_params = params[param_start:param_stop]
 
-        nbhd_kernel = get_gaussian_mixture_kernel(radius=self.kernel_radius, \
-                parameters=self.kernel_params)
+            nbhd_kernel = get_gaussian_mixture_kernel(radius=self.kernel_radius, \
+                    parameters=self.kernel_params)
 
-        self.add_neighborhood_kernel(nbhd_kernel)
-        self.initialize_neighborhood_layer()
-        self.to_device(self.my_device)
+            self.add_neighborhood_kernel(nbhd_kernel)
+            self.initialize_neighborhood_layer()
+            self.to_device(self.my_device)
 
     def no_grad(self):
 
