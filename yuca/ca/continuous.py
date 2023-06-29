@@ -149,7 +149,8 @@ class CCA(CA):
         if "kernel_kwargs" in self.neighborhood_kernel_config.keys():
             self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
 
-        self.add_neighborhood_kernel(nbhd_kernel)
+        # update self.kernel_radius
+        self.change_kernel_radius(self.neighborhood_kernel_config["radius"])
         self.initialize_neighborhood_layer()
 
         self.add_genesis_fn(config["genesis_config"])
