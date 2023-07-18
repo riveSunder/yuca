@@ -266,7 +266,7 @@ class RxnDfn(CA):
         params = np.array([])
 
         for param in [self.diffusion_u, self.diffusion_v, self.f, self.k]:
-            params = np.append(params, param.detach().numpy().ravel())
+            params = np.append(params, param.detach().cpu().numpy().ravel())
 
         return params
 
@@ -305,4 +305,19 @@ class RxnDfn(CA):
         to ensure all parameters get moved for CCA
         """
         
+        self.no_grad()
         self.to(my_device)
+        self.my_device = my_device
+        self.id_layer.to(my_device)
+        self.neighborhood_layer.to(my_device)
+
+        self.dx = self.dx.to(my_device)
+        self.dt = self.dt.to(my_device)
+
+        self.diffusion_u = self.diffusion_u.to(my_device)
+        self.diffusion_v = self.diffusion_v.to(my_device)
+        self.f = self.f.to(my_device)
+        self.k = self.k.to(my_device)
+        self.no_grad()
+
+
