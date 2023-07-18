@@ -151,14 +151,14 @@ class RxnDfn(CA):
 
         # Gray-Scott parameters
         # nominal U-Skate world from Tim Hutton and mrob
-        self.f = torch.tensor([0.062])
-        self.k = torch.tensor([0.06093])
-        self.diffusion_u = torch.tensor([0.64])
-        self.diffusion_v = torch.tensor([0.32])
+        self.f = torch.tensor([0.06])
+        self.k = torch.tensor([0.0609])
+        self.diffusion_u = torch.tensor([2e-5])
+        self.diffusion_v = torch.tensor([1e-5])
         # time step
-        self.dt = torch.tensor([0.2])
+        self.dt = torch.tensor([0.5])
         # spatial step 
-        self.dx = torch.tensor([1.0]) 
+        self.dx = torch.tensor([0.006993]) 
 
 
     def add_neighborhood_kernel(self, kernel=None):
@@ -234,7 +234,7 @@ class RxnDfn(CA):
         # species u
         update[:,0,:,:] = self.diffusion_u * nabla_u - u*v*v + self.f*(1-u)
         # species v
-        update[:,1,:,:] = self.diffusion_v * nabla_v + u*v*v - v*(self.f+self.k)
+        update[:,1,:,:] = self.diffusion_v * nabla_v + u*v*v - (self.f+self.k)*v
 
         return update
 

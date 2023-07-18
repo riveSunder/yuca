@@ -54,7 +54,9 @@ def get_kernel(kernel_config):
 
 def get_laplacian_kernel(radius=1):
 
-    return  torch.tensor([[[[0,1.,0],[1.,-4.,1.],[0,1.,0]]]])
+    #return  torch.tensor([[[[0,1.,0],[1.,-4.,1.],[0,1.,0]]]])
+    
+    return  torch.tensor([[[[.25,.5,.25],[.5.,-3.,.5],[0.25,.5,0.25]]]])
 
 def get_cosx2_kernel(radius=13, mu=0.5, omega=12.56, r_scale=1.0):
     
