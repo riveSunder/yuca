@@ -92,13 +92,19 @@ class GliderWrapper():
        
             action = self.ca(action)
 
-            mean_grid = action.mean()
-            max_grid = action.max()
+            if action.shape[1] == 2:
+                # indicates rxn diffusion system
+                action_of_interest = 1.0 *action[:,0:1,:,:]
+            else:
+                action_of_interest = 1.0 *action
+
+            mean_grid = action_of_interest.mean()
+            max_grid = action_of_interest.max()
 
             if step % (score_every) == 0:# or step == (self.ca_steps - 1):
                 
 
-                y_displacement_1 = (self.y_grid * action[0:1]).sum() / (eps + action.sum())
+                y_displacement_1 = (self.y_grid * action_of_interest[0:1]).sum() / (eps + action.sum())
 
 
                 # penalize growth/decay, i.e. incentivize morphological homeostasis
@@ -121,8 +127,8 @@ class GliderWrapper():
                 y_displacement_0 = y_displacement_1.clone()
 
 
-            dgrid = action - old_grid
-            old_grid = 1.0  * action
+            dgrid = action_of_interest - old_grid
+            old_grid = 1.0  * action_of_interest
 
             if mean_grid == 0.0 or dgrid.max() <= 0.00001:
                 break
