@@ -55,9 +55,9 @@ class RxnDfn(CA):
         self.initialize_neighborhood_layer()
 
         if "dt" in config.keys():
-            self.dt = config["dt"]
+            self.dt = torch.tensor(config["dt"])
         else: 
-            self.dt = 0.1
+            self.dt = torch.tensor([0.5])
 
         self.set_params(config["params"])
         self.include_parameters()
@@ -151,14 +151,14 @@ class RxnDfn(CA):
 
         # Gray-Scott parameters
         # nominal U-Skate world from Tim Hutton and mrob
-        self.f = torch.tensor([0.062])
-        self.k = torch.tensor([0.06093])
-        self.diffusion_u = torch.tensor([0.64])
-        self.diffusion_v = torch.tensor([0.32])
+        self.f = torch.tensor([0.0620])
+        self.k = torch.tensor([0.0609])
+        self.diffusion_u = torch.tensor([2e-5])
+        self.diffusion_v = torch.tensor([1e-5])
         # time step
-        self.dt = torch.tensor([0.2])
+        self.dt = torch.tensor([0.5])
         # spatial step 
-        self.dx = torch.tensor([1.0]) 
+        self.dx = torch.tensor([0.006993]) 
 
 
     def add_neighborhood_kernel(self, kernel=None):
@@ -185,6 +185,41 @@ class RxnDfn(CA):
         kernel = torch.cat([kernel, kernel], dim=0)
         self.neighborhood_kernels = kernel 
         self.neighborhood_dim = dim_x 
+
+    def initialize_h3(self, batch_size=1, dim=256):
+        """
+        initialize a grid with h3 background equilibrium for u an v
+        
+        from R.P. Munafo 2014:
+
+        $A = \frac{\sqrt{F}}{(F+k)}$
+
+        and the concentration of $u$ is 
+
+        $u_{h3} = \frac{A - \sqrt{A^2 - 4}}{2A} $
+
+        and $v$
+
+        $v_{h3} = \frac{\sqrt{F} (A +  \sqrt{A^2 - 4}) }{3}$
+
+
+        batch_size: int - number of samples in a batch
+        dim: int or 2-tuple - row and column dimensions for grid
+        """
+
+        if type(dim) is int:
+            dim = [dim, dim]
+
+        grid = torch.zeros(batch_size, self.external_channels, dim[0], dim[1])
+
+        A = self.f.sqrt() / (self.f + self.k)
+        uh3 = (A - torch.sqrt(A**2 - 4)) / (2*A)
+        vh3 = (torch.sqrt(self.f) * (A + torch.sqrt(A**2 - 4))) / 2
+
+        grid[:,0,:,:] = uh3
+        grid[:,1,:,:] = vh3
+
+        return grid
 
     def initialize_neighborhood_layer(self):
         """
@@ -226,15 +261,15 @@ class RxnDfn(CA):
 
         update = 0 * identity
 
-        nabla_u = self.dx * neighborhoods[:,0,:,:] 
-        nabla_v = self.dx * neighborhoods[:,1,:,:] 
+        nabla_u = neighborhoods[:,0,:,:] / self.dx**2
+        nabla_v = neighborhoods[:,1,:,:] / self.dx**2 
         u = identity[:,0,:,:]
         v = identity[:,1,:,:]
 
         # species u
         update[:,0,:,:] = self.diffusion_u * nabla_u - u*v*v + self.f*(1-u)
         # species v
-        update[:,1,:,:] = self.diffusion_v * nabla_v + u*v*v - v*(self.f+self.k)
+        update[:,1,:,:] = self.diffusion_v * nabla_v + u*v*v - (self.f+self.k)*v
 
         return update
 
@@ -266,7 +301,7 @@ class RxnDfn(CA):
         params = np.array([])
 
         for param in [self.diffusion_u, self.diffusion_v, self.f, self.k]:
-            params = np.append(params, param.detach().numpy().ravel())
+            params = np.append(params, param.detach().cpu().numpy().ravel())
 
         return params
 
@@ -305,4 +340,19 @@ class RxnDfn(CA):
         to ensure all parameters get moved for CCA
         """
         
+        self.no_grad()
         self.to(my_device)
+        self.my_device = my_device
+        self.id_layer.to(my_device)
+        self.neighborhood_layer.to(my_device)
+
+        self.dx = self.dx.to(my_device)
+        self.dt = self.dt.to(my_device)
+
+        self.diffusion_u = self.diffusion_u.to(my_device)
+        self.diffusion_v = self.diffusion_v.to(my_device)
+        self.f = self.f.to(my_device)
+        self.k = self.k.to(my_device)
+        self.no_grad()
+
+

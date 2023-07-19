@@ -6,7 +6,7 @@ yuca/ca/__init__.py                    4      0   100%
 yuca/ca/common.py                    140     20    86%
 yuca/ca/continuous.py                401     35    91%
 yuca/ca/neural.py                    194     23    88%
-yuca/ca/reaction_diffusion.py        151     16    89%
+yuca/ca/reaction_diffusion.py        172     27    84%
 yuca/clone.py                        118     19    84%
 yuca/configs.py                       89     21    76%
 yuca/cppn.py                         152     31    80%
@@ -19,5 +19,5 @@ yuca/wrappers/glider_wrapper.py       90     13    86%
 yuca/wrappers/halting_wrapper.py     184     29    84%
 yuca/wrappers/random_wrapper.py       18      5    72%
 ------------------------------------------------------
-TOTAL                               2058    284    86%
-no additional message
+TOTAL                               2079    295    86%
+message: revert glider_wrapper changes per review

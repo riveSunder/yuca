@@ -37,6 +37,7 @@ def coevolve(**kwargs):
         kwargs["hidden_channels"] = query_kwargs("hidden_channels", 16, **kwargs)
     elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
+        kwargs["external_channels"] = 2
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
     elif "Lenia" in kwargs["ca_fn"]:
@@ -69,6 +70,7 @@ def pattern_search(**kwargs):
         kwargs["hidden_channels"] = query_kwargs("hidden_channels", 256, **kwargs)
     elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
+        kwargs["external_channels"] = 2
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
     elif "Lenia" in kwargs["ca_fn"]:
@@ -109,6 +111,7 @@ def universe_search(**kwargs):
         kwargs["hidden_channels"] = query_kwargs("hidden_channels", 16, **kwargs)
     elif "RxnDfn" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = RxnDfn
+        kwargs["external_channels"] = 2
     elif "CODE" in kwargs["ca_fn"]:
         kwargs["ca_fn"] = CODE
     elif "Lenia" in kwargs["ca_fn"]:
@@ -211,6 +214,8 @@ if __name__ == "__main__":
             help="padding mode to use, 'circular', 'reflect', or 'zeros'")
     parser.add_argument("-w", "--workers", type=int, default=0,\
             help="number of thread to use as workers, 0 - no workers (mantle only)")
+    parser.add_argument("-x", "--external_channels", type=int, default=1,\
+            help="number of external channels in ca system")
 
 
     args = parser.parse_args()
