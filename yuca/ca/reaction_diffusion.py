@@ -151,7 +151,7 @@ class RxnDfn(CA):
 
         # Gray-Scott parameters
         # nominal U-Skate world from Tim Hutton and mrob
-        self.f = torch.tensor([0.06])
+        self.f = torch.tensor([0.0620])
         self.k = torch.tensor([0.0609])
         self.diffusion_u = torch.tensor([2e-5])
         self.diffusion_v = torch.tensor([1e-5])
@@ -185,6 +185,41 @@ class RxnDfn(CA):
         kernel = torch.cat([kernel, kernel], dim=0)
         self.neighborhood_kernels = kernel 
         self.neighborhood_dim = dim_x 
+
+    def initialize_h3(self, batch_size=1, dim=256):
+        """
+        initialize a grid with h3 background equilibrium for u an v
+        
+        from R.P. Munafo 2014:
+
+        $A = \frac{\sqrt{F}}{(F+k)}$
+
+        and the concentration of $u$ is 
+
+        $u_{h3} = \frac{A - \sqrt{A^2 - 4}}{2A} $
+
+        and $v$
+
+        $v_{h3} = \frac{\sqrt{F} (A +  \sqrt{A^2 - 4}) }{3}$
+
+
+        batch_size: int - number of samples in a batch
+        dim: int or 2-tuple - row and column dimensions for grid
+        """
+
+        if type(dim) is int:
+            dim = [dim, dim]
+
+        grid = torch.zeros(batch_size, self.external_channels, dim[0], dim[1])
+
+        A = self.f.sqrt() / (self.f + self.k)
+        uh3 = (A - torch.sqrt(A**2 - 4)) / (2*A)
+        vh3 = (torch.sqrt(self.f) * (A + torch.sqrt(A**2 - 4))) / 2
+
+        grid[:,0,:,:] = uh3
+        grid[:,1,:,:] = vh3
+
+        return grid
 
     def initialize_neighborhood_layer(self):
         """
