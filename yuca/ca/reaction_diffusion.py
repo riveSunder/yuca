@@ -55,9 +55,9 @@ class RxnDfn(CA):
         self.initialize_neighborhood_layer()
 
         if "dt" in config.keys():
-            self.dt = config["dt"]
+            self.dt = torch.tensor(config["dt"])
         else: 
-            self.dt = 0.1
+            self.dt = torch.tensor([0.5])
 
         self.set_params(config["params"])
         self.include_parameters()
