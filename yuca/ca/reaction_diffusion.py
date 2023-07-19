@@ -226,8 +226,8 @@ class RxnDfn(CA):
 
         update = 0 * identity
 
-        nabla_u = self.dx * neighborhoods[:,0,:,:] 
-        nabla_v = self.dx * neighborhoods[:,1,:,:] 
+        nabla_u = neighborhoods[:,0,:,:] / self.dx**2
+        nabla_v = neighborhoods[:,1,:,:] / self.dx**2 
         u = identity[:,0,:,:]
         v = identity[:,1,:,:]
 
