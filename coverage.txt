@@ -15,9 +15,9 @@ yuca/params_agent.py                  32     11    66%
 yuca/patterns.py                      46      6    87%
 yuca/utils.py                        131      8    94%
 yuca/wrappers/__init__.py              3      0   100%
-yuca/wrappers/glider_wrapper.py       93     14    85%
+yuca/wrappers/glider_wrapper.py       90     13    86%
 yuca/wrappers/halting_wrapper.py     184     29    84%
 yuca/wrappers/random_wrapper.py       18      5    72%
 ------------------------------------------------------
-TOTAL                               2082    296    86%
-no additional message
+TOTAL                               2079    295    86%
+message: revert glider_wrapper changes per review
