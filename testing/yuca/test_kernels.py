@@ -19,7 +19,8 @@ class TestLaplacianKernel(unittest.TestCase):
 
         laplacian = get_laplacian_kernel(radius=1)
 
-        target = torch.tensor([[[[0,1.,0],[1.,-4.,1.],[0,1.,0]]]])
+        # nine-stencil Laplacian
+        target = torch.tensor([[[[.25,.5,.25],[.5,-3.,.5],[.25,.5,.25]]]])
 
         self.assertNotIn(False, target == laplacian)
         self.assertTrue(type(laplacian) == torch.Tensor)
