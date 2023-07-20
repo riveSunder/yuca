@@ -164,9 +164,11 @@ class LaplacianOfGaussian(nn.Module):
         if type(x) is not torch.Tensor:
             x = torch.tensor(x)
 
-        laplacian_of_gaussian = (1 / (torch.pi * self.sigma**4)) \
-                * (1 - x**2 / (4*self.sigma**2)) \
+        laplacian_of_gaussian = -(1 / (torch.pi * self.sigma**4)) \
+                * (1 - (x**2) / (2*self.sigma**2)) \
                 * (torch.exp(- (x**2)/(2*self.sigma**2)))
+
+        print(laplacian_of_gaussian.sum())
 
         laplacian_of_gaussian -= laplacian_of_gaussian.mean()
 
