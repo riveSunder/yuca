@@ -32,6 +32,7 @@ class RxnDfn(CA):
             
         self.internal_channels = 2
         self.external_channels = 2
+        self.kernel_radius = 1
 
         self.default_init()
         self.reset()
@@ -106,13 +107,10 @@ class RxnDfn(CA):
         if self.neighborhood_kernel_config is None:
             print("kernel config is missing, assuming GaussianMixture")
             #assert False,  "not implemented exception"
-            neighborhood_kernel_config = "GaussianMixture"
             neighborhood_kernel_config = {}
-            neighborhood_kernel_config["name"] = "GaussianMixture"
+            neighborhood_kernel_config["name"] = "LaplacianOfGaussian"
             neighborhood_kernel_config["kernel_kwargs"] = {}
             neighborhood_kernel_config["radius"] = self.kernel_radius
-
-
         else:
             neighborhood_kernel_config = self.neighborhood_kernel_config
 
@@ -122,6 +120,9 @@ class RxnDfn(CA):
         config["id_kernel_config"] = id_kernel_config
         config["neighborhood_kernel_config"] = neighborhood_kernel_config
 
+        if "dt" not in config.keys():
+            config["dt"] = self.dt 
+
         return copy.deepcopy(config)
 
     def save_config(self, filepath, config=None):
@@ -130,9 +131,17 @@ class RxnDfn(CA):
             config = self.make_config()
 
         np.save(filepath, config)
+
     def default_init(self):
 
-        self.add_neighborhood_kernel()
+        self.neighborhood_kernel_config = {}
+        self.neighborhood_kernel_config["name"] = "LaplacianOfGaussian"
+        self.neighborhood_kernel_config["kernel_kwargs"] = {"sigma": 0.5}
+        self.neighborhood_kernel_config["radius"] = self.kernel_radius
+
+        kernel = get_kernel(self.neighborhood_kernel_config)
+
+        self.add_neighborhood_kernel(kernel)
         self.initialize_neighborhood_layer()
 
         self.add_identity_kernel()
@@ -158,7 +167,8 @@ class RxnDfn(CA):
         # time step
         self.dt = torch.tensor([0.5])
         # spatial step 
-        self.dx = torch.tensor([0.006993]) 
+        # R.P. Munafo used 1/143. for dx, but I had to adjust to use scalable Laplacian of Gaussian kernels 
+        self.dx = torch.tensor([1/105.])
 
 
     def add_neighborhood_kernel(self, kernel=None):
@@ -166,7 +176,9 @@ class RxnDfn(CA):
         add Laplacian kernel (kernel arg is ignored).
         """
 
-        kernel = get_laplacian_kernel()
+        if kernel is None:
+            # fall back to 9-point stencil finite difference kernel
+            kernel = get_laplacian_kernel()
 
         kernel_dims = len(kernel.shape)
         

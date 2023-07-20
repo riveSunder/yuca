@@ -220,7 +220,6 @@ class NCA(CA):
         if self.neighborhood_kernel_config is None:
             print("kernel config is missing, assuming GaussianMixture")
             #assert False,  "not implemented exception"
-            neighborhood_kernel_config = "GaussianMixture"
             neighborhood_kernel_config = {}
             neighborhood_kernel_config["name"] = "GaussianMixture"
             params = self.get_params()
