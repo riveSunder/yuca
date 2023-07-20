@@ -60,6 +60,31 @@ class RxnDfn(CA):
         else: 
             self.dt = torch.tensor([0.5])
 
+        if "dx" in config.keys():
+            self.dx = torch.tensor(config["dx"])
+        else: 
+            self.dx = torch.tensor([1./105.])
+
+        if "decay_rate" in config.keys():
+            self.k = torch.tensor(config["decay_rate"])
+        else: 
+            self.k = torch.tensor([0.00609])
+
+        if "feed_rate" in config.keys():
+            self.f = torch.tensor(config["feed_rate"])
+        else: 
+            self.f = torch.tensor([0.00620])
+
+        if "diffusion_u" in config.keys():
+            self.diffusion_u = torch.tensor(config["diffusion_u"])
+        else: 
+            self.diffusion_u = torch.tensor([2e-5])
+
+        if "diffusion_v" in config.keys():
+            self.diffusion_v = torch.tensor(config["diffusion_v"])
+        else: 
+            self.diffusion_v = torch.tensor([1e-5])
+
         self.set_params(config["params"])
         self.include_parameters()
 
@@ -120,8 +145,12 @@ class RxnDfn(CA):
         config["id_kernel_config"] = id_kernel_config
         config["neighborhood_kernel_config"] = neighborhood_kernel_config
 
-        if "dt" not in config.keys():
-            config["dt"] = self.dt 
+        config["dt"] = self.dt.item() 
+        config["dx"] = self.dx.item() 
+        config["diffusion_u"] = self.diffusion_u.item()
+        config["diffusion_v"] = self.diffusion_v.item()
+        config["feed_rate"] = self.f.item()
+        config["decay_rate"] = self.k.item()
 
         return copy.deepcopy(config)
 

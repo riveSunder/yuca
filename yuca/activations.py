@@ -168,8 +168,6 @@ class LaplacianOfGaussian(nn.Module):
                 * (1 - (x**2) / (2*self.sigma**2)) \
                 * (torch.exp(- (x**2)/(2*self.sigma**2)))
 
-        print(laplacian_of_gaussian.sum())
-
         laplacian_of_gaussian -= laplacian_of_gaussian.mean()
 
         return laplacian_of_gaussian
