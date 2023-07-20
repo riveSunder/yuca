@@ -2,7 +2,7 @@ import numpy as np
 
 import torch
 
-from yuca.activations import Gaussian, DoGaussian, \
+from yuca.activations import LaplacianOfGaussian, Gaussian, DoGaussian, \
         CosOverX2, GaussianMixture, SmoothLifeKernel
 
 import matplotlib.pyplot as plt
@@ -20,18 +20,18 @@ def get_kernel(kernel_config):
     elif kernel_config["name"] == "SmoothLifeKernel":
         get_kernel_fn = SmoothLifeKernel
     elif kernel_config["name"] == "InnerMoore":
-        kernel = np.zeros((3,3))
-        kernel[1,1] = 1.0
-        return kernel
+        kernel = np.zeros((1,1,3,3))
+        kernel[0,0,1,1] = 1.0
+        return torch.tensor(kernel)
     elif kernel_config["name"] == "MooreLike":
         kernel_radius = kernel_config["radius"]
         mid_kernel = kernel_radius 
-
-        kernel = np.ones((kernel_radius * 2 + 1, kernel_radius * 2 + 1))
-        kernel[mid_kernel, mid_kernel] = 0.0
+        kernel = np.ones((1,1,kernel_radius * 2 + 1, kernel_radius * 2 + 1))
+        kernel[0, 0, mid_kernel, mid_kernel] = 0.0
         kernel /= kernel.sum()
-
-        return kernel
+        return torch.tensor(kernel)
+    elif kernel_config["name"] == "LaplacianOfGaussian":
+        get_kernel_fn = LaplacianOfGaussian
     else:
         kernel_error = f"kernel function {kernel_config['name']} not found"
         assert False, kernel_error
@@ -46,8 +46,12 @@ def get_kernel(kernel_config):
     grid = np.sqrt(xx**2 + yy**2) / kernel_config["radius"] 
 
     kernel = kernel_fn(grid.reshape(1, 1, radius * 2 + 1, radius * 2 + 1))
-    kernel = kernel - kernel.min()
-    kernel = kernel / (eps + kernel.sum())
+    if "aplacian" in kernel_config["name"]:
+        # laplacian of gaussian and finite difference laplacian kernels  nominally sum to ~0
+        pass
+    else:
+        kernel = kernel - kernel.min()
+        kernel = kernel / (eps + kernel.sum())
 
     return kernel
    

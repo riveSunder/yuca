@@ -7,7 +7,43 @@ import numpy as np
 import torch
 
 import yuca.kernels
-from yuca.kernels import get_laplacian_kernel
+from yuca.kernels import get_laplacian_kernel, get_kernel
+
+
+class TestGetKernel(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_get_kernel(self):
+
+        kernel_names = ["Gaussian", \
+                "GaussianMixture", \
+                "CosOverX2", \
+                "SmoothLifeKernel", \
+                "InnerMoore", \
+                "MooreLike", \
+                "LaplacianOfGaussian"\
+                ]
+
+        for kernel_name in kernel_names:
+
+            kernel_config = {"name": kernel_name,
+                    "radius": 1,
+                    "kernel_kwargs": {"radius": 1}}
+            kernel = get_kernel(kernel_config)
+
+            
+            self.assertEqual(torch.Tensor, type(kernel))
+            self.assertEqual(1, kernel.shape[0])
+            self.assertEqual(1, kernel.shape[1])
+
+            if "aplacian" in kernel_name:
+                self.assertAlmostEqual(0.0, kernel.sum().item(), 5)
+            elif "oore" in kernel_name:
+                pass
+            else:
+                self.assertAlmostEqual(1.0, kernel.sum().item(), 5)
 
 
 class TestLaplacianKernel(unittest.TestCase):
