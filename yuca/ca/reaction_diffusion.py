@@ -37,13 +37,26 @@ class RxnDfn(CA):
         self.default_init()
         self.reset()
 
-    def change_kernel_radius(self, radius):
+    def set_dx(self, new_dx):
 
-        self.neighborhood_kernel_config["radius"] = radius
-        nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
-        self.add_neighborhood_kernel(nbhd_kernel)
-        self.kernel_radius = self.neighborhood_kernel_config["radius"]
-        self.initialize_neighborhood_layer()
+        if type(new_dx) is torch.Tensor:
+            self.dx = new_dx.to(self.my_device)
+        else:
+            self.dx = torch.tensor(new_dx).to(self.my_device)
+
+    def set_diffusion_u(self, new_diffusion_u):
+
+        if type(new_diffusion_u) is torch.Tensor:
+            self.diffusion_u = new_diffusion_u.to(self.my_device)
+        else:
+            self.diffusion_u = torch.tensor(new_diffusion_u).to(self.my_device)
+
+    def set_diffusion_v(self, new_diffusion_v):
+
+        if type(new_diffusion_v) is torch.Tensor:
+            self.diffusion_v = new_diffusion_v.to(self.my_device)
+        else:
+            self.diffusion_v = torch.tensor(new_diffusion_v).to(self.my_device)
 
     def load_config(self, config, verbose=False):
 

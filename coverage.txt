@@ -3,10 +3,10 @@ Name                               Stmts   Miss  Cover
 yuca/__init__.py                       3      0   100%
 yuca/activations.py                  209     36    83%
 yuca/ca/__init__.py                    4      0   100%
-yuca/ca/common.py                    140     22    84%
-yuca/ca/continuous.py                400     35    91%
+yuca/ca/common.py                    158     31    80%
+yuca/ca/continuous.py                381     29    92%
 yuca/ca/neural.py                    193     23    88%
-yuca/ca/reaction_diffusion.py        205     43    79%
+yuca/ca/reaction_diffusion.py        219     52    76%
 yuca/clone.py                        118     19    84%
 yuca/configs.py                       89     21    76%
 yuca/cppn.py                         152     31    80%
@@ -20,5 +20,5 @@ yuca/wrappers/halting_wrapper.py     184     29    84%
 yuca/wrappers/random_wrapper.py       18      5    72%
 yuca/zoo/__init__.py                   0      0   100%
 ------------------------------------------------------
-TOTAL                               2128    313    85%
-message: scale laplacian of gaussian kernels by sum of absolute value
+TOTAL                               2141    325    85%
+no additional message
