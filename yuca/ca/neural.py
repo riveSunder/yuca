@@ -159,7 +159,7 @@ class NCA(CA):
             
 
         # update self.kernel_radius
-        self.change_kernel_radius(self.neighborhood_kernel_config["radius"])
+        self.set_kernel_radius(self.neighborhood_kernel_config["radius"])
         self.initialize_neighborhood_layer()
 
         if "dt" in config.keys():

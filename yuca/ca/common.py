@@ -228,20 +228,44 @@ class CA(nn.Module):
 
         return update
 
-    def change_kernel_radius(self, radius):
+    def set_kernel_radius(self, radius):
         """
         common method for changing the kernel size (radius)
         and therefore changing the spatial resolution of the system. 
         """
 
-
-        if self.neighborhood_kernel_config is not None:
-            self.neighborhood_kernel_config["radius"] = radius
-
+        self.neighborhood_kernel_config["radius"] = radius
         nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
         self.add_neighborhood_kernel(nbhd_kernel)
         self.kernel_radius = self.neighborhood_kernel_config["radius"]
         self.initialize_neighborhood_layer()
+
+    def update_kernel_params(self, kernel_kwargs):
+
+        self.kernel_params = None
+
+        for key in kernel_kwargs.keys():
+            if self.kernel_params is None:
+                self.kernel_params = np.array(kernel_kwargs[key])
+            else:
+                self.kernel_params = np.append(self.kernel_params, \
+                        np.array(kernel_kwargs[key]))
+
+    def set_kernel_config(self, kernel_config):
+
+        self.neighborhood_kernel_config = kernel_config
+        if "kernel_kwargs" in self.neighborhood_kernel_config.keys():
+            self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
+
+        self.set_kernel_radius(self.neighborhood_kernel_config["radius"])
+
+
+    def set_dt(self, new_dt):
+        
+        if type(new_dt) is torch.Tensor:
+            self.dt = new_dt.to(self.my_device)
+        else:
+            self.dt = torch.tensor(new_dt).to(self.my_device)
 
     def alive_mask(self, universe):
         """
