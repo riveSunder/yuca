@@ -32,9 +32,18 @@ class RxnDfn(CA):
             
         self.internal_channels = 2
         self.external_channels = 2
+        self.kernel_radius = 1
 
         self.default_init()
         self.reset()
+
+    def change_kernel_radius(self, radius):
+
+        self.neighborhood_kernel_config["radius"] = radius
+        nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
+        self.add_neighborhood_kernel(nbhd_kernel)
+        self.kernel_radius = self.neighborhood_kernel_config["radius"]
+        self.initialize_neighborhood_layer()
 
     def load_config(self, config):
 
@@ -58,6 +67,31 @@ class RxnDfn(CA):
             self.dt = torch.tensor(config["dt"])
         else: 
             self.dt = torch.tensor([0.5])
+
+        if "dx" in config.keys():
+            self.dx = torch.tensor(config["dx"])
+        else: 
+            self.dx = torch.tensor([1./330.])
+
+        if "decay_rate" in config.keys():
+            self.k = torch.tensor(config["decay_rate"])
+        else: 
+            self.k = torch.tensor([0.00609])
+
+        if "feed_rate" in config.keys():
+            self.f = torch.tensor(config["feed_rate"])
+        else: 
+            self.f = torch.tensor([0.00620])
+
+        if "diffusion_u" in config.keys():
+            self.diffusion_u = torch.tensor(config["diffusion_u"])
+        else: 
+            self.diffusion_u = torch.tensor([2e-5])
+
+        if "diffusion_v" in config.keys():
+            self.diffusion_v = torch.tensor(config["diffusion_v"])
+        else: 
+            self.diffusion_v = torch.tensor([1e-5])
 
         self.set_params(config["params"])
         self.include_parameters()
@@ -106,13 +140,10 @@ class RxnDfn(CA):
         if self.neighborhood_kernel_config is None:
             print("kernel config is missing, assuming GaussianMixture")
             #assert False,  "not implemented exception"
-            neighborhood_kernel_config = "GaussianMixture"
             neighborhood_kernel_config = {}
-            neighborhood_kernel_config["name"] = "GaussianMixture"
+            neighborhood_kernel_config["name"] = "LaplacianOfGaussian"
             neighborhood_kernel_config["kernel_kwargs"] = {}
             neighborhood_kernel_config["radius"] = self.kernel_radius
-
-
         else:
             neighborhood_kernel_config = self.neighborhood_kernel_config
 
@@ -122,6 +153,13 @@ class RxnDfn(CA):
         config["id_kernel_config"] = id_kernel_config
         config["neighborhood_kernel_config"] = neighborhood_kernel_config
 
+        config["dt"] = self.dt.item() 
+        config["dx"] = self.dx.item() 
+        config["diffusion_u"] = self.diffusion_u.item()
+        config["diffusion_v"] = self.diffusion_v.item()
+        config["feed_rate"] = self.f.item()
+        config["decay_rate"] = self.k.item()
+
         return copy.deepcopy(config)
 
     def save_config(self, filepath, config=None):
@@ -130,9 +168,17 @@ class RxnDfn(CA):
             config = self.make_config()
 
         np.save(filepath, config)
+
     def default_init(self):
 
-        self.add_neighborhood_kernel()
+        self.neighborhood_kernel_config = {}
+        self.neighborhood_kernel_config["name"] = "LaplacianOfGaussian"
+        self.neighborhood_kernel_config["kernel_kwargs"] = {"sigma": 0.5}
+        self.neighborhood_kernel_config["radius"] = self.kernel_radius
+
+        kernel = get_kernel(self.neighborhood_kernel_config)
+
+        self.add_neighborhood_kernel(kernel)
         self.initialize_neighborhood_layer()
 
         self.add_identity_kernel()
@@ -158,7 +204,8 @@ class RxnDfn(CA):
         # time step
         self.dt = torch.tensor([0.5])
         # spatial step 
-        self.dx = torch.tensor([0.006993]) 
+        # R.P. Munafo used 1/143. for dx, but I had to adjust to use scalable Laplacian of Gaussian kernels 
+        self.dx = torch.tensor([1/330.])
 
 
     def add_neighborhood_kernel(self, kernel=None):
@@ -166,7 +213,9 @@ class RxnDfn(CA):
         add Laplacian kernel (kernel arg is ignored).
         """
 
-        kernel = get_laplacian_kernel()
+        if kernel is None:
+            # fall back to 9-point stencil finite difference kernel
+            kernel = get_laplacian_kernel()
 
         kernel_dims = len(kernel.shape)
         
@@ -291,7 +340,7 @@ class RxnDfn(CA):
         new_universe = universe + self.dt * update 
         new_universe = torch.clamp(new_universe,0,1.)
 
-        self.t_count += self.dt
+        self.t_count += self.dt.cpu()
 
         return new_universe
 
