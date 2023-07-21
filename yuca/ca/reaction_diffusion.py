@@ -45,7 +45,7 @@ class RxnDfn(CA):
         self.kernel_radius = self.neighborhood_kernel_config["radius"]
         self.initialize_neighborhood_layer()
 
-    def load_config(self, config):
+    def load_config(self, config, verbose=False):
 
         self.config = config
 
@@ -96,7 +96,7 @@ class RxnDfn(CA):
         self.set_params(config["params"])
         self.include_parameters()
 
-    def restore_config(self, filepath):
+    def restore_config(self, filepath, verbose=False):
         if "\n" in filepath:
             filepath = filepath.replace("\n","")
 
@@ -108,14 +108,16 @@ class RxnDfn(CA):
 
             config = np.load(filepath, allow_pickle=True).reshape(1)[0]
             self.load_config(config)
-            print(f"config restored from {filepath}")
+            if verbose:
+                print(f"config restored from {filepath}")
 
         elif os.path.exists(os.path.join(default_directory, filepath)):
             
             filepath = os.path.join(default_directory, filepath)
             config = np.load(filepath, allow_pickle=True).reshape(1)[0]
             self.load_config(config)
-            print(f"config restored from {filepath}")
+            if verbose:
+                print(f"config restored from {filepath}")
         
         else:
 
@@ -123,7 +125,7 @@ class RxnDfn(CA):
             print(f"attempted to read {filepath}, not found")
             #assert False, f"{filepath} not found"
         
-    def make_config(self):
+    def make_config(self, verbose=False):
 
         config = {}
 
