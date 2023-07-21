@@ -228,6 +228,16 @@ class CA(nn.Module):
 
         return update
 
+    def get_kernel_radius(self, radius):
+
+        # kernel_radius is a float
+        return self.kernel_radius
+
+    def get_dt(self, radius):
+
+        # self.dt is a torch tensor
+        return self.dt.item()
+
     def set_kernel_radius(self, radius):
         """
         common method for changing the kernel size (radius)
@@ -258,7 +268,6 @@ class CA(nn.Module):
             self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
 
         self.set_kernel_radius(self.neighborhood_kernel_config["radius"])
-
 
     def set_dt(self, new_dt):
         
