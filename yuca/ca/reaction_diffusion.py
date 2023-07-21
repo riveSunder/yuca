@@ -37,6 +37,21 @@ class RxnDfn(CA):
         self.default_init()
         self.reset()
 
+    def get_dx(self, radius):
+
+        # self.dx is a torch tensor
+        return self.dx.item()
+
+    def get_diffusion_u(self, radius):
+
+        # self.diffusion_v is a torch tensor
+        return self.diffusion_u.item()
+
+    def get_diffusion_v(self, radius):
+
+        # self.diffusion_v is a torch tensor
+        return self.diffusion_v.item()
+
     def set_dx(self, new_dx):
 
         if type(new_dx) is torch.Tensor:
