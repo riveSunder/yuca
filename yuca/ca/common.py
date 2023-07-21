@@ -228,12 +228,12 @@ class CA(nn.Module):
 
         return update
 
-    def get_kernel_radius(self, radius):
+    def get_kernel_radius(self):
 
         # kernel_radius is a float
         return self.kernel_radius
 
-    def get_dt(self, radius):
+    def get_dt(self):
 
         # self.dt is a torch tensor
         return self.dt.item()

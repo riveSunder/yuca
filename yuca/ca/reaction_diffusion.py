@@ -37,17 +37,17 @@ class RxnDfn(CA):
         self.default_init()
         self.reset()
 
-    def get_dx(self, radius):
+    def get_dx(self):
 
         # self.dx is a torch tensor
         return self.dx.item()
 
-    def get_diffusion_u(self, radius):
+    def get_diffusion_u(self):
 
         # self.diffusion_v is a torch tensor
         return self.diffusion_u.item()
 
-    def get_diffusion_v(self, radius):
+    def get_diffusion_v(self):
 
         # self.diffusion_v is a torch tensor
         return self.diffusion_v.item()
