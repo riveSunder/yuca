@@ -21,4 +21,4 @@ yuca/wrappers/random_wrapper.py       18      5    72%
 yuca/zoo/__init__.py                   0      0   100%
 ------------------------------------------------------
 TOTAL                               2141    325    85%
-no additional message
+message: remove erroneous input args for getters
