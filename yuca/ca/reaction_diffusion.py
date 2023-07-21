@@ -71,7 +71,7 @@ class RxnDfn(CA):
         if "dx" in config.keys():
             self.dx = torch.tensor(config["dx"])
         else: 
-            self.dx = torch.tensor([1./105.])
+            self.dx = torch.tensor([1./330.])
 
         if "decay_rate" in config.keys():
             self.k = torch.tensor(config["decay_rate"])
@@ -205,7 +205,7 @@ class RxnDfn(CA):
         self.dt = torch.tensor([0.5])
         # spatial step 
         # R.P. Munafo used 1/143. for dx, but I had to adjust to use scalable Laplacian of Gaussian kernels 
-        self.dx = torch.tensor([1/105.])
+        self.dx = torch.tensor([1/330.])
 
 
     def add_neighborhood_kernel(self, kernel=None):
@@ -340,7 +340,7 @@ class RxnDfn(CA):
         new_universe = universe + self.dt * update 
         new_universe = torch.clamp(new_universe,0,1.)
 
-        self.t_count += self.dt
+        self.t_count += self.dt.cpu()
 
         return new_universe
 
