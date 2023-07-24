@@ -141,6 +141,8 @@ class CCA(CA):
         self.initialize_weight_layer()
         self.include_parameters()
 
+        self.to_device(self.my_device)
+
     def restore_config(self, filepath, verbose=True):
         if "\n" in filepath:
             filepath = filepath.replace("\n","")
@@ -686,6 +688,9 @@ class CCA(CA):
     def no_grad(self):
 
         self.use_grad = False
+
+        for p_name, p_param in self.named_parameters():
+            p_param.requires_grad = False
 
         for hh, param in enumerate(self.weights_layer.parameters()):
             param.requires_grad = False

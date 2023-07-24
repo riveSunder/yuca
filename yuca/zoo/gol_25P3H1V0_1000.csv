@@ -1,0 +1,4 @@
+ca_config,conway_life.npy
+commit_hash,db738125121545cfe58e5e62db7b51634c36350f
+notes, Pattern attributed to Dean Hickerson, 1989. Manually replicated here from pictures at https://conwaylife.com/wiki/25P3H1V0.1 i.e. https://conwaylife.com/w/images/7/76/25p3h1v0.1.png. Pattern always has 25 active cells.
+entry_point,not specified
