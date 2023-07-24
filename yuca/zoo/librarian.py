@@ -74,7 +74,7 @@ class Librarian():
         with open(meta_path, "w") as f:
             f.write(f"ca_config,{config_name}")
             f.write(f"\ncommit_hash,{commit_hash}")
-            f.write(f"notes, {notes}")
+            f.write(f"\nnotes, {notes}")
             f.write(f"\nentry_point,{entry_point}")
 
         np.save(file_path, pattern) 
