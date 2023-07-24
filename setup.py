@@ -18,7 +18,7 @@ setup(\
                         "pyparsing==3.0.7",\
                         "python-dateutil==2.8.2",\
                         "scikit-image==0.17.2",\
-                        "scipy==1.5",\
+                        "scipy==1.10.0",\
                         "six==1.16.0",\
                         "tifffile==2020.9.3",\
                         "scikit-image==0.17.2"]\

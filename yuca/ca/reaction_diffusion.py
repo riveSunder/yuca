@@ -32,11 +32,48 @@ class RxnDfn(CA):
             
         self.internal_channels = 2
         self.external_channels = 2
+        self.kernel_radius = 1
 
         self.default_init()
         self.reset()
 
-    def load_config(self, config):
+    def get_dx(self):
+
+        # self.dx is a torch tensor
+        return self.dx.item()
+
+    def get_diffusion_u(self):
+
+        # self.diffusion_v is a torch tensor
+        return self.diffusion_u.item()
+
+    def get_diffusion_v(self):
+
+        # self.diffusion_v is a torch tensor
+        return self.diffusion_v.item()
+
+    def set_dx(self, new_dx):
+
+        if type(new_dx) is torch.Tensor:
+            self.dx = new_dx.to(self.my_device)
+        else:
+            self.dx = torch.tensor(new_dx).to(self.my_device)
+
+    def set_diffusion_u(self, new_diffusion_u):
+
+        if type(new_diffusion_u) is torch.Tensor:
+            self.diffusion_u = new_diffusion_u.to(self.my_device)
+        else:
+            self.diffusion_u = torch.tensor(new_diffusion_u).to(self.my_device)
+
+    def set_diffusion_v(self, new_diffusion_v):
+
+        if type(new_diffusion_v) is torch.Tensor:
+            self.diffusion_v = new_diffusion_v.to(self.my_device)
+        else:
+            self.diffusion_v = torch.tensor(new_diffusion_v).to(self.my_device)
+
+    def load_config(self, config, verbose=False):
 
         self.config = config
 
@@ -55,14 +92,39 @@ class RxnDfn(CA):
         self.initialize_neighborhood_layer()
 
         if "dt" in config.keys():
-            self.dt = config["dt"]
+            self.dt = torch.tensor(config["dt"])
         else: 
-            self.dt = 0.1
+            self.dt = torch.tensor([0.5])
+
+        if "dx" in config.keys():
+            self.dx = torch.tensor(config["dx"])
+        else: 
+            self.dx = torch.tensor([1./330.])
+
+        if "decay_rate" in config.keys():
+            self.k = torch.tensor(config["decay_rate"])
+        else: 
+            self.k = torch.tensor([0.00609])
+
+        if "feed_rate" in config.keys():
+            self.f = torch.tensor(config["feed_rate"])
+        else: 
+            self.f = torch.tensor([0.00620])
+
+        if "diffusion_u" in config.keys():
+            self.diffusion_u = torch.tensor(config["diffusion_u"])
+        else: 
+            self.diffusion_u = torch.tensor([2e-5])
+
+        if "diffusion_v" in config.keys():
+            self.diffusion_v = torch.tensor(config["diffusion_v"])
+        else: 
+            self.diffusion_v = torch.tensor([1e-5])
 
         self.set_params(config["params"])
         self.include_parameters()
 
-    def restore_config(self, filepath):
+    def restore_config(self, filepath, verbose=False):
         if "\n" in filepath:
             filepath = filepath.replace("\n","")
 
@@ -74,14 +136,16 @@ class RxnDfn(CA):
 
             config = np.load(filepath, allow_pickle=True).reshape(1)[0]
             self.load_config(config)
-            print(f"config restored from {filepath}")
+            if verbose:
+                print(f"config restored from {filepath}")
 
         elif os.path.exists(os.path.join(default_directory, filepath)):
             
             filepath = os.path.join(default_directory, filepath)
             config = np.load(filepath, allow_pickle=True).reshape(1)[0]
             self.load_config(config)
-            print(f"config restored from {filepath}")
+            if verbose:
+                print(f"config restored from {filepath}")
         
         else:
 
@@ -89,7 +153,7 @@ class RxnDfn(CA):
             print(f"attempted to read {filepath}, not found")
             #assert False, f"{filepath} not found"
         
-    def make_config(self):
+    def make_config(self, verbose=False):
 
         config = {}
 
@@ -106,13 +170,10 @@ class RxnDfn(CA):
         if self.neighborhood_kernel_config is None:
             print("kernel config is missing, assuming GaussianMixture")
             #assert False,  "not implemented exception"
-            neighborhood_kernel_config = "GaussianMixture"
             neighborhood_kernel_config = {}
-            neighborhood_kernel_config["name"] = "GaussianMixture"
+            neighborhood_kernel_config["name"] = "LaplacianOfGaussian"
             neighborhood_kernel_config["kernel_kwargs"] = {}
             neighborhood_kernel_config["radius"] = self.kernel_radius
-
-
         else:
             neighborhood_kernel_config = self.neighborhood_kernel_config
 
@@ -122,6 +183,13 @@ class RxnDfn(CA):
         config["id_kernel_config"] = id_kernel_config
         config["neighborhood_kernel_config"] = neighborhood_kernel_config
 
+        config["dt"] = self.dt.item() 
+        config["dx"] = self.dx.item() 
+        config["diffusion_u"] = self.diffusion_u.item()
+        config["diffusion_v"] = self.diffusion_v.item()
+        config["feed_rate"] = self.f.item()
+        config["decay_rate"] = self.k.item()
+
         return copy.deepcopy(config)
 
     def save_config(self, filepath, config=None):
@@ -130,9 +198,17 @@ class RxnDfn(CA):
             config = self.make_config()
 
         np.save(filepath, config)
+
     def default_init(self):
 
-        self.add_neighborhood_kernel()
+        self.neighborhood_kernel_config = {}
+        self.neighborhood_kernel_config["name"] = "LaplacianOfGaussian"
+        self.neighborhood_kernel_config["kernel_kwargs"] = {"sigma": 0.5}
+        self.neighborhood_kernel_config["radius"] = self.kernel_radius
+
+        kernel = get_kernel(self.neighborhood_kernel_config)
+
+        self.add_neighborhood_kernel(kernel)
         self.initialize_neighborhood_layer()
 
         self.add_identity_kernel()
@@ -151,14 +227,15 @@ class RxnDfn(CA):
 
         # Gray-Scott parameters
         # nominal U-Skate world from Tim Hutton and mrob
-        self.f = torch.tensor([0.062])
-        self.k = torch.tensor([0.06093])
-        self.diffusion_u = torch.tensor([0.64])
-        self.diffusion_v = torch.tensor([0.32])
+        self.f = torch.tensor([0.0620])
+        self.k = torch.tensor([0.0609])
+        self.diffusion_u = torch.tensor([2e-5])
+        self.diffusion_v = torch.tensor([1e-5])
         # time step
-        self.dt = torch.tensor([0.2])
+        self.dt = torch.tensor([0.5])
         # spatial step 
-        self.dx = torch.tensor([1.0]) 
+        # R.P. Munafo used 1/143. for dx, but I had to adjust to use scalable Laplacian of Gaussian kernels 
+        self.dx = torch.tensor([1/330.])
 
 
     def add_neighborhood_kernel(self, kernel=None):
@@ -166,7 +243,9 @@ class RxnDfn(CA):
         add Laplacian kernel (kernel arg is ignored).
         """
 
-        kernel = get_laplacian_kernel()
+        if kernel is None:
+            # fall back to 9-point stencil finite difference kernel
+            kernel = get_laplacian_kernel()
 
         kernel_dims = len(kernel.shape)
         
@@ -185,6 +264,41 @@ class RxnDfn(CA):
         kernel = torch.cat([kernel, kernel], dim=0)
         self.neighborhood_kernels = kernel 
         self.neighborhood_dim = dim_x 
+
+    def initialize_h3(self, batch_size=1, dim=256):
+        """
+        initialize a grid with h3 background equilibrium for u an v
+        
+        from R.P. Munafo 2014:
+
+        $A = \frac{\sqrt{F}}{(F+k)}$
+
+        and the concentration of $u$ is 
+
+        $u_{h3} = \frac{A - \sqrt{A^2 - 4}}{2A} $
+
+        and $v$
+
+        $v_{h3} = \frac{\sqrt{F} (A +  \sqrt{A^2 - 4}) }{3}$
+
+
+        batch_size: int - number of samples in a batch
+        dim: int or 2-tuple - row and column dimensions for grid
+        """
+
+        if type(dim) is int:
+            dim = [dim, dim]
+
+        grid = torch.zeros(batch_size, self.external_channels, dim[0], dim[1])
+
+        A = self.f.sqrt() / (self.f + self.k)
+        uh3 = (A - torch.sqrt(A**2 - 4)) / (2*A)
+        vh3 = (torch.sqrt(self.f) * (A + torch.sqrt(A**2 - 4))) / 2
+
+        grid[:,0,:,:] = uh3
+        grid[:,1,:,:] = vh3
+
+        return grid
 
     def initialize_neighborhood_layer(self):
         """
@@ -226,15 +340,15 @@ class RxnDfn(CA):
 
         update = 0 * identity
 
-        nabla_u = self.dx * neighborhoods[:,0,:,:] 
-        nabla_v = self.dx * neighborhoods[:,1,:,:] 
+        nabla_u = neighborhoods[:,0,:,:] / self.dx**2
+        nabla_v = neighborhoods[:,1,:,:] / self.dx**2 
         u = identity[:,0,:,:]
         v = identity[:,1,:,:]
 
         # species u
         update[:,0,:,:] = self.diffusion_u * nabla_u - u*v*v + self.f*(1-u)
         # species v
-        update[:,1,:,:] = self.diffusion_v * nabla_v + u*v*v - v*(self.f+self.k)
+        update[:,1,:,:] = self.diffusion_v * nabla_v + u*v*v - (self.f+self.k)*v
 
         return update
 
@@ -256,7 +370,7 @@ class RxnDfn(CA):
         new_universe = universe + self.dt * update 
         new_universe = torch.clamp(new_universe,0,1.)
 
-        self.t_count += self.dt
+        self.t_count += self.dt.cpu()
 
         return new_universe
 
@@ -266,7 +380,7 @@ class RxnDfn(CA):
         params = np.array([])
 
         for param in [self.diffusion_u, self.diffusion_v, self.f, self.k]:
-            params = np.append(params, param.detach().numpy().ravel())
+            params = np.append(params, param.detach().cpu().numpy().ravel())
 
         return params
 
@@ -305,4 +419,19 @@ class RxnDfn(CA):
         to ensure all parameters get moved for CCA
         """
         
+        self.no_grad()
         self.to(my_device)
+        self.my_device = my_device
+        self.id_layer.to(my_device)
+        self.neighborhood_layer.to(my_device)
+
+        self.dx = self.dx.to(my_device)
+        self.dt = self.dt.to(my_device)
+
+        self.diffusion_u = self.diffusion_u.to(my_device)
+        self.diffusion_v = self.diffusion_v.to(my_device)
+        self.f = self.f.to(my_device)
+        self.k = self.k.to(my_device)
+        self.no_grad()
+
+

@@ -46,7 +46,8 @@ class Librarian():
         self.index = pattern_names
 
     def store(self, pattern: np.array, pattern_name: str = "my_pattern",\
-            config_name: str = "unspecified", entry_point="not specified",\
+            config_name: str = "unspecified", ca_config: str="unspecified", \
+            entry_point="not specified",\
             commit_hash="not_specified", notes=None):
 
         counter = 0
@@ -64,9 +65,11 @@ class Librarian():
         meta_path = os.path.join(self.directory, 
                 f"{pattern_name}{counter:03}.csv")
 
-
         if config_name == "unspecified" and self.verbose:
-            print(f"warning, no config supplied for {pattern_name}")
+            if ca_config == "unspecified" and self.verbose:
+                print(f"warning, no config supplied for {pattern_name}")
+            else:
+                config_name = ca_config
 
         with open(meta_path, "w") as f:
             f.write(f"ca_config,{config_name}")
@@ -79,8 +82,6 @@ class Librarian():
         if self.verbose:
             print(f"pattern {pattern_name} saved to {file_path}")
             print(f"pattern {pattern_name} metadata saved to {meta_path}")
-
-        self.index.append(f"{pattern_name}  {counter:03}")
 
 
     def load(self, pattern_name: str) -> tuple([np.array, str]):

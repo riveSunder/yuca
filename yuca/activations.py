@@ -151,7 +151,28 @@ class CosOverX2(nn.Module):
             
 
         return result
+
+class LaplacianOfGaussian(nn.Module):
+
+    def __init__(self, **kwargs):
+        super(LaplacianOfGaussian, self).__init__()
+
+        self.sigma = query_kwargs("sigma", 0.5, **kwargs)
         
+    def forward(self, x):
+
+        if type(x) is not torch.Tensor:
+            x = torch.tensor(x)
+
+        laplacian_of_gaussian = -(1 / (torch.pi * self.sigma**4)) \
+                * (1 - (x**2) / (2*self.sigma**2)) \
+                * (torch.exp(- (x**2)/(2*self.sigma**2)))
+
+        laplacian_of_gaussian -= laplacian_of_gaussian.mean()
+        laplacian_of_gaussian /= laplacian_of_gaussian.abs().sum()
+
+        return laplacian_of_gaussian
+
 class Gaussian(nn.Module):
 
     def __init__(self, **kwargs):

@@ -43,6 +43,8 @@ class CA(nn.Module):
     def __init__(self, **kwargs):
         super(CA, self).__init__()
 
+        self.instant_kwargs = kwargs
+
         self.kernel_radius = query_kwargs("kernel_radius", 13, **kwargs)
         self.kernel_peaks = query_kwargs("kernel_peaks", 3, **kwargs)
         self.my_device = query_kwargs("device", "cpu", **kwargs)
@@ -226,20 +228,53 @@ class CA(nn.Module):
 
         return update
 
-    def change_kernel_radius(self, radius):
+    def get_kernel_radius(self):
+
+        # kernel_radius is a float
+        return self.kernel_radius
+
+    def get_dt(self):
+
+        # self.dt is a torch tensor
+        return self.dt.item()
+
+    def set_kernel_radius(self, radius):
         """
         common method for changing the kernel size (radius)
         and therefore changing the spatial resolution of the system. 
         """
 
-
-        if self.neighborhood_kernel_config is not None:
-            self.neighborhood_kernel_config["radius"] = radius
-
+        self.neighborhood_kernel_config["radius"] = radius
         nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
         self.add_neighborhood_kernel(nbhd_kernel)
         self.kernel_radius = self.neighborhood_kernel_config["radius"]
         self.initialize_neighborhood_layer()
+
+    def update_kernel_params(self, kernel_kwargs):
+
+        self.kernel_params = None
+
+        for key in kernel_kwargs.keys():
+            if self.kernel_params is None:
+                self.kernel_params = np.array(kernel_kwargs[key])
+            else:
+                self.kernel_params = np.append(self.kernel_params, \
+                        np.array(kernel_kwargs[key]))
+
+    def set_kernel_config(self, kernel_config):
+
+        self.neighborhood_kernel_config = kernel_config
+        if "kernel_kwargs" in self.neighborhood_kernel_config.keys():
+            self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
+
+        self.set_kernel_radius(self.neighborhood_kernel_config["radius"])
+
+    def set_dt(self, new_dt):
+        
+        if type(new_dt) is torch.Tensor:
+            self.dt = new_dt.to(self.my_device)
+        else:
+            self.dt = torch.tensor(new_dt).to(self.my_device)
 
     def alive_mask(self, universe):
         """

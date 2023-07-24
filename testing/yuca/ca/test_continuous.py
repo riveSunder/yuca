@@ -227,7 +227,7 @@ class TestCCA(unittest.TestCase):
                     self.assertEqual(param[1].device.type, \
                             torch.device(my_device).type)
 
-    def test_change_kernel_radius(self):
+    def test_set_kernel_radius(self):
 
         cca = CCA()
         cca.restore_config("geminium.npy")
@@ -235,7 +235,7 @@ class TestCCA(unittest.TestCase):
 
         for kr in [13, 17, 29]:
 
-            cca.change_kernel_radius(kr)
+            cca.set_kernel_radius(kr)
 
             my_config = cca.make_config()
 

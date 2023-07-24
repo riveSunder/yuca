@@ -99,37 +99,10 @@ class CCA(CA):
         
         self.t_count = 0.0
 
-    def update_kernel_params(self, kernel_kwargs):
-
-        self.kernel_params = None
-
-        for key in kernel_kwargs.keys():
-            if self.kernel_params is None:
-                self.kernel_params = np.array(kernel_kwargs[key])
-            else:
-                self.kernel_params = np.append(self.kernel_params, \
-                        np.array(kernel_kwargs[key]))
-        
-        
-    def change_kernel_radius(self, radius):
-
-        self.neighborhood_kernel_config["radius"] = radius
-        nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
-        self.add_neighborhood_kernel(nbhd_kernel)
-        self.kernel_radius = self.neighborhood_kernel_config["radius"]
-        self.initialize_neighborhood_layer()
-
-    def set_kernel_config(self, kernel_config):
-
-        self.neighborhood_kernel_config = kernel_config
-        self.kernel_radius = self.neighborhood_kernel_config["radius"]
-        nbhd_kernel = get_kernel(self.neighborhood_kernel_config)
-        if "kernel_kwargs" in self.neighborhood_kernel_config.keys():
-            self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
-
-        self.add_neighborhood_kernel(nbhd_kernel)
-
     def load_config(self, config):
+
+        if "instant_kwargs" in config.keys():
+            self.__init__(**config["instant_kwargs"])
 
         self.genesis_fns = []
         self.persistence_fns = []
@@ -150,7 +123,7 @@ class CCA(CA):
             self.update_kernel_params(self.neighborhood_kernel_config["kernel_kwargs"])
 
         # update self.kernel_radius
-        self.change_kernel_radius(self.neighborhood_kernel_config["radius"])
+        self.set_kernel_radius(self.neighborhood_kernel_config["radius"])
         self.initialize_neighborhood_layer()
 
         self.add_genesis_fn(config["genesis_config"])
@@ -214,7 +187,6 @@ class CCA(CA):
         if self.neighborhood_kernel_config is None:
             print("kernel config is missing, assuming GaussianMixture")
             #assert False,  "not implemented exception"
-            neighborhood_kernel_config = "GaussianMixture"
             neighborhood_kernel_config = {}
             neighborhood_kernel_config["name"] = "GaussianMixture"
             if self.kernel_params is not None:
@@ -270,6 +242,16 @@ class CCA(CA):
 
         if "dt" not in config.keys():
             config["dt"] = self.dt 
+
+        # include activation and number hidden channels, and all kwargs for instantiating ca
+        config["instant_kwargs"] = self.instant_kwargs
+
+        config["instant_kwargs"]["kernel_radius"] = self.kernel_radius
+        config["instant_kwargs"]["kernel_peaks"] = self.kernel_peaks
+        config["instant_kwargs"]["conv_mode"] = self.conv_mode
+
+        config["instant_kwargs"]["external_channels"] = self.external_channels
+        config["instant_kwargs"]["internal_channels"] = self.internal_channels
 
         return copy.deepcopy(config)
 

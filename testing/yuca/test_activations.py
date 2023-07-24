@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 
 from yuca.activations import Gaussian,\
+        LaplacianOfGaussian,\
         DoGaussian,\
         GaussianMixture,\
         Identity,\
@@ -93,6 +94,31 @@ class TestCosOverX2(unittest.TestCase):
         y = self.activation(x)
 
         self.assertEqual(x.shape, y.shape)
+
+class TestLaplacianOfGaussian(unittest.TestCase):
+
+    def setUp(self):
+
+        pass
+
+    def test_forward(self):
+
+        my_log = LaplacianOfGaussian()
+
+        for radius in np.arange(1,31):
+
+            xx, yy = np.meshgrid(np.arange(-radius, radius + 1), \
+                    np.arange(-radius, radius + 1))
+
+            grid = np.sqrt(xx**2 + yy**2) / radius
+
+            kernel = my_log(grid.reshape(1, 1, radius * 2 + 1, radius * 2 + 1))
+
+            self.assertAlmostEqual(0.0, kernel.sum().item())
+            self.assertEqual(radius*2+1, kernel.shape[-1])
+            self.assertEqual(radius*2+1, kernel.shape[-2])
+            self.assertEqual(1, 1)
+            self.assertEqual(1, 1)
 
 class TestGaussian(unittest.TestCase):
     """

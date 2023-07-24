@@ -1,16 +1,16 @@
 Name                               Stmts   Miss  Cover
 ------------------------------------------------------
-yuca/__init__.py                       0      0   100%
-yuca/activations.py                  198     36    82%
+yuca/__init__.py                       3      0   100%
+yuca/activations.py                  209     36    83%
 yuca/ca/__init__.py                    4      0   100%
-yuca/ca/common.py                    139     20    86%
-yuca/ca/continuous.py                393     35    91%
-yuca/ca/neural.py                    179     22    88%
-yuca/ca/reaction_diffusion.py        151     16    89%
+yuca/ca/common.py                    158     31    80%
+yuca/ca/continuous.py                381     29    92%
+yuca/ca/neural.py                    193     23    88%
+yuca/ca/reaction_diffusion.py        219     52    76%
 yuca/clone.py                        118     19    84%
 yuca/configs.py                       89     21    76%
 yuca/cppn.py                         152     31    80%
-yuca/kernels.py                      107     11    90%
+yuca/kernels.py                      111     11    90%
 yuca/params_agent.py                  32     11    66%
 yuca/patterns.py                      46      6    87%
 yuca/utils.py                        131      8    94%
@@ -18,6 +18,7 @@ yuca/wrappers/__init__.py              3      0   100%
 yuca/wrappers/glider_wrapper.py       90     13    86%
 yuca/wrappers/halting_wrapper.py     184     29    84%
 yuca/wrappers/random_wrapper.py       18      5    72%
+yuca/zoo/__init__.py                   0      0   100%
 ------------------------------------------------------
-TOTAL                               2034    283    86%
-no additional message
+TOTAL                               2141    325    85%
+message: test with upgraded scipy version 1.10.0

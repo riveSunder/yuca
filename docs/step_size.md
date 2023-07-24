@@ -37,14 +37,14 @@ Only the final condition with a step size of ~0.4166 seconds displays noticeably
 
 ## Pattern stability depends on step size
 
-A minimal glider in the style of the 
+A small glider in the style of the 
 SmoothLife glider [^Ra2012] and implemented in the _Scutium gravidus_ CA under the Lenia framework is only stable in a range of step sizes from about 0.25 to 0.97. A choice of <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/dt.png"> outside this range results in a vanishing glider. 
 
 {:style="text-align:center;"}
 ![Image](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/consequential_step_size/single_scutium.gif)
 
 {:refdef: style="text-align: center;"}
-**A minimal glider in Lenia's _Scutium gravidus_ rule set [^Ch2019], similar to the SmoothLife glider [^Ra2012], is unstable at step sizes below about 0.25 and above about 0.97.**
+**A small glider in Lenia's _Scutium gravidus_ rule set [^Ch2019], similar to the SmoothLife glider [^Ra2012], is unstable at step sizes below about 0.25 and above about 0.97.**
 {: refdef}
 
 A wide glider in the same CA rule set is typically stable for over 2000 steps at a <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/dt.png" height=16> of <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/equations/point_1.png" height=16>, but disappears at step sizes of 0.05 or below and is also unstable at a step size of 0.5 or above, usually exhibiting unconstrained growth at large step sizes.

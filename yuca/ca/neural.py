@@ -61,7 +61,7 @@ class NCA(CA):
         super(NCA, self).__init__(**kwargs)
 
         self.dropout_rate = query_kwargs("dropout_rate", 0.1, **kwargs)
-        self.act = query_kwargs("activation", Gaussian, **kwargs)
+        self.act = query_kwargs("activation", "Gaussian", **kwargs)
 
         if type(self.act) == str and self.act in activation_dict.keys():
             self.act = activation_dict[self.act]
@@ -71,7 +71,14 @@ class NCA(CA):
             print(f"Defaulting to Gaussian activation function")
             self.act = Gaussian
 
-        self.default_init()
+        if "ca_config" in kwargs.keys():
+            if kwargs["ca_config"] is not None:
+                self.restore_config(kwargs["ca_config"])
+            else:
+                self.default_init()
+        else:
+            self.default_init()
+
         self.reset()
 
     def update_kernel_params(self, kernel_kwargs):
@@ -95,7 +102,7 @@ class NCA(CA):
         for mm in range(self.internal_channels):
 
             if self.kernel_params is None:
-                self.kernel_params = [1/self.kernel_peaks, 0.5, 0.15] * self.kernel_peaks #np.random.rand(self.kernel_peaks*3) 
+                self.kernel_params = [1/self.kernel_peaks, 0.5, 0.15] * self.kernel_peaks 
                 self.kernel_params = np.array(self.kernel_params)
             
             nbhd_kernel = get_gaussian_mixture_kernel(radius=self.kernel_radius, \
@@ -126,6 +133,10 @@ class NCA(CA):
 
     def load_config(self, config):
 
+        if "instant_kwargs" in config.keys():
+            self.__init__(**config["instant_kwargs"])
+
+
         self.config = config
 
         if "identity_kernel_config" not in config.keys():
@@ -148,7 +159,7 @@ class NCA(CA):
             
 
         # update self.kernel_radius
-        self.change_kernel_radius(self.neighborhood_kernel_config["radius"])
+        self.set_kernel_radius(self.neighborhood_kernel_config["radius"])
         self.initialize_neighborhood_layer()
 
         if "dt" in config.keys():
@@ -209,7 +220,6 @@ class NCA(CA):
         if self.neighborhood_kernel_config is None:
             print("kernel config is missing, assuming GaussianMixture")
             #assert False,  "not implemented exception"
-            neighborhood_kernel_config = "GaussianMixture"
             neighborhood_kernel_config = {}
             neighborhood_kernel_config["name"] = "GaussianMixture"
             params = self.get_params()
@@ -231,6 +241,19 @@ class NCA(CA):
 
         if "dt" not in config.keys():
             config["dt"] = self.dt 
+
+        # include activation and number hidden channels
+        config["instant_kwargs"] = self.instant_kwargs
+        config["instant_kwargs"]["activation"] = str(self.act).split("'")[1].split(".")[-1]
+        config["instant_kwargs"]["dropout_rate"] = self.dropout_rate
+
+        config["instant_kwargs"]["kernel_radius"] = self.kernel_radius
+        config["instant_kwargs"]["kernel_peaks"] = self.kernel_peaks
+        config["instant_kwargs"]["conv_mode"] = self.conv_mode
+
+        config["instant_kwargs"]["hidden_channels"] = self.hidden_channels
+        config["instant_kwargs"]["external_channels"] = self.external_channels
+        config["instant_kwargs"]["internal_channels"] = self.internal_channels
 
         return copy.deepcopy(config)
 
