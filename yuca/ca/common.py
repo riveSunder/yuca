@@ -76,7 +76,7 @@ class CA(nn.Module):
         self.kernel_params = None
 
         self.input_filepath = query_kwargs("input_filepath", None, **kwargs)
-            
+
 
     def reset(self):
         
@@ -249,6 +249,8 @@ class CA(nn.Module):
         self.add_neighborhood_kernel(nbhd_kernel)
         self.kernel_radius = self.neighborhood_kernel_config["radius"]
         self.initialize_neighborhood_layer()
+
+        self.to_device(self.my_device)
 
     def update_kernel_params(self, kernel_kwargs):
 
