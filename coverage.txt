@@ -21,4 +21,4 @@ yuca/wrappers/random_wrapper.py       18      5    72%
 yuca/zoo/__init__.py                   0      0   100%
 ------------------------------------------------------
 TOTAL                               2145    325    85%
-message: update malformed pattern metadata csvs (add missing \n to notes row)
+message: missed a few csv updates, added here
