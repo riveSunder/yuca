@@ -11,30 +11,30 @@ class TestRxnDfn(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_h3_equilibrium(self):
+    def test_grid_equilibrium(self):
 
         rxn = RxnDfn()
 
-        grid = rxn.initialize_h3()
+        grid = rxn.initialize_grid()
 
         self.assertAlmostEqual(0.42012, grid[:,0,:,:].mean().item(), 5)
         self.assertAlmostEqual(0.29253, grid[:,1,:,:].mean().item(), 5)
 
         my_batch_size = 10
-        grid = rxn.initialize_h3(batch_size=my_batch_size)
+        grid = rxn.initialize_grid(batch_size=my_batch_size)
         self.assertEqual(my_batch_size, grid.shape[0])
         self.assertAlmostEqual(0.42012, grid[:,0,:,:].mean().item(), 5)
         self.assertAlmostEqual(0.29253, grid[:,1,:,:].mean().item(), 5)
 
         my_dim = 16
-        grid = rxn.initialize_h3(dim=my_dim)
+        grid = rxn.initialize_grid(dim=my_dim)
         self.assertEqual(my_dim, grid.shape[-1])
         self.assertEqual(my_dim, grid.shape[-2])
         self.assertAlmostEqual(0.42012, grid[:,0,:,:].mean().item(), 5)
         self.assertAlmostEqual(0.29253, grid[:,1,:,:].mean().item(), 5)
 
         my_dim = (16,17)
-        grid = rxn.initialize_h3(dim=my_dim)
+        grid = rxn.initialize_grid(dim=my_dim)
         self.assertEqual(my_dim[0], grid.shape[-2])
         self.assertEqual(my_dim[1], grid.shape[-1])
         self.assertAlmostEqual(0.42012, grid[:,0,:,:].mean().item(), 5)
