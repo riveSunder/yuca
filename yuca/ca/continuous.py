@@ -133,10 +133,10 @@ class CCA(CA):
         self.persistence_fn_config = config["persistence_config"]
 
         if "dt" in config.keys():
-            self.dt = config["dt"]
+            self.set_dt(config["dt"])
         else: 
 
-            self.dt = 0.1
+            self.set_dt(0.1)
 
         self.initialize_weight_layer()
         self.include_parameters()
@@ -349,7 +349,7 @@ class CCA(CA):
                 self.add_persistence_fn(persistence_config)
 
 
-        self.dt = 0.1
+        self.set_dt(0.1)
 
         self.include_parameters()
         
@@ -559,7 +559,7 @@ class CCA(CA):
             
             new_universe = torch.clamp(universe + self.dt * update, 0, 1.0)
         #new_universe = self.weights_layer(new_universe)
-        self.t_count += self.dt
+        self.t_count += self.dt.detach().cpu()
 
         return new_universe
 
