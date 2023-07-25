@@ -265,7 +265,7 @@ class RxnDfn(CA):
         self.neighborhood_kernels = kernel 
         self.neighborhood_dim = dim_x 
 
-    def initialize_h3(self, batch_size=1, dim=256):
+    def initialize_grid(self, batch_size=1, dim=256):
         """
         initialize a grid with h3 background equilibrium for u an v
         
@@ -370,7 +370,7 @@ class RxnDfn(CA):
         new_universe = universe + self.dt * update 
         new_universe = torch.clamp(new_universe,0,1.)
 
-        self.t_count += self.dt.cpu()
+        self.t_count += self.dt.detach().cpu()
 
         return new_universe
 

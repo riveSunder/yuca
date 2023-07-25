@@ -118,7 +118,7 @@ class NCA(CA):
 
         self.initialize_weight_layer()
 
-        self.dt = 0.1
+        self.set_dt(0.1)
 
 
     def set_kernel_config(self, kernel_config):
@@ -163,11 +163,9 @@ class NCA(CA):
         self.initialize_neighborhood_layer()
 
         if "dt" in config.keys():
-            self.dt = config["dt"]
+            self.set_dt(config["dt"])
         else: 
-            self.dt = 0.1
-
-        print(self.dt)
+            self.set_dt(0.1)
 
         self.initialize_weight_layer()
 

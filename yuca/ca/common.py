@@ -54,7 +54,6 @@ class CA(nn.Module):
         # CA mode. Options are 'neural' or 'functional'.
         self.ca_mode = query_kwargs("ca_mode", "functional", **kwargs)
 
-
         self.external_channels = query_kwargs("external_channels", 1, **kwargs)
         self.internal_channels = query_kwargs("internal_channels", 1, **kwargs)
         self.alive_threshold = query_kwargs("alive_threshold", 0.1, **kwargs)
@@ -184,6 +183,21 @@ class CA(nn.Module):
         self.neighborhood_kernels = kernel.to(torch.get_default_dtype()) 
         self.neighborhood_dim = dim_x 
 
+    def initialize_grid(self, batch_size=1, dim=256):
+        """
+        initialize a grid with background of 0
+        
+        batch_size: int - number of samples in a batch
+        dim: int or 2-tuple - row and column dimensions for grid
+        """
+
+        if type(dim) is int:
+            dim = [dim, dim]
+
+        grid = torch.zeros(batch_size, self.external_channels, dim[0], dim[1])
+
+        return grid
+
     def initialize_neighborhood_layer(self):
         """
         initialized a convolutional layer containing neighborhod functions
@@ -230,13 +244,18 @@ class CA(nn.Module):
 
     def get_kernel_radius(self):
 
-        # kernel_radius is a float
+        # kernel_radius is an int 
         return self.kernel_radius
 
     def get_dt(self):
 
         # self.dt is a torch tensor
         return self.dt.item()
+
+    def get_dx(self):
+
+        # self.dx is a just 0 by default
+        return 0 
 
     def set_kernel_radius(self, radius):
         """
@@ -278,6 +297,10 @@ class CA(nn.Module):
         else:
             self.dt = torch.tensor(new_dt).to(self.my_device)
 
+
+    def set_dx(self, new_dx):
+        pass
+
     def alive_mask(self, universe):
         """
         zero out cells not meeting a threshold in the alpha channel
@@ -308,7 +331,7 @@ class CA(nn.Module):
             
             new_universe = torch.clamp(universe + self.dt * update, 0, 1.0)
 
-        self.t_count += self.dt
+        self.t_count += self.dt.detach().cpu()
 
         return new_universe
 
