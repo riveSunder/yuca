@@ -12,8 +12,12 @@
 * [Intention Outline (pdf)](https://github.com/riveSunder/DisContinuous/blob/gh-pages/docs/assets/discretization_intention_apa6.pdf) - [arXiv:2208.09444](https://arxiv.org/abs/2208.09444)
 * [Experiments outline script](https://raw.githubusercontent.com/riveSunder/DisContinuous/master/scripts/exp_0x00_outline.py)
 * [Animations](https://rivesunder.github.io/DisContinuous/disco_demo)
-* [Notebook](https://github.com/riveSunder/DisContinuous/blob/master/notebooks/disco_demo.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/DisContinuous/master?labpath=notebooks%2Fdisco_demo.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/DisContinuous/master?labpath=notebooks%2Fdisco_demo.ipynb), [colab](https://colab.research.google.com/github/rivesunder/DisContinuous/blob/master/notebooks/disco_demo.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/DisContinuous/blob/master/notebooks/disco_demo.ipynb) 
+* [Notebook](https://github.com/riveSunder/DisContinuous/blob/master/notebooks/disco_demo.ipynb) Try it on: -> [colab](https://colab.research.google.com/github/rivesunder/DisContinuous/blob/master/notebooks/disco_demo.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/DisContinuous/blob/master/notebooks/disco_demo.ipynb) 
 
+<!--
+[mybinder](https://mybinder.org/v2/gh/rivesunder/DisContinuous/master?labpath=notebooks%2Fdisco_demo.ipynb) 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/DisContinuous/master?labpath=notebooks%2Fdisco_demo.ipynb), 
+-->
 
 ####  Davis, Q, Tyrell and Bongard, Josh. Step Size is a Consequential Parameter in Continuous Cellular Automata. The 2022 Conference on Artificial Life. (2022). 
 
@@ -21,9 +25,11 @@
 * ArXiv -> [https://arxiv.org/abs/2205.12728](https://arxiv.org/abs/2205.12728)
 * [Repository](https://github.com/rivesunder/yuca) 
 * [Blog post](https://rivesunder.github.io/yuca/step_size) 
-* [Notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) 
+* [Notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) Try it on: [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) 
 * [ALife 2022 slides](https://rivesunder.github.io/yuca/ss_slide_000)
-
+<!--
+[mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb), 
+-->
 
 ####  Davis, Q, Tyrell and Bongard, Josh. Glaberish: Generalizing the Continuously-Valued Lenia Framework to Arbitrary Life-Like Cellular Automata. The 2022 Conference on Artificial Life. (2022). 
 
@@ -31,10 +37,13 @@
 * ArXiv -> [https://arxiv.org/abs/2205.10463](https://arxiv.org/abs/2205.10463)
 * [Repository](https://github.com/rivesunder/yuca) 
 * [Supporting animations](https://rivesunder.github.io/yuca/glaberish) 
-* [Static figures notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) 
-* [Animations notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_animations.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_animations.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) 
+* [Static figures notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) Try it on: [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) 
+* [Animations notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) Try it on: [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) 
 * [ALife 2022 slides](https://rivesunder.github.io/yuca/g_slide_000)
-
+<!--
+[mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb), 
+[mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_animations.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_animations.ipynb), 
+-->
 
 ####  Davis, Q, Tyrell and Bongard, Josh. Selecting Continuous Life-Like Cellular Automata for Halting Unpredictability: Evolving for Abiogenesis. Companion Proceedings of the Genetic and Evolutionary Computation Conference Companion (2022).  
 
@@ -42,6 +51,7 @@
 * ArXiv -> [https://arxiv.org/abs/2204.07541](https://arxiv.org/abs/2204.07541)
 * [Blog post](https://rivesunder.github.io/yuca/evo_abio)
 * [Summary poster](https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/halting_evo/pos237s1.pdf)
-* [Notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/halting_evo.ipynb) Try it on: [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb), [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) 
-* [Bokeh app glider demo -- watch evolved gliders](https://mybinder.org/v2/gh/riveSunder/yuca_docs/master?urlpath=/proxy/5006/gecco_bokeh_app) Note that this runs on [mybinder.org](https://mybinder.org), a great free cloud notebook service that can be a little slow. 
-
+* [Notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/halting_evo.ipynb) Try it on: [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/halting_evo.ipynb) 
+<!--
+[mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fhalting_evo.ipynb), 
+-->
