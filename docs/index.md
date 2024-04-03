@@ -9,8 +9,8 @@
 
 ### Discretization-Dependent Dissolution of Gliders in (Dis)Continuous Systems: Non-Platonic Self-Organization in Complex Systems
 
-* Paper at [Innovations in Machine Intelligence](https://www.imijournal.org/articles/discretization-dependent-dissolution-of-gliders-in-dis-continuous-systems-non-platonic-self-organization-in-complex-systems)[pdf](https://assets-global.website-files.com/61b44e7e8aa4501d338e7775/65960e2672c79a72b7a12677_IMI_Tyrell_Davis.pdf)
-* Pre-print at [Arxiv.org](https://arxiv.org/abs/2401.13111v1)[pdf](https://arxiv.org/pdf/2401.13111v1)
+* Paper at [Innovations in Machine Intelligence doi:10.54854/imi2023.01](https://www.imijournal.org/articles/discretization-dependent-dissolution-of-gliders-in-dis-continuous-systems-non-platonic-self-organization-in-complex-systems) ([pdf](https://assets-global.website-files.com/61b44e7e8aa4501d338e7775/65960e2672c79a72b7a12677_IMI_Tyrell_Davis.pdf))
+* Pre-print at [Arxiv.org 2401.13111](https://arxiv.org/abs/2401.13111v1) ([pdf](https://arxiv.org/pdf/2401.13111v1))
 * Code repository [https://github.com/riveSunder/DiscoGliders/](https://github.com/riveSunder/DiscoGliders/)
 
 ### Intention to explore the role of discretization in the emergence of self-organization in certain approximations of continuous cellular automata and dynamic systems
