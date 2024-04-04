@@ -32,6 +32,7 @@
 * [Repository](https://github.com/rivesunder/yuca) 
 * [Blog post](https://rivesunder.github.io/yuca/step_size) 
 * [Notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) Try it on: [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/consequential_step_size.ipynb) 
+* [Talk at ALife 2022 (YouTube)](https://youtu.be/JRi2YR_xJY4?t=2266)
 * [ALife 2022 slides](https://rivesunder.github.io/yuca/ss_slide_000)
 <!--
 [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fconsequential_step_size.ipynb), 
@@ -45,6 +46,7 @@
 * [Supporting animations](https://rivesunder.github.io/yuca/glaberish) 
 * [Static figures notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) Try it on: [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_static_figures.ipynb) 
 * [Animations notebook](https://github.com/riveSunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) Try it on: [colab](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) -> [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rivesunder/yuca/blob/master/notebooks/glaberish_animations.ipynb) 
+* [Talk at ALife 2022 (YouTube)](https://youtu.be/rdAAMhgdUGU?t=7268)
 * [ALife 2022 slides](https://rivesunder.github.io/yuca/g_slide_000)
 <!--
 [mybinder](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb) -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rivesunder/yuca/master?labpath=notebooks%2Fglaberish_static_figures.ipynb), 
