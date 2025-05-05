@@ -13,7 +13,6 @@ setup(\
                         "torch==2.0.1",\
                         "future==0.18.3",\
                         "imageio==2.14.1",\
-                        "matplotlib==3.3.4",\
                         "Pillow==9.3.0",\
                         "pyparsing==3.0.7",\
                         "python-dateutil==2.8.2",\
