@@ -7,13 +7,30 @@
 
 ## A continuous cellular automata research library -> [https://github.com/rivesunder/yuca](https://github.com/rivesunder/yuca)
 
-### Discretization-Dependent Dissolution of Gliders in (Dis)Continuous Systems: Non-Platonic Self-Organization in Complex Systems
+### "Simulated Universe Survival Guide." Cross Roads Seminar Series #49 (2024)
+(other relevant repos: [fractal_persistence](https://github.com/rivesunder/fractal_persistence), [index/links](https://rivesunder.github.io/fractal_persistence/al24_slide_000))
+* Video: [YouTube](Non-Platonic Autopoiesis of a Cellular Automaton Glider in Asymptotic Lenia)
+* Slides: [https://rivesunder.github.io/non_platonic_cross_roads/](https://rivesunder.github.io/non_platonic_cross_roads/)
+
+### Non-Platonic Autopoiesis of a Cellular Automaton Glider in Asymptotic Lenia (2024)
+(main repo: [fractal_persistence](https://github.com/rivesunder/fractal_persistence), [index/links](https://rivesunder.github.io/fractal_persistence/al24_slide_000))
+* Paper: [https://doi.org/10.1162/isal_a_00786](https://doi.org/10.1162/isal_a_00786)
+* ArXiV: [2407.21086](https://arxiv.org/abs/2407.21086)
+* Slides: [https://rivesunder.github.io/fractal_persistence/al24_slide_000](https://rivesunder.github.io/fractal_persistence/al24_slide_000)
+
+### The Eidolic Principle: Exploring the Fractal Simuliverse of (dis)Continuous Cellular Automata (2024)
+_An entry to the 2024 Virtual Creatures Competition at ALife 2024_ <br>
+(main repo [https://github.com/rivesunder/fractal_persistence](https://github.com/rivesunder/fractal_persistence), [index/links](https://rivesunder.github.io/fractal_persistence/al24_slide_000))
+* [Video (YouTube)](https://www.youtube.com/watch?v=pH1x-6FzmTo)
+* Write-up (as appendix): [ArXiV:2407:21086](https://arxiv.org/abs/2407.21086)
+
+### Discretization-Dependent Dissolution of Gliders in (Dis)Continuous Systems: Non-Platonic Self-Organization in Complex Systems (2023)
 
 * Paper at [Innovations in Machine Intelligence doi:10.54854/imi2023.01](https://www.imijournal.org/articles/discretization-dependent-dissolution-of-gliders-in-dis-continuous-systems-non-platonic-self-organization-in-complex-systems) ([pdf](https://assets-global.website-files.com/61b44e7e8aa4501d338e7775/65960e2672c79a72b7a12677_IMI_Tyrell_Davis.pdf))
 * Pre-print at [Arxiv.org 2401.13111](https://arxiv.org/abs/2401.13111v1) ([pdf](https://arxiv.org/pdf/2401.13111v1))
 * Code repository [https://github.com/riveSunder/DiscoGliders/](https://github.com/riveSunder/DiscoGliders/)
 
-### Intention to explore the role of discretization in the emergence of self-organization in certain approximations of continuous cellular automata and dynamic systems
+### Intention to explore the role of discretization in the emergence of self-organization in certain approximations of continuous cellular automata and dynamic systems (2022)
 
 * [Intention Outline (pdf)](https://github.com/riveSunder/DisContinuous/blob/gh-pages/docs/assets/discretization_intention_apa6.pdf) - [arXiv:2208.09444](https://arxiv.org/abs/2208.09444)
 * [Experiments outline script](https://raw.githubusercontent.com/riveSunder/DisContinuous/master/scripts/exp_0x00_outline.py)
