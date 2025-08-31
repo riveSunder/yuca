@@ -1,6 +1,6 @@
 <p align="center">
 <img src="https://raw.githubusercontent.com/riveSunder/yuca_docs/master/assets/supplemental_artifact_2_gliders.gif"><br>
-Gliders in <em>Hydrogeminium natans</em> (Left, Lenia) and s613 (Right, in Glaberish, a variant of Lenia). The fast/wobbly gliders have similar behavior but different cell state values. This animation corresponds to Figure 11 in the paper. 
+Gliders in <em>Hydrogeminium natans</em> (Right, Lenia) and s613 (Left, in Glaberish, the new bivariate expansion of Lenia). The fast/wobbly gliders have similar behavior but different cell state values. This animation corresponds to Figure 11 in the paper. 
 </p>
 
 
