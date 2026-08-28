@@ -9,7 +9,7 @@
 
 ### "Simulated Universe Survival Guide." Cross Roads Seminar Series #49 (2024)
 (other relevant repos: [fractal_persistence](https://github.com/rivesunder/fractal_persistence), [index/links](https://rivesunder.github.io/fractal_persistence/al24_slide_000))
-* Video: [YouTube](Non-Platonic Autopoiesis of a Cellular Automaton Glider in Asymptotic Lenia)
+* Video: [YouTube](https://www.youtube.com/watch?v=wiZ6mYkKhts)
 * Slides: [https://rivesunder.github.io/non_platonic_cross_roads/](https://rivesunder.github.io/non_platonic_cross_roads/)
 
 ### Non-Platonic Autopoiesis of a Cellular Automaton Glider in Asymptotic Lenia (2024)
